@@ -1,0 +1,104 @@
+html{
+  background-color: rgb(46,49,54);
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1rem;
+  color: white;
+}
+
+
+#main {
+  display: flex;
+  direction: row;
+}
+
+#main .sidebar {
+  flex: 0 0 0;
+	background-color: rgb(54,57,62);
+}
+
+#main .sidebar li {
+  width: 1.4rem;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  background-color: rgb(243,101,35);
+}
+
+#main .content {
+  background-color: rgb(46,49,54);
+  /*background: green;*/
+  display: flex;
+  flex-direction: column;
+
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.content h1 {
+  margin: 1rem;
+  font-size: 2rem;
+}
+
+.content form {
+ display: flex;
+ margin: 1rem;
+ margin-bottom: 0rem;
+ align-items: center;
+}
+
+
+.content form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.content form input {
+  font-size: 1rem;
+  padding: 3px 6px;
+  border-style: none;
+}
+
+.content form button {
+    border-radius: 100%;
+    background: #f36523;
+    border-style: none;
+    width: 3.8rem;
+    height: 3.8rem;
+    font-size: 3rem;
+    color: white;
+    padding-left: 0.7rem;
+    margin-left: -2rem;
+}
+
+.content form input:first-child {
+  margin-bottom: 0.1rem;
+  border-radius: 10px 10px 0 0;
+}
+
+.content form input:last-child {
+  margin-top: 0.1rem;
+  border-radius: 0 0 10px 10px;
+}
+
+.content > p {
+  font-size: 0.4rem;
+}
+
+.content > p a {
+    color: #f36523;
+}
+
+
+span.nation {
+  color:  rgb(243,101,35);
+}
+
+#main #explanation {
+  width: 15rem;
+  max-width: 100%;
+  margin: 1rem;
+  margin-top: 2rem;
+}
