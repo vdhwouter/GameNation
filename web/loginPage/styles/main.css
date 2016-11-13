@@ -25,6 +25,7 @@ html{
   background-color: rgb(243,101,35);
 }
 
+
 #main .content {
   background-color: rgb(46,49,54);
   /*background: green;*/
@@ -100,5 +101,5 @@ span.nation {
   width: 15rem;
   max-width: 100%;
   margin: 1rem;
-  margin-top: 2rem;
+  margin-top: 2 rem;
 }
