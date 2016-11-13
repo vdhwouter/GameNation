@@ -1,7 +1,7 @@
 package hello;
 
-import org.springframework.data.mongodb.repostitory.MongoRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserRepostitory extends MongoRepository<User, String> {
+public interface UserRepository extends MongoRepository<User, String> {
     User findByName(String name);
 }
