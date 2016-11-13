@@ -74,13 +74,15 @@ html{
     margin-left: -2rem;
 }
 
-.content form input:first-child {
+.content form input  {
   margin-bottom: 0.1rem;
+}
+
+.content form input:first-child {
   border-radius: 10px 10px 0 0;
 }
 
 .content form input:last-child {
-  margin-top: 0.1rem;
   border-radius: 0 0 10px 10px;
 }
 
@@ -92,6 +94,17 @@ html{
     color: #f36523;
 }
 
+.content .explanation-text {
+  font-size: 0.6rem;
+}
+
+
+.content #register-button {
+    color: #f36523;
+    background: none;
+    border-style: none;
+    margin-bottom: 1rem;
+}
 
 span.nation {
   color:  rgb(243,101,35);
