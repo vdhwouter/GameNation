@@ -1,6 +1,12 @@
+@font-face {
+    font-family: WhitneyMedium;
+    src: url(../fonts/WhitneyMedium.ttf);
+}
+
+
 html{
 	background-color:#36393e;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: WhitneyMedium, Helvetica, sans-serif;
 	font-size: 1rem;
 }
 
@@ -12,17 +18,6 @@ html{
 	background-color: #2e3136;
 	height: 100rem;
 	padding: 2rem;
-}
-
-#profileImage{
-	width: 18rem;
-}
-
-#side{
-	float: left;
-	width: 18rem;
-	margin-top:1.20rem;
-	margin-right: 1rem;
 }
 
 .structural {
@@ -37,19 +32,76 @@ h2{
 	margin-bottom: 1rem;
 }
 
+li{
+	list-style: none;
+}
+
+p{
+	color: white;
+	margin: 0rem 0rem 0rem 0rem;
+}
+
 .btn{
 	background-color:  #db5f24;
 	color: white;
 	float: right;
+	border: 0px;
+}
+/* ===========================================
+   set button
+   =========================================== */
+#set{
+	padding: 0.25rem;
+	margin-top: -5rem;
+	text-decoration: none;
+}
+
+/* ===========================================
+   profile
+   =========================================== */
+#profileImage{
+	width: 18rem;
+}
+
+#side{
+	float: left;
+	width: 18rem;
+	margin-top:1.20rem;
+	margin-right: 2rem;
 }
 
 #profileData{
-	width: 68%;
+	width: 66%;
 	float: left;
+}
+
+#profileData li{
+	margin-left: -2rem;
+}
+
+.level{
+	position: absolute;
+	width: 5rem;
+	top: 21.5rem;
+    left: 16rem;
+}
+
+#side p{
+	text-align: center;
+    margin-top: 0.75rem;
+    font-size: 3rem;
 }
 
 #submit{
 	width: 5rem;
+}
+
+/* ===========================================
+   Data
+   =========================================== */
+.title{
+	color: #db5f24;
+	margin-top: 1rem;
 }
 
 /* ===========================================
@@ -63,7 +115,7 @@ h2{
 
 #games h3{
 	color: #db5f24;
-	margin: 0rem 0rem 0rem 0rem;
+	margin: 1rem 0rem 0rem 0rem;
 }
 
 #games li{
@@ -76,6 +128,7 @@ h2{
 
 #games li img{
 	width: 100%;
+	background-color: #36393e;
 }
 
 #games ul{
@@ -95,12 +148,14 @@ h2{
 	text-decoration: none;
 }
 
+
 /* ===========================================
    Discord steam
    =========================================== */
 #discordSteam{
 	float: left;
-	width: 29rem;
+	width: 48%;
+	margin-right: 2rem;
 }
 
 #submitDiscord{
@@ -116,8 +171,7 @@ h2{
    =========================================== */
 #description{
 	float: left;
-	width: 29rem;
-	margin-left: 2rem;
+	width: 48%;
 }
 
 #submitDescription{
@@ -184,5 +238,3 @@ textarea{
 input:focus{
 	border: 0px;
 }
-
-
