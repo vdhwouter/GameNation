@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Persoonlijke instellingen</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="css/styles.css" />
 
 </head>
@@ -17,63 +17,40 @@
 <div class="wrapper">
 <!-- content -->            
     <h2>Profile</h2>  
+    <a href="ProfilePageSet.html" class="btn" id="set"> Set profilepage</a>
     <div id="side">
     	<img id="profileImage" src="img/avatar-member.jpg"/>
-    	<input type="submit" name="update-submit" id="submit-photo" class="btn" value="Edit photo" />
+        <img class="level" src="img/cirkel.png"/> 
+        <p class="level"> 35 </p>
     </div>  
     
     <div id="profileData">
-		<form action="" method="post" role="form" id="formdata">
-		    <dl>
-		    	<dt><label>Name</label></dt>
-		        <dd><input type="text" name="firstname" id="firstname" autocomplete="off"/></dd>
-				
-				<dt><label>Last name</label></dt>
-		        <dd><input type="text" name="lastname" id="lastname"  autocomplete="off" /></dd>
-		        
-		        <dt><label>Username</label></dt>
-		        <dd><input type="text" name="username" id="username"  autocomplete="off" /></dd>
-		        
-		        <dt><label>E-mail</label></dt>
-		        <dd><input type="text" name="email" id="email" autocomplete="off"/></dd>
-		    	
-		    	<dt><label>Password</label></dt>
-		        <dd><input type="password" name="password" id="password" autocomplete="off" /></dd>
-
-		        <dt><label>Confirmation</label></dt>
-		        <dd><input type="password" name="confirmpass" id="confirmpass" autocomplete="off" /></dd>
-
-		        <dd><input type="submit" name="update-submit" class="btn" id="submit" value="Save" /></dd>
-		    </dl>
-		</form>
-	</div>
-
-	<div id="discordSteam">
-		<form action="" method="post" role="form" id="discordForm">
-		    <dl>
-		    	<dt><label>Steam-Address</label></dt>
-		        <dd><input type="text" name="steamAddr" id="steamAddr" autocomplete="off"/></dd>
-				
-				<dt><label>Discord-Address</label></dt>
-		        <dd><input type="text" name="DiscordAddr" id="DiscordAddr"  autocomplete="off" /></dd>
-		         <dd><input type="submit" name="submitDiscord" class="btn" id="submitDiscord" value="Save" /></dd>
-		    </dl>
-		</form>
-	</div>
-
-	<div id="description">
-		<form action="" method="post" role="form" id="descriptionForm">
-		    <dl>
-		    	<dt><label>Description</label></dt>
-				<dd><textarea name="descriptionText" id="descriptionText" rows="10" value=""></textarea></dd>
-
-				<dd><input type="submit" name="submitDescription" class="btn" id="submitDescription" value="Save" /></dd>
-		    </dl>
-		</form>
+		<ul>
+            <li>
+                <p class=title>Username</p>
+                <p> DNSSINKHOLE</p>
+            </li>
+            <li>
+                <p class=title>Name</p>
+                <p> Tijs Sengier</p>
+            </li>
+            <li>
+                <p class=title>E-mail</p>
+                <p> sengier.tijs@hotmail.com</p>
+            </li>
+            <li>
+                <p class=title>Steam-Address</p>
+                <p> sengier.ddns.net </p>
+            </li>
+             <li>
+                <p class=title>Description</p>
+                <p> HOI ik ben tijs ik ben 20 jaar en speel vooral payday :D</p>
+            </li>
+        </ul>
 	</div>
 
     <div id="games">
-    	<h3>Games</h3>
+    	<h3>My games</h3>
     	<ul>
     		<li>
     			<a href="#">
@@ -129,13 +106,78 @@
     				<p>payday</p>
     			</a>
     		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" id="addGame" src="img/addGame.png"/>
-    				<p>New game</p>
-    			</a>
-    		</li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/payday.jpg"/>
+                    <p>payday</p>
+                </a>
+            </li>
     	</ul>
+    </div>
+     <div id="games">
+        <h3>My lobbies</h3>
+        <ul>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="game" src="img/bench.png"/>
+                    <p>lobby</p>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
 </body>
