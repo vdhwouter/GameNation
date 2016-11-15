@@ -2,43 +2,44 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Login | Gamenation</title>
+	<meta charset="UTF-8">
+	<title>Register | Gamenation</title>
 
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/main.css">
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
 
-  <div id="main">
-    <div class="sidebar">
-      <ul>
-        <li>?</li>
-        <li>✉</li>
-      </ul>
-    </div>
+	<div id="main">
+		<div class="sidebar">
+			<ul>
+				<li>?</li>
+				<li>✉</li>
+			</ul>
+		</div>
 
-    <div class="content">
-      <h1>Game<span class="nation">nation</span></h1>
+		<div class="content">
+			<h1>Game<span class="nation">nation</span></h1>
 
-      <p class="explanation-text">Fill in this form to complete your registration</p>
+			<p class="explanation-text">Fill in this form to complete your registration</p>
 
-      <form action="#">
-        <div>
-          <input type="text" placeholder="username">
-          <input type="text" placeholder="email">
-          <input type="password" placeholder="password">
-          <input type="password" placeholder="confirm password">
-        </div>
-      </form>
-      
-      <button id="register-button">register</button>
+			<form action="http://localhost:8080/users" method="POST" id="register-form">
+				<div>
+					<input type="text" placeholder="username" name="username" value="">
+					<input type="text" placeholder="email" name="email" value="">
+					<input type="password" placeholder="password" name="password" value="">
+					<input type="password" placeholder="confirm password" name="" value="">
+				</div>
+				<input type="submit" name="submit" id="register-button" >
+			</form>
+
+			<!-- <button id="register-button">register</button> -->
 
 
-      <p>Already have an account? <a href="login.html">Login</a></p>
-    </div>
-  </div>
+			<p>Already have an account? <a href="login.html">Login</a></p>
+		</div>
+	</div>
 </body>
 
 </html>

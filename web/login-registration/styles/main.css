@@ -1,7 +1,7 @@
 html{
   background-color: rgb(46,49,54);
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 1rem;
+	font-size: 30px;
   color: white;
 }
 
@@ -72,6 +72,10 @@ html{
     color: white;
     padding-left: 0.7rem;
     margin-left: -2rem;
+}
+
+#register-form{
+    flex-direction: column;
 }
 
 .content form input  {
