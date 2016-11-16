@@ -22,7 +22,7 @@ public class User {
 	private String teamspeak;
 
 	private List<Game> games;
-	private List<Lobby> lobbies;
+	//private List<Lobby> lobbies;
 	private List<String> friends;
 
 	public User(){
