@@ -92,7 +92,18 @@ public class ApiController {
 	@CrossOrigin
 	@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
 	public User AddGameToUser(@PathVariable User user, @RequestParam Game game ){
-        user.addGame(game);
+		if(user.getGames() == null){
+			 user.setGames(new ArrayList<Game>());
+			 user.addGame(game);
+			 userDB.save(user);
+		}
+		else {
+			List<Game> currentGames = user.getGames();
+			if (!currentGames.contains(game)){
+				user.addGame(game);
+				userDB.save(user);
+			}
+		}
 		return user;
 	}
 

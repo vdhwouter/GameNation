@@ -74,6 +74,7 @@ public class User {
 	public String getTeamspeak() { return teamspeak; }
 	public String getDiscord() { return discord; }
 	public String getDescription() { return description; }
+	public List<Game> getGames() { return games; }
 
 	public void setId(String id) {
 		this._id = id;
@@ -96,4 +97,5 @@ public class User {
 	public void setTeamspeak(String teamspeak) { this.teamspeak = teamspeak; }
 	public void setDiscord(String discord) { this.discord = discord; }
 	public void setDescription(String description) { this.description = description; }
+	public void setGames(List<Game> games) {this.games = games;}
 }
