@@ -19,6 +19,9 @@ public class GreetingController {
 	@Autowired
 	private UserRepository userDB;
 
+	@Autowired
+	private GameRepository gameDB;
+
 	// Get all users from database (Currently for testing purposes only)
 	// CrossOrigin annotion must be added to prevent cross site errors
 	@CrossOrigin
@@ -41,5 +44,12 @@ public class GreetingController {
 	public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
 		userDB.save(new User(username, email, password));
 		return userDB.findByUsername(username);
+	}
+
+	@CrossOrigin
+	@RequestMapping(value = "/games", method = RequestMethod.POST)
+	public Game InsertGame(@RequestParam String name, @RequestParam String description, @RequestParam String imageName) {
+		gameDB.save(new Game(name, description, imageName));
+		return gameDB.findByName(name);
 	}
 }
