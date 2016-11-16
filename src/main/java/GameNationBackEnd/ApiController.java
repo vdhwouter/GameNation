@@ -97,12 +97,9 @@ public class ApiController {
 			 user.addGame(game);
 			 userDB.save(user);
 		}
-		else {
-			List<Game> currentGames = user.getGames();
-			if (!currentGames.contains(game)){
-				user.addGame(game);
-				userDB.save(user);
-			}
+		else if (user.getGames().stream().anyMatch(g -> g.getId().equals(game.getId()))) {
+            user.addGame(game);
+            userDB.save(user);
 		}
 		return user;
 	}
