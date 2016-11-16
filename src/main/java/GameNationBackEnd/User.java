@@ -1,15 +1,29 @@
 package GameNationBackEnd;
 
+import org.springframework.data.annotation.Id;
+
+import java.util.List;
+
 public class User {
+	@Id
 	private String _id;
-	private String username;
+
 	private String email;
+	private String username;
 	private String password;
+
 	private String firstname;
 	private String lastname;
-	private String teamspeak;
-	private String discord;
 	private String description;
+
+	private int level;
+	private String steam;
+	private String discord;
+	private String teamspeak;
+
+	private List<Game> games;
+	private List<Lobby> lobbies;
+	private List<String> friends;
 
 	public User(){
 
