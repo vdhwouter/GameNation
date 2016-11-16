@@ -35,7 +35,7 @@
 	var APICALL = function(){
 		var request = new XMLHttpRequest();
 		request.addEventListener('load',listen)
-		request.open("get", 'http://localhost:8080/users/' + findGetParameter('username'), true);
+		request.open("get", 'http://localhost:8080/api/users/' + findGetParameter('username'), true);
 		request.send();
 	};
 

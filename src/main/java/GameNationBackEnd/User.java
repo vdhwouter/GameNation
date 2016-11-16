@@ -2,6 +2,7 @@ package GameNationBackEnd;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -33,6 +34,8 @@ public class User {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+
+		games = new ArrayList<Game>() ;
 	}
 
 	public User(String username, String email, String password, String firstname, String lastname, String teamspeak, String discord, String description) {
@@ -46,6 +49,9 @@ public class User {
 		this.description = description;
 	}
 
+	public void addGame(Game game) {
+		games.add(game);
+	}
 
 	public String getId() {
 		return  _id;

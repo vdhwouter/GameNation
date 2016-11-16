@@ -89,11 +89,12 @@ public class ApiController {
 	}
 
 
-	//@CrossOrigin
-	//@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
-	//public User AddGameToUser(@PathVariable User user, @RequestParam Game game ){
-	//	return userDB.addGameToUser(user, game);
-	//}
+	@CrossOrigin
+	@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
+	public User AddGameToUser(@PathVariable User user, @RequestParam Game game ){
+        user.addGame(game);
+		return user;
+	}
 
 	@CrossOrigin
 	@RequestMapping(value = "/games", method = RequestMethod.POST)
