@@ -16,6 +16,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 @RestController
+@RequestMapping("/api")
 public class ApiController {
 
 	// MongoDB Connection
