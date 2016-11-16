@@ -46,19 +46,43 @@ public class GreetingController {
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
 	public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
 
+		// Get user that needs to be edited
 		User userToEdit = userDB.findByUsername(username);
 
-		if (!username.isEmpty()) { userToEdit.setUsername(username); }
-		if (!email.isEmpty()) { userToEdit.setEmail(email); }
-		if (!password.isEmpty()) { userToEdit.setPassword(password); }
-		if (!firstname.isEmpty()) { userToEdit.setFirstname(firstname); }
-		if (!lastname.isEmpty()) { userToEdit.setLastname(lastname); }
-		if (!teamspeak.isEmpty()) { userToEdit.setTeamspeak(teamspeak); }
-		if (!discord.isEmpty()) {userToEdit.setDiscord(discord); }
-		if (!description.isEmpty()) { userToEdit.setDescription(description); }
+		if (userToEdit == null) {
+			userDB.save(new User(username, email, password));
+		} else {
+			// Edit all fields independently to prevent data loss
+			if (!username.isEmpty()) {
+				userToEdit.setUsername(username);
+			}
+			if (!email.isEmpty()) {
+				userToEdit.setEmail(email);
+			}
+			if (!password.isEmpty()) {
+				userToEdit.setPassword(password);
+			}
+			if (!firstname.isEmpty()) {
+				userToEdit.setFirstname(firstname);
+			}
+			if (!lastname.isEmpty()) {
+				userToEdit.setLastname(lastname);
+			}
+			if (!teamspeak.isEmpty()) {
+				userToEdit.setTeamspeak(teamspeak);
+			}
+			if (!discord.isEmpty()) {
+				userToEdit.setDiscord(discord);
+			}
+			if (!description.isEmpty()) {
+				userToEdit.setDescription(description);
+			}
 
-		userDB.save(userToEdit);
+			// Save edited user
+			userDB.save(userToEdit);
+		}
 
+		// Return object for testing purposes
 		return userDB.findByUsername(username);
 	}
 
