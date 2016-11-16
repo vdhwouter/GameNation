@@ -87,6 +87,13 @@ public class ApiController {
 		return userDB.findByUsername(username);
 	}
 
+
+	//@CrossOrigin
+	//@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
+	//public User AddGameToUser(@PathVariable User user, @RequestParam Game game ){
+	//	return userDB.addGameToUser(user, game);
+	//}
+
 	@CrossOrigin
 	@RequestMapping(value = "/games", method = RequestMethod.POST)
 	public Game InsertGame(@RequestParam String name, @RequestParam String description, @RequestParam String imageName) {
