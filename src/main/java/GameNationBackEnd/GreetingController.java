@@ -2,6 +2,9 @@ package GameNationBackEnd;
 
 import java.util.*;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,8 +41,21 @@ public class GreetingController {
 	// Save one user to database (used in registration). Object is returned for testing purposes
 	@CrossOrigin
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
-	public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
-		userDB.save(new User(username, email, password));
+	public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+
+		User userToEdit = userDB.findByUsername(username);
+
+		if (!username.isEmpty()) { userToEdit.setUsername(username); }
+		if (!email.isEmpty()) { userToEdit.setEmail(email); }
+		if (!password.isEmpty()) { userToEdit.setPassword(password); }
+		if (!firstname.isEmpty()) { userToEdit.setFirstname(firstname); }
+		if (!lastname.isEmpty()) { userToEdit.setLastname(lastname); }
+		if (!teamspeak.isEmpty()) { userToEdit.setTeamspeak(teamspeak); }
+		if (!discord.isEmpty()) {userToEdit.setDiscord(discord); }
+		if (!description.isEmpty()) { userToEdit.setDescription(description); }
+
+		userDB.save(userToEdit);
+
 		return userDB.findByUsername(username);
 	}
 }

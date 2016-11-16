@@ -40,9 +40,13 @@
 	};
 
 	var listen = function(){
-		console.log(JSON.parse(this.responseText).username)
 		document.getElementById('username').value = JSON.parse(this.responseText).username;
 		document.getElementById('email').value = JSON.parse(this.responseText).email;
+		document.getElementById('firstname').value = JSON.parse(this.responseText).firstname;
+		document.getElementById('lastname').value = JSON.parse(this.responseText).lastname;
+		document.getElementById('teamspeakAddr').value = JSON.parse(this.responseText).teamspeak;
+		document.getElementById('DiscordAddr').value = JSON.parse(this.responseText).discord;
+		document.getElementById('descriptionText').value = JSON.parse(this.responseText).description;
 	};
 
 	APICALL();
@@ -56,12 +60,12 @@
     <div id="side">
     	<img id="profileImage" src="img/avatar-member.jpg"/>
     	<input type="submit" name="update-submit" id="submit-photo" class="btn" value="Edit photo" />
-    </div>  
-    
+    </div>
+
     <div id="profileData">
-		<form action="" method="post" role="form" id="formdata">
+		<form action="http://localhost:8080/users" method="post" role="form" id="formdata">
 		    <dl>
-		    	<dt><label>Name</label></dt>
+		    	<dt><label>First Name</label></dt>
 		        <dd><input type="text" name="firstname" id="firstname" autocomplete="off"/></dd>
 				
 				<dt><label>Last name</label></dt>
@@ -79,31 +83,16 @@
 		        <dt><label>Confirmation</label></dt>
 		        <dd><input type="password" name="confirmpass" id="confirmpass" autocomplete="off" /></dd>
 
-		        <dd><input type="submit" name="update-submit" class="btn" id="submit" value="Save" /></dd>
-		    </dl>
-		</form>
-	</div>
-
-	<div id="discordSteam">
-		<form action="" method="post" role="form" id="discordForm">
-		    <dl>
 		    	<dt><label>Teamspeak-Address</label></dt>
-		        <dd><input type="text" name="steamAddr" id="steamAddr" autocomplete="off"/></dd>
+		        <dd><input type="text" name="teamspeak" id="teamspeakAddr" autocomplete="off"/></dd>
 				
 				<dt><label>Discord-Address</label></dt>
-		        <dd><input type="text" name="DiscordAddr" id="DiscordAddr"  autocomplete="off" /></dd>
-		         <dd><input type="submit" name="submitDiscord" class="btn" id="submitDiscord" value="Save" /></dd>
-		    </dl>
-		</form>
-	</div>
+		        <dd><input type="text" name="discord" id="DiscordAddr"  autocomplete="off" /></dd>
 
-	<div id="description">
-		<form action="" method="post" role="form" id="descriptionForm">
-		    <dl>
 		    	<dt><label>Description</label></dt>
-				<dd><textarea name="descriptionText" id="descriptionText" rows="10" value=""></textarea></dd>
+				<dd><textarea name="description" id="descriptionText" rows="10" value=""></textarea></dd>
 
-				<dd><input type="submit" name="submitDescription" class="btn" id="submitDescription" value="Save" /></dd>
+				<dd><input type="submit" name="update-submit" class="btn" id="submit" value="Save" /></dd>
 		    </dl>
 		</form>
 	</div>
