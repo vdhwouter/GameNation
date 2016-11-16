@@ -37,10 +37,11 @@ public class ApiController {
 
 	// Get all info from database for one specified user (returned as user object)
 	@CrossOrigin
-	@RequestMapping(value = "/users/{username}", method = RequestMethod.GET)
-	public User GetUser(@PathVariable String username) {
-		return userDB.findByUsername(username);
-	}
+	@RequestMapping(value = "/users/{user}", method = RequestMethod.GET)
+	public User GetUser(@PathVariable User user) {
+//		return userDB.findByUsername(username);
+        return user;
+    }
 
 	// Save one user to database (used in registration). Object is returned for testing purposes
 	@CrossOrigin
