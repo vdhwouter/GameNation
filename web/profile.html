@@ -42,7 +42,14 @@
 		console.log(JSON.parse(this.responseText).username)
 		document.getElementById('usernameVal').innerHTML = JSON.parse(this.responseText).username;
 		document.getElementById('emailVal').innerHTML = JSON.parse(this.responseText).email;
+
+
+		document.getElementById('namelVal').innerHTML = JSON.parse(this.responseText).firstname + ' ' + JSON.parse(this.responseText).lastname;
+		document.getElementById('teamspeakVal').innerHTML = JSON.parse(this.responseText).teamspeak;
+		document.getElementById('descriptionVal').innerHTML = JSON.parse(this.responseText).description;
+		document.getElementById('discordVal').innerHTML = JSON.parse(this.responseText).discord;
 	};
+
 
 	APICALL();
 
@@ -67,7 +74,7 @@
             </li>
             <li>
                 <p class=title>Name</p>
-                <p></p>
+                <p id="namelVal"></p>
             </li>
             <li>
                 <p class=title>E-mail</p>
@@ -75,11 +82,17 @@
             </li>
             <li>
                 <p class=title>Teamspeak-Address</p>
-                <p></p>
+                <p id="teamspeakVal"></p>
             </li>
+
+            <li>
+                <p class=title>Discord-Address</p>
+                <p id="discordVal"></p>
+            </li>
+
              <li>
                 <p class=title>Description</p>
-                <p></p>
+                <p id="descriptionVal"></p>
             </li>
         </ul>
 	</div>

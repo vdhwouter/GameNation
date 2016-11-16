@@ -16,7 +16,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 @RestController
-public class GreetingController {
+public class ApiController {
 
 	// MongoDB Connection
 	@Autowired

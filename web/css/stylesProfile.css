@@ -51,7 +51,7 @@ p{
    set button
    =========================================== */
 #set{
-	padding: 0.25rem;
+	padding: 0.75rem;
 	margin-top: -5rem;
 	text-decoration: none;
 }
@@ -204,7 +204,7 @@ dd{
 	margin-left: 0rem;
 }
 
-input, textarea{
+input, textarea {
 	border: 0px;
 	border-bottom: 1px solid #db5f24;
 	background-color: #36393e;
@@ -215,25 +215,26 @@ input, textarea{
 	color: white;
 }
 
-dd input{
+dd input {
 	width: 97.7%;
+	margin-top: 0.5rem;
 }
 
-label{
+label {
 	color: #db5f24;
 }
 
-input{
+input {
 	width: 100%;
-	margin-bottom: 0.75rem;
+	margin-bottom: 1rem;
 }
 
-textarea{
+textarea {
 	width: 96%;
 	height: 5.05rem;
 }
 
-}
+
 
 input:focus{
 	border: 0px;
