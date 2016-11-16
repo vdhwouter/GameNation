@@ -30,4 +30,5 @@ public class Game {
     public String getDescription() {
         return description;
     }
+    public String getImageName(){ return imageName; }
 }

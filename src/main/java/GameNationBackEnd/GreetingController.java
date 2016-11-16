@@ -52,4 +52,16 @@ public class GreetingController {
 		gameDB.save(new Game(name, description, imageName));
 		return gameDB.findByName(name);
 	}
+
+	@CrossOrigin
+	@RequestMapping(value = "/games", method = RequestMethod.GET)
+	public List<Game> GetAllGames() {
+		return gameDB.findAll();
+	}
+
+	@CrossOrigin
+	@RequestMapping(value = "/games/{name}", method = RequestMethod.GET)
+	public Game GetGame(@PathVariable String name) {
+		return gameDB.findByName(name);
+	}
 }
