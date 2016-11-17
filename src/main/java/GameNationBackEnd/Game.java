@@ -1,8 +1,11 @@
 package GameNationBackEnd;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Created by tijs on 16/11/2016.
  */
+@Document
 public class Game {
     private String _id;
     private String name;

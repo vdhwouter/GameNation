@@ -2,10 +2,12 @@ package GameNationBackEnd;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by tijs on 17/11/2016.
  */
+@Document
 public class UserGame {
 
     @DBRef

@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
+        classpath('com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.13.0')
     }
 }
 
@@ -29,4 +30,16 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile(group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "1.50.3")
+}
+
+apply plugin: 'mongo'
+
+task integrationTest(type: Test) {
+    runWithMongoDb = true
+}
+
+mongo {
+    port 12345
+    logging 'console'
 }
