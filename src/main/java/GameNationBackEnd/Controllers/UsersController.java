@@ -93,12 +93,19 @@ public class UsersController {
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
 
-        //aanpassen naar UserGame WERKT NIET
-        if (!userGameDB.findAll().stream().anyMatch(ug -> ug.getUser().equals(user) && ug.getGame().equals(game))) {
+        // AAN TIJS:
+        //  IMPLEMENTEER COMPARE METHOD voor game zoda ge rechtstreeks game compare kunt doen
+        //
+        if (!userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().getId().equals(game.getId()))) {
             newUserGame.setUser(user);
             newUserGame.setGame(game);
             newUserGame.setSkill_level(skill);
             userGameDB.save(newUserGame);
+
+        } else {
+            // VERDER AAN TIJS:
+            // EN AAN KJELL:
+            // THROW ERROR ALS DE GAME AL BESTAAT
         }
 
         return userGameDB.findByUser(user);
