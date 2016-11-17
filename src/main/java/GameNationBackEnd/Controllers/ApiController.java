@@ -91,39 +91,21 @@ public class ApiController {
 
 	@CrossOrigin
 	@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
-	public User AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill){
+	public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill){
 		UserGame newUserGame = new UserGame();
 
-//		if(user.getGames2() == null){
-//			user.setGames2(new HashMap<>());
-//			user.addGame2(game, skill);
-//			userDB.save(user);
-//		}
-//		else{
-//			user.addGame2(game, skill);
-//			userDB.save(user);
-//		}
+		//als skill niet ingevuld is moet deze een standaard waarde krijgen.
+		if(skill == null) skill = new Integer(0);
 
-		if(user.getGames() == null){
-			 user.setGames(new ArrayList<Game>());
-			 user.addGame(game);
-			 userDB.save(user);
-
-			 newUserGame.setUser(user);
-			 newUserGame.setGame(game);
-			 newUserGame.setSkill_level(skill);
-			 userGameDB.save(newUserGame);
-		}
-		else if (!user.getGames().stream().anyMatch(g -> g.getId().equals(game.getId()))) {
-            user.addGame(game);
-            userDB.save(user);
-
+		//aanpassen naar UserGame WERKT NIET
+        if(!userGameDB.findAll().stream().anyMatch(ug -> ug.getUser().equals(user) && ug.getGame().equals(game))){
 			newUserGame.setUser(user);
 			newUserGame.setGame(game);
 			newUserGame.setSkill_level(skill);
 			userGameDB.save(newUserGame);
 		}
-		return user;
+
+		return userGameDB.findByUser(user);
 	}
 
 	@CrossOrigin

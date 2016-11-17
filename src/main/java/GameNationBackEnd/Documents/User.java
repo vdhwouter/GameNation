@@ -4,11 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
+
 import java.util.*;
 
+
 @Document
-public class User {
+public class User{
 	@Id
 	private String _id;
 
@@ -25,11 +26,6 @@ public class User {
 	private String discord;
 	private String teamspeak;
 
-	@DBRef
-	private List<Game> games;
-
-//	@DBRef
-//	private Map<Game, Integer> games2;
 	//private List<Lobby> lobbies;
 	private List<String> friends;
 
@@ -39,8 +35,6 @@ public class User {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-
-		games = new ArrayList<Game>() ;
 	}
 
 	public User(String username, String email, String password, String firstname, String lastname, String teamspeak, String discord, String description) {
@@ -53,14 +47,6 @@ public class User {
 		this.discord = discord;
 		this.description = description;
 	}
-
-	public void addGame(Game game) {
-		games.add(game);
-	}
-
-//	public void addGame2(Game game, Integer skill) {
-//		games2.put(game, skill);
-//	}
 
 	public String getId() {
 		return  _id;
@@ -83,8 +69,6 @@ public class User {
 	public String getTeamspeak() { return teamspeak; }
 	public String getDiscord() { return discord; }
 	public String getDescription() { return description; }
-	public List<Game> getGames() { return games; }
-//	public Map<Game, Integer> getGames2() {return games2; }
 
 	public void setId(String id) {
 		this._id = id;
@@ -107,6 +91,4 @@ public class User {
 	public void setTeamspeak(String teamspeak) { this.teamspeak = teamspeak; }
 	public void setDiscord(String discord) { this.discord = discord; }
 	public void setDescription(String description) { this.description = description; }
-	public void setGames(List<Game> games) {this.games = games;}
-//	public void setGames2(Map<Game, Integer> games2) {this.games2 = games2;}
 }

@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface UserGameRepository extends MongoRepository<UserGame, String> {
-    UserGame findByUser(User user);
+    List<UserGame> findByUser(User user);
     List<UserGame> findAll();
 }
