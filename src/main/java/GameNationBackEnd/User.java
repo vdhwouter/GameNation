@@ -1,6 +1,7 @@
 package GameNationBackEnd;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class User {
 	private String discord;
 	private String teamspeak;
 
+	@DBRef
 	private List<Game> games;
 	//private List<Lobby> lobbies;
 	private List<String> friends;

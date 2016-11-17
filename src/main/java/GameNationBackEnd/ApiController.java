@@ -26,6 +26,9 @@ public class ApiController {
 	@Autowired
 	private GameRepository gameDB;
 
+	@Autowired
+	private UserGameRepository userGameDB;
+
 	// Get all users from database (Currently for testing purposes only)
 	// CrossOrigin annotion must be added to prevent cross site errors
 	@CrossOrigin
@@ -88,6 +91,17 @@ public class ApiController {
 		return userDB.findByUsername(username);
 	}
 
+	@CrossOrigin
+	@RequestMapping(value="/users/{game}/{user}/skill", method = RequestMethod.POST)
+	public User AddUserSkill(@PathVariable Game game, @PathVariable User user, @RequestParam int skill) {
+		UserGame newUserGame = new UserGame();
+		newUserGame.setUser(user);
+		newUserGame.setGame(game);
+		newUserGame.setSkill_level(skill);
+
+		userGameDB.save(newUserGame);
+		return userGameDB.findByUser(user); //return werkt niet :D
+	}
 
 	@CrossOrigin
 	@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
@@ -97,7 +111,7 @@ public class ApiController {
 			 user.addGame(game);
 			 userDB.save(user);
 		}
-		else if (user.getGames().stream().anyMatch(g -> g.getId().equals(game.getId()))) {
+		else if (!user.getGames().stream().anyMatch(g -> g.getId().equals(game.getId()))) {
             user.addGame(game);
             userDB.save(user);
 		}
