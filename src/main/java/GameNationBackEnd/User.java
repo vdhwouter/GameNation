@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class User {
 	@Id
@@ -25,12 +25,13 @@ public class User {
 
 	@DBRef
 	private List<Game> games;
+
+//	@DBRef
+//	private Map<Game, Integer> games2;
 	//private List<Lobby> lobbies;
 	private List<String> friends;
 
-	public User(){
-
-	}
+	public User(){}
 
 	public User(String username, String email, String password) {
 		this.username = username;
@@ -55,6 +56,10 @@ public class User {
 		games.add(game);
 	}
 
+//	public void addGame2(Game game, Integer skill) {
+//		games2.put(game, skill);
+//	}
+
 	public String getId() {
 		return  _id;
 	}
@@ -77,6 +82,7 @@ public class User {
 	public String getDiscord() { return discord; }
 	public String getDescription() { return description; }
 	public List<Game> getGames() { return games; }
+//	public Map<Game, Integer> getGames2() {return games2; }
 
 	public void setId(String id) {
 		this._id = id;
@@ -100,4 +106,5 @@ public class User {
 	public void setDiscord(String discord) { this.discord = discord; }
 	public void setDescription(String description) { this.description = description; }
 	public void setGames(List<Game> games) {this.games = games;}
+//	public void setGames2(Map<Game, Integer> games2) {this.games2 = games2;}
 }

@@ -90,23 +90,21 @@ public class ApiController {
 		return userDB.findByUsername(username);
 	}
 
-//	@CrossOrigin
-//	@RequestMapping(value="/users/{user}/games/", method = RequestMethod.POST)
-//	public UserGame AddGameParamsToGameInUser(@PathVariable Game game, @PathVariable User user, @RequestParam(required = false) Integer skill) {
-//		UserGame newUserGame = new UserGame();
-//		newUserGame.setUser(user);
-//		newUserGame.setGame(game);
-//		newUserGame.setSkill_level(skill);
-//
-//		userGameDB.save(newUserGame);
-//		return userGameDB.findByUser(user); //return werkt niet stack overflowerror door skill_level :D
-//	}
-
 	@CrossOrigin
 	@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
 	public User AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill){
 		UserGame newUserGame = new UserGame();
-		if(skill == null) skill =0 ;
+
+//		if(user.getGames2() == null){
+//			user.setGames2(new HashMap<>());
+//			user.addGame2(game, skill);
+//			userDB.save(user);
+//		}
+//		else{
+//			user.addGame2(game, skill);
+//			userDB.save(user);
+//		}
+
 		if(user.getGames() == null){
 			 user.setGames(new ArrayList<Game>());
 			 user.addGame(game);
@@ -126,10 +124,6 @@ public class ApiController {
 			newUserGame.setSkill_level(skill);
 			userGameDB.save(newUserGame);
 		}
-
-		//if (!userGameDB.findAll().stream().anyMatch(ug -> ug.getGame().equals(game) && ug.getUser().equals(user))){
-
-		//}
 		return user;
 	}
 

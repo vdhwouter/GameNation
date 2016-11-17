@@ -17,4 +17,5 @@ public class GameTest {
         assertEquals("some description", game.getDescription());
         assertEquals("./img/wuk.jpg", game.GetImagePath());
     }
+
 }
