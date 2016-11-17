@@ -1,7 +1,6 @@
-package GameNationBackEnd;
+package GameNationBackEnd.Repositories;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import GameNationBackEnd.Documents.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

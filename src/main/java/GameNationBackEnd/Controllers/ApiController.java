@@ -1,19 +1,18 @@
-package GameNationBackEnd;
+package GameNationBackEnd.Controllers;
 
 import java.util.*;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import GameNationBackEnd.Documents.Game;
+import GameNationBackEnd.Documents.User;
+import GameNationBackEnd.Documents.UserGame;
+import GameNationBackEnd.Repositories.GameRepository;
+import GameNationBackEnd.Repositories.UserGameRepository;
+import GameNationBackEnd.Repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 @RestController
 @RequestMapping("/api")

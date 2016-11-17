@@ -1,4 +1,4 @@
-package GameNationBackEnd;
+package GameNationBackEnd.Documents;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

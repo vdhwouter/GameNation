@@ -1,5 +1,6 @@
-package GameNationBackEnd;
+package GameNationBackEnd.Repositories;
 
+import GameNationBackEnd.Documents.Game;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
