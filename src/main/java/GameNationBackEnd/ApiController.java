@@ -37,14 +37,13 @@ public class ApiController {
 		return userDB.findAll();
 	}
 
-
 	// Get all info from database for one specified user (returned as user object)
 	@CrossOrigin
 	@RequestMapping(value = "/users/{user}", method = RequestMethod.GET)
 	public User GetUser(@PathVariable User user) {
 //		return userDB.findByUsername(username);
-        return user;
-    }
+		return user;
+	}
 
 	// Save one user to database (used in registration). Object is returned for testing purposes
 	@CrossOrigin
@@ -91,30 +90,46 @@ public class ApiController {
 		return userDB.findByUsername(username);
 	}
 
-	@CrossOrigin
-	@RequestMapping(value="/users/{game}/{user}/skill", method = RequestMethod.POST)
-	public User AddUserSkill(@PathVariable Game game, @PathVariable User user, @RequestParam int skill) {
-		UserGame newUserGame = new UserGame();
-		newUserGame.setUser(user);
-		newUserGame.setGame(game);
-		newUserGame.setSkill_level(skill);
-
-		userGameDB.save(newUserGame);
-		return userGameDB.findByUser(user); //return werkt niet :D
-	}
+//	@CrossOrigin
+//	@RequestMapping(value="/users/{user}/games/", method = RequestMethod.POST)
+//	public UserGame AddGameParamsToGameInUser(@PathVariable Game game, @PathVariable User user, @RequestParam(required = false) Integer skill) {
+//		UserGame newUserGame = new UserGame();
+//		newUserGame.setUser(user);
+//		newUserGame.setGame(game);
+//		newUserGame.setSkill_level(skill);
+//
+//		userGameDB.save(newUserGame);
+//		return userGameDB.findByUser(user); //return werkt niet stack overflowerror door skill_level :D
+//	}
 
 	@CrossOrigin
 	@RequestMapping(value="/users/{user}/games", method = RequestMethod.POST)
-	public User AddGameToUser(@PathVariable User user, @RequestParam Game game ){
+	public User AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill){
+		UserGame newUserGame = new UserGame();
+		if(skill == null) skill =0 ;
 		if(user.getGames() == null){
 			 user.setGames(new ArrayList<Game>());
 			 user.addGame(game);
 			 userDB.save(user);
+
+			 newUserGame.setUser(user);
+			 newUserGame.setGame(game);
+			 newUserGame.setSkill_level(skill);
+			 userGameDB.save(newUserGame);
 		}
 		else if (!user.getGames().stream().anyMatch(g -> g.getId().equals(game.getId()))) {
             user.addGame(game);
             userDB.save(user);
+
+			newUserGame.setUser(user);
+			newUserGame.setGame(game);
+			newUserGame.setSkill_level(skill);
+			userGameDB.save(newUserGame);
 		}
+
+		//if (!userGameDB.findAll().stream().anyMatch(ug -> ug.getGame().equals(game) && ug.getUser().equals(user))){
+
+		//}
 		return user;
 	}
 

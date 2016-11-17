@@ -1,5 +1,6 @@
 package GameNationBackEnd;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
@@ -12,7 +13,8 @@ public class UserGame {
 
     @DBRef
     private Game game;
-    private int skill_level;
+
+    private Integer skill_level;
 
     public UserGame(){
         user = new User();
@@ -21,11 +23,11 @@ public class UserGame {
 
     public User getUser(){return this.user; }
     public Game getGame(){return this.game; }
-    public int getSkill_level(){return  this.getSkill_level(); }
+    public int getSkill_level(){return  this.skill_level; }
 
     public void setUser(User user){ this.user=user; }
     public void setGame(Game game){ this.game=game; }
-    public void setSkill_level(int skill_level){this.skill_level = skill_level; }
+    public void setSkill_level(Integer skill_level){this.skill_level = skill_level; }
 
 
 }
