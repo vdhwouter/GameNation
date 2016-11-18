@@ -23,8 +23,8 @@ public class UserRepositoryTest extends TestCase {
     public void setUp() {
         User user1 = new User("lucas", "lucas@gmail.com", "wat? ja inderdaad!");
         User user2 = new User("matthias", "matthias@gmail.com", "mattie!");
-        User user3 = new User("wouter", "wouter1234@gmail.com", "superwow");
-        User user4 = new User("kjell", "tijs@gmail.com", "c <3");
+        User user3 = new User("wouter", "wouter@gmail.com", "superwow");
+        User user4 = new User("kjell", "kjell@gmail.com", "c <3");
         User user5 = new User("tijs", "tijs@gmail.com", "tijsje123");
 
         userRepo.save(user1);
