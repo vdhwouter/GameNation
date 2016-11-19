@@ -33,48 +33,38 @@ public class UsersController {
     // Get all info from database for one specified user (returned as user object)
     @RequestMapping(value = "/{user}", method = RequestMethod.GET)
     public User GetUser(@PathVariable User user) {
-//		return userDB.findByUsername(username);
         return user;
+    }
+
+
+    // Update all info for one specified user (returned as user object)
+    @RequestMapping(value = "/{user}", method = RequestMethod.POST)
+    public User UpdateUser(@PathVariable User user, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+        User userToEdit = user;
+        // Test if the new values aren't empty to prevent loss of data
+        if (!username.isEmpty()) { userToEdit.setUsername(username); }
+        if (!firstname.isEmpty()) { userToEdit.setFirstname(firstname); }
+        if (!lastname.isEmpty()) { userToEdit.setLastname(lastname); }
+        if (!teamspeak.isEmpty()) { userToEdit.setTeamspeak(teamspeak); }
+        if (!discord.isEmpty()) { userToEdit.setDiscord(discord); }
+        if (!description.isEmpty()) { userToEdit.setDescription(description); }
+
+        // Save edited user
+        userDB.save(userToEdit);
+
+        // Return user object for testing purposes
+        return userToEdit;
     }
 
     // Save one user to database (used in registration). Object is returned for testing purposes
     @RequestMapping(method = RequestMethod.POST)
     public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
 
-        // Get user that needs to be edited
-        User userToEdit = userDB.findByUsername(username);
-
-        if (userToEdit == null) {
+        // Test if username is already in use
+        if (userDB.findByUsername(username) == null) {
             userDB.save(new User(username, email, password));
         } else {
-            // Edit all fields independently to prevent data loss
-            if (!username.isEmpty()) {
-                userToEdit.setUsername(username);
-            }
-            if (!email.isEmpty()) {
-                userToEdit.setEmail(email);
-            }
-            if (!password.isEmpty()) {
-                userToEdit.setPassword(password);
-            }
-            if (!firstname.isEmpty()) {
-                userToEdit.setFirstname(firstname);
-            }
-            if (!lastname.isEmpty()) {
-                userToEdit.setLastname(lastname);
-            }
-            if (!teamspeak.isEmpty()) {
-                userToEdit.setTeamspeak(teamspeak);
-            }
-            if (!discord.isEmpty()) {
-                userToEdit.setDiscord(discord);
-            }
-            if (!description.isEmpty()) {
-                userToEdit.setDescription(description);
-            }
-
-            // Save edited user
-            userDB.save(userToEdit);
+            // TODO: FOUTMELDING RETURNEN DAT GEBRUIKERNAAM AL BESATAAT
         }
 
         // Return object for testing purposes
@@ -93,9 +83,8 @@ public class UsersController {
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
 
-        // AAN TIJS:
-        //  IMPLEMENTEER COMPARE METHOD voor game zoda ge rechtstreeks game compare kunt doen
-        //
+
+        // TODO (@TIJS):  IMPLEMENTEER COMPARE METHOD voor game zoda ge rechtstreeks game compare kunt doen
         if (!userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().getId().equals(game.getId()))) {
             newUserGame.setUser(user);
             newUserGame.setGame(game);
@@ -103,9 +92,7 @@ public class UsersController {
             userGameDB.save(newUserGame);
 
         } else {
-            // VERDER AAN TIJS:
-            // EN AAN KJELL:
-            // THROW ERROR ALS DE GAME AL BESTAAT
+            // TODO (@TIJS, @KJELL):THROW ERROR ALS DE GAME AL BESTAAT
         }
 
         return userGameDB.findByUser(user);
