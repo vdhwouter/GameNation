@@ -1,6 +1,6 @@
 @font-face {
-    font-family: WhitneyMedium;
-    src: url(../fonts/WhitneyMedium.ttf);
+	font-family: WhitneyMedium;
+	src: url(../fonts/WhitneyMedium.ttf);
 }
 
 
@@ -21,8 +21,8 @@ html{
 }
 
 .structural {
-    position: absolute;
-    left: -9999px;
+	position: absolute;
+	left: -9999px;
 }
 
 h2{
@@ -48,8 +48,8 @@ p{
 	border: 0px;
 }
 /* ===========================================
-   set button
-   =========================================== */
+set button
+=========================================== */
 #set{
 	padding: 0.75rem;
 	margin-top: -5rem;
@@ -57,8 +57,8 @@ p{
 }
 
 /* ===========================================
-   profile
-   =========================================== */
+profile
+=========================================== */
 #profileImage{
 	width: 18rem;
 }
@@ -83,13 +83,13 @@ p{
 	position: absolute;
 	width: 5rem;
 	top: 21.5rem;
-    left: 16rem;
+	left: 16rem;
 }
 
 #side p{
 	text-align: center;
-    margin-top: 0.75rem;
-    font-size: 3rem;
+	margin-top: 0.75rem;
+	font-size: 3rem;
 }
 
 #submit{
@@ -97,16 +97,16 @@ p{
 }
 
 /* ===========================================
-   Data
-   =========================================== */
+Data
+=========================================== */
 .title{
 	color: #db5f24;
 	margin-top: 1rem;
 }
 
 /* ===========================================
-   Games
-   =========================================== */
+Games
+=========================================== */
 
 #games{
 	float: left;
@@ -150,8 +150,8 @@ p{
 
 
 /* ===========================================
-   Discord steam
-   =========================================== */
+Discord steam
+=========================================== */
 #discordSteam{
 	float: left;
 	width: 48%;
@@ -167,8 +167,8 @@ p{
 
 
 /* ===========================================
-   Description
-   =========================================== */
+Description
+=========================================== */
 #description{
 	float: left;
 	width: 48%;
@@ -181,8 +181,8 @@ p{
 
 
 /* ===========================================
-   Form
-   =========================================== */
+Form
+=========================================== */
 form{
 	width: 100%;
 	margin-top: -1rem;
@@ -238,4 +238,32 @@ textarea {
 
 input:focus{
 	border: 0px;
+}
+
+
+
+#editoverlay {
+	width: 9rem;
+	margin: 4.5rem;
+	margin-top: -18rem;
+	display: none;
+}
+
+#image {
+	display: none;
+}
+
+
+
+
+#profileImage {
+	background-image: url('../img/avatar-member.jpg');
+	background-size: 100% 100%;
+	width: 18rem;
+	height: 18rem;
+}
+
+
+#profileImage:hover {
+	background-image: url('../img/pencil.png'), url('../img/avatar-member.jpg');
 }

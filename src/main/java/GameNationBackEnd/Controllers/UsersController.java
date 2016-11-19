@@ -5,10 +5,18 @@ import GameNationBackEnd.Documents.User;
 import GameNationBackEnd.Documents.UserGame;
 import GameNationBackEnd.Repositories.UserGameRepository;
 import GameNationBackEnd.Repositories.UserRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+
 
 /**
  * Created by lucas on 17/11/2016.
@@ -37,10 +45,39 @@ public class UsersController {
     }
 
 
+
+
+
+
+
     // Update all info for one specified user (returned as user object)
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public User UpdateUser(@PathVariable User user, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+    public User UpdateUser(@PathVariable User user, @RequestParam(value = "image", required = false) MultipartFile image, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+
+
+
+
+//Poging voor fileupload
+//        if (!image.isEmpty()) {
+//            FileOutputStream fos = null;
+//            try {
+//                fos = new FileOutputStream("abc.jpg");
+//                fos.write(image.getBytes());
+//                fos.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+
+
+
+
+
+
         User userToEdit = user;
+
         // Test if the new values aren't empty to prevent loss of data
         if (!username.isEmpty()) { userToEdit.setUsername(username); }
         if (!firstname.isEmpty()) { userToEdit.setFirstname(firstname); }
@@ -58,7 +95,7 @@ public class UsersController {
 
     // Save one user to database (used in registration). Object is returned for testing purposes
     @RequestMapping(method = RequestMethod.POST)
-    public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+    public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
 
         // Test if username is already in use
         if (userDB.findByUsername(username) == null) {
@@ -90,7 +127,6 @@ public class UsersController {
             newUserGame.setGame(game);
             newUserGame.setSkill_level(skill);
             userGameDB.save(newUserGame);
-
         } else {
             // TODO (@TIJS, @KJELL):THROW ERROR ALS DE GAME AL BESTAAT
         }
