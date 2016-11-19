@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Profile settings</title>
-    <link rel="stylesheet" href="css/stylesProfile.css" />
-
+	<link rel="stylesheet" href="css/stylesProfile.css" />
+	<link rel="stylesheet" href="css/remodal.css">
+	<link rel="stylesheet" href="css/remodal-default-theme.css">
 </head>
 <body>
 
@@ -52,6 +53,51 @@
 	APICALL();
 
 </script>
+
+
+<script>
+	var APICALL = function(){
+		var request = new XMLHttpRequest();
+		request.addEventListener('load',listen)
+		request.open("get", 'http://localhost:8080/api/games');
+		request.send();
+	};
+
+	var listen = function(){
+		var data = JSON.parse(this.responseText)
+
+		var ul = document.createElement("ul");
+		ul.className = "live-search-list";
+		document.getElementById('addGames').appendChild(ul);
+
+		for(key in data) {
+			if(data.hasOwnProperty(key)) {
+				var value = data[key];
+
+				var li = document.createElement("li");
+				li.className = "file";
+				li.setAttribute("data-search-term", value.name)
+
+				var img = document.createElement("img");
+				img.setAttribute("src", "img/games/" + value.imageName + ".jpg");
+				img.setAttribute("alt", value.name);
+				img.setAttribute("title", value.name);
+				img.className += "addGamesImg";
+
+				var p = document.createElement("p");
+				p.innerHTML = value.name;
+
+				li.appendChild(img);
+				li.appendChild(p);
+				ul.appendChild(li);
+			}
+		}
+	};
+
+	APICALL();
+
+</script>
+
 
 <div class="wrapper">
 <!-- content -->
@@ -102,71 +148,107 @@
     	<ul>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
     			<a href="#">
-    				<img class="game" src="img/payday.jpg"/>
+    				<img class="game" src="img/games/payday.jpg"/>
     				<p>payday</p>
     			</a>
     		</li>
     		<li>
-    			<a href="#">
+    			<a href="#AddNewGameModal">
     				<img class="game" id="addGame" src="img/addGame.png"/>
     				<p>New game</p>
     			</a>
     		</li>
     	</ul>
     </div>
+
+
+
+	<!-- model dialog add games -->
+	<div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: false">
+		<button data-remodal-action="close" class="remodal-close"></button>
+		<h1>Add new Game</h1>
+		<div id="searchAddGames">
+			<form action="" method="post" role="form">
+				<dl>
+					<dt style="display: none"><label>Zoeken</label></dt>
+					<dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
+				</dl>
+			</form>
+		</div>
+
+		<div class="grid" id="addGames">
+
+		</div>
+
+		<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+		<button data-remodal-action="confirm" class="remodal-confirm">Add</button>
+	</div>
+
 </div>
+
+
+
+
 
 <script>
 	document.getElementById('set').href += findGetParameter('username')
 </script>
+
+
+
+<script src="js/jquery-1.12.4.js"></script>
+
+<script src="js/remodal.min.js"></script>
+<script src="js/settings.js"></script>
+
 
 </body>
 </html>

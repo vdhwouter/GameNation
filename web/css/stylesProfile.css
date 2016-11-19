@@ -188,19 +188,19 @@ form{
 	margin-top: -1rem;
 }
 
-dl{
+/*dl{
 	width: 45%;
-}
-
+}*/
+/*
 dt,dd{
 	float: left;
-}
+}*/
 dt{
 	width: 15rem;
 }
 
 dd{
-	width: 222%;
+	/*width: 222%;*/
 	margin-left: 0rem;
 }
 
@@ -215,7 +215,7 @@ input, textarea {
 	color: white;
 }
 
-dd input {
+#profileData > dd input {
 	width: 97.7%;
 	margin-top: 0.5rem;
 }
@@ -225,12 +225,12 @@ label {
 }
 
 input {
-	width: 100%;
+	width: 97%;
 	margin-bottom: 1rem;
 }
 
 textarea {
-	width: 96%;
+	width: 97%;
 	height: 5.05rem;
 }
 
@@ -238,4 +238,95 @@ textarea {
 
 input:focus{
 	border: 0px;
+}*/
+
+
+/* ===========================================
+   Model add games
+   =========================================== */
+.remodal h1 {
 }
+
+#addGames {
+    overflow: hidden;
+    margin-bottom: 30px;
+    overflow-y: auto;
+    height: 380px;
+
+
+}
+
+
+#addGames ul {
+    margin-left: -40px;
+    margin-top: -5px;
+}
+
+#addGames li p {
+    color: #db5f24;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#addGames li {
+    width: 142px;
+    display: block;
+    float: left;
+    margin: 5px;
+}
+
+#addGames li img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+    margin-top: 3px;
+}
+
+#addGames li img:hover {
+    outline: #999999 solid 3px;
+}
+
+#addGames li img:active{
+    outline: #999999 solid 3px;
+}
+
+#addGames > ul > li > img.active {
+    outline: #999999 solid 3px;
+}
+
+#searchAddGames {
+    overflow: hidden;
+}
+
+#searchAddGames dt {
+    width: 10%;
+    float: left;
+}
+
+#searchAddGames input {
+    background-color: #4a4c51;
+}
+
+#searchAddGames dd {
+    margin-left:4px;
+    width: 100%;
+    float: left;
+}
+
+::-webkit-scrollbar {
+    width:  5px;
+    height: 5px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #db5f24;
+}
+
+::-webkit-scrollbar-track {
+    background: #4a4c51;
+}
+
+
+
