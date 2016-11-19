@@ -2,190 +2,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<<<<<<< HEAD
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>Profile settings</title>
-	<link rel="stylesheet" href="css/stylesProfile.css" />
-
-</head>
-<body>
-
-	<header>
-
-	</header>
-
-
-
-	<script type="text/javascript">
-
-		function findGetParameter(parameterName) {
-			var result = null,
-			tmp = [];
-			location.search
-			.substr(1)
-			.split("&")
-			.forEach(function (item) {
-				tmp = item.split("=");
-				if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-			});
-			return result;
-		}
-
-		var APICALL = function(){
-			var request = new XMLHttpRequest();
-			request.addEventListener('load',listen)
-			request.open("get", 'http://localhost:8080/api/users/' + findGetParameter('username'), true);
-			request.send();
-		};
-
-		var listen = function(){
-			document.getElementById('username').value = JSON.parse(this.responseText).username;
-			document.getElementById('email').value = JSON.parse(this.responseText).email;
-			document.getElementById('firstname').value = JSON.parse(this.responseText).firstname;
-			document.getElementById('lastname').value = JSON.parse(this.responseText).lastname;
-			document.getElementById('teamspeakAddr').value = JSON.parse(this.responseText).teamspeak;
-			document.getElementById('DiscordAddr').value = JSON.parse(this.responseText).discord;
-			document.getElementById('descriptionText').value = JSON.parse(this.responseText).description;
-		};
-
-		APICALL();
-
-	</script>
-
-
-
-
-
-	<div class="wrapper">
-		<!-- content -->
-		<h2>Profile</h2>
-		<a href="profile.html?username=" class="btn" id="set">Return</a>
-		<div id="side">
-			<form action="http://localhost:8080/users" method="POST" role="form" id="formfrofile" enctype="multipart/form-data">
-				<div id="profileImage" ></div>
-				<input type="file" name="image" id="image" autocomplete="off"/>
-				<input type="submit" name="update-submit" id="submit-photo" class="btn" value="Save changes" />
-			</form>
-		</div>
-
-			<div id="profileData">
-				<form action="http://localhost:8080/users" method="post" role="form" id="formdata">
-					<dl>
-						<dt><label>First Name</label></dt>
-						<dd><input type="text" name="firstname" id="firstname" autocomplete="off"/></dd>
-
-						<dt><label>Last name</label></dt>
-						<dd><input type="text" name="lastname" id="lastname"  autocomplete="off" /></dd>
-
-						<dt><label>Username</label></dt>
-						<dd><input type="text" name="username" id="username"  autocomplete="off" value="" /></dd>
-
-						<dt><label>E-mail</label></dt>
-						<dd><input type="text" name="email" id="email" autocomplete="off" value=""/></dd>
-
-						<dt><label>Password</label></dt>
-						<dd><input type="password" name="password" id="password" autocomplete="off" /></dd>
-
-						<dt><label>Confirmation</label></dt>
-						<dd><input type="password" name="confirmpass" id="confirmpass" autocomplete="off" /></dd>
-
-						<dt><label>Teamspeak-Address</label></dt>
-						<dd><input type="text" name="teamspeak" id="teamspeakAddr" autocomplete="off"/></dd>
-
-						<dt><label>Discord-Address</label></dt>
-						<dd><input type="text" name="discord" id="DiscordAddr"  autocomplete="off" /></dd>
-
-						<dt><label>Description</label></dt>
-						<dd><textarea name="description" id="descriptionText" rows="10" value=""></textarea></dd>
-
-						<dd><input type="submit" name="update-submit" class="btn" id="submit" value="Save" /></dd>
-					</dl>
-				</form>
-			</div>
-
-			<div id="games">
-				<h3>Games</h3>
-				<ul>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" src="img/payday.jpg"/>
-							<p>payday</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img class="game" id="addGame" src="img/addGame.png"/>
-							<p>New game</p>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<script>
-			document.getElementById('set').href += findGetParameter('username')
-		</script>
-
-		<script type="text/javascript">
-			document.getElementById('profileImage').addEventListener('click', function() {
-				console.log('anchor');
-				document.getElementById("image").click(); 
-			});
-		</script>
-
-	</body>
-	</html>
-=======
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -240,45 +56,7 @@
 
 
 <script>
-	var APICALL = function(){
-		var request = new XMLHttpRequest();
-		request.addEventListener('load',listen)
-		request.open("get", 'http://localhost:8080/api/games');
-		request.send();
-	};
 
-	var listen = function(){
-		var data = JSON.parse(this.responseText)
-
-		var ul = document.createElement("ul");
-		ul.className = "live-search-list";
-		document.getElementById('addGames').appendChild(ul);
-
-		for(key in data) {
-			if(data.hasOwnProperty(key)) {
-				var value = data[key];
-
-				var li = document.createElement("li");
-				li.className = "file";
-				li.setAttribute("data-search-term", value.name)
-
-				var img = document.createElement("img");
-				img.setAttribute("src", "img/games/" + value.imageName + ".jpg");
-				img.setAttribute("alt", value.name);
-				img.setAttribute("title", value.name);
-				img.className += "addGamesImg";
-
-				var p = document.createElement("p");
-				p.innerHTML = value.name;
-
-				li.appendChild(img);
-				li.appendChild(p);
-				ul.appendChild(li);
-			}
-		}
-	};
-
-	APICALL();
 
 </script>
 
@@ -331,59 +109,39 @@
     	<h3>Games</h3>
     	<ul>
     		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
+				<a href="#EditGameModal" onclick="editGame(this)">
+					<p style="display: none">5830533b9e783a58e84d6a80</p>
+					<img class="game" src="img/games/payday.jpg"/>
+					<p>payday</p>
+					<p>Skill level: 5</p>
+				</a>
     		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
-    		<li>
-    			<a href="#">
-    				<img class="game" src="img/games/payday.jpg"/>
-    				<p>payday</p>
-    			</a>
-    		</li>
+			<li>
+				<a href="#EditGameModal" onclick="editGame(this)">
+					<p style="display: none">5830533b9e783a58e84d6a80</p>
+					<img class="game" src="img/games/payday.jpg"/>
+					<p>blok</p>
+					<p>Skill level: 4</p>
+				</a>
+			</li>
+			<li>
+				<a href="#EditGameModal" onclick="editGame(this)">
+					<p style="display: none">5830533b9e783a58e84d6a80</p>
+					<img class="game" src="img/games/payday.jpg"/>
+					<p>payday</p>
+					<p>Skill level: 3</p>
+				</a>
+			</li>
+			<li>
+				<a href="#EditGameModal" onclick="editGame(this)">
+					<p style="display: none">5830533b9e783a58e84d6a80</p>
+					<img class="game" src="img/games/payday.jpg"/>
+					<p>payday</p>
+					<p>Skill level: 2</p>
+				</a>
+			</li>
+
+
     		<li>
     			<a href="#AddNewGameModal">
     				<img class="game" id="addGame" src="img/addGame.png"/>
@@ -408,12 +166,35 @@
 			</form>
 		</div>
 
-		<div class="grid" id="addGames">
+		<div class="grid" id="addGames"></div>
 
+		<form action="http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games/payday">
+			<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+			<button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
+		</form>
+	</div>
+
+
+
+
+	<!-- model dialog add games -->
+	<div class="remodal" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: false">
+		<button data-remodal-action="close" class="remodal-close"></button>
+		<h1 id="editGameTitle"></h1>
+		<div id="editGame">
+			<form action="">
+				<dl>
+					<dt style="display: none"><label>Id</label></dt>
+					<dd style="display: none"><input type="text" name="id" id="id" value="5830533b9e783a58e84d6a80" autocomplete="off"/></dd>
+
+					<dt><label>Skillset</label></dt>
+					<dd><input id="skillset" type="number" value="0"/></dd>
+
+					<dd id="modelSkilEditCansel"><input data-remodal-action="cancel"  type="submit" name="update-submit" class="remodal-cancel" value="Cansel" /></dd>
+					<dd id="modelSkilEditEdit"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-confirm" value="Edit" /></dd>
+				</dl>
+			</form>
 		</div>
-
-		<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
-		<button data-remodal-action="confirm" class="remodal-confirm">Add</button>
 	</div>
 
 </div>
@@ -427,6 +208,14 @@
 </script>
 
 
+<script type="text/javascript">
+	document.getElementById('profileImage').addEventListener('click', function() {
+		console.log('anchor');
+		document.getElementById("image").click();
+	});
+</script>
+
+
 
 <script src="js/jquery-1.12.4.js"></script>
 
@@ -436,4 +225,3 @@
 
 </body>
 </html>
->>>>>>> 0292aa5b531b87cf5db0730d26fd7e5d48a05151

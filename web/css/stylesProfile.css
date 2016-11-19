@@ -1,6 +1,6 @@
 @font-face {
-	font-family: WhitneyMedium;
-	src: url(../fonts/WhitneyMedium.ttf);
+    font-family: WhitneyMedium;
+    src: url(../fonts/WhitneyMedium.ttf);
 }
 
 
@@ -21,8 +21,8 @@ html{
 }
 
 .structural {
-	position: absolute;
-	left: -9999px;
+    position: absolute;
+    left: -9999px;
 }
 
 h2{
@@ -48,8 +48,8 @@ p{
 	border: 0px;
 }
 /* ===========================================
-set button
-=========================================== */
+   set button
+   =========================================== */
 #set{
 	padding: 0.75rem;
 	margin-top: -5rem;
@@ -57,8 +57,8 @@ set button
 }
 
 /* ===========================================
-profile
-=========================================== */
+   profile
+   =========================================== */
 #profileImage{
 	width: 18rem;
 }
@@ -83,13 +83,13 @@ profile
 	position: absolute;
 	width: 5rem;
 	top: 21.5rem;
-	left: 16rem;
+    left: 16rem;
 }
 
 #side p{
 	text-align: center;
-	margin-top: 0.75rem;
-	font-size: 3rem;
+    margin-top: 0.75rem;
+    font-size: 3rem;
 }
 
 #submit{
@@ -97,16 +97,16 @@ profile
 }
 
 /* ===========================================
-Data
-=========================================== */
+   Data
+   =========================================== */
 .title{
 	color: #db5f24;
 	margin-top: 1rem;
 }
 
 /* ===========================================
-Games
-=========================================== */
+   Games
+   =========================================== */
 
 #games{
 	float: left;
@@ -150,8 +150,8 @@ Games
 
 
 /* ===========================================
-Discord steam
-=========================================== */
+   Discord steam
+   =========================================== */
 #discordSteam{
 	float: left;
 	width: 48%;
@@ -167,8 +167,8 @@ Discord steam
 
 
 /* ===========================================
-Description
-=========================================== */
+   Description
+   =========================================== */
 #description{
 	float: left;
 	width: 48%;
@@ -181,26 +181,19 @@ Description
 
 
 /* ===========================================
-Form
-=========================================== */
+   Form
+   =========================================== */
 form{
 	width: 100%;
 	margin-top: -1rem;
 }
 
-/*dl{
-	width: 45%;
-}*/
-/*
-dt,dd{
-	float: left;
-}*/
 dt{
 	width: 15rem;
+    margin-bottom: 5px
 }
 
 dd{
-	/*width: 222%;*/
 	margin-left: 0rem;
 }
 
@@ -234,41 +227,8 @@ textarea {
 	height: 5.05rem;
 }
 
-
-
 input:focus{
 	border: 0px;
-<<<<<<< HEAD
-}
-
-
-
-#editoverlay {
-	width: 9rem;
-	margin: 4.5rem;
-	margin-top: -18rem;
-	display: none;
-}
-
-#image {
-	display: none;
-}
-
-
-
-
-#profileImage {
-	background-image: url('../img/avatar-member.jpg');
-	background-size: 100% 100%;
-	width: 18rem;
-	height: 18rem;
-}
-
-
-#profileImage:hover {
-	background-image: url('../img/pencil.png'), url('../img/avatar-member.jpg');
-}
-=======
 }*/
 
 
@@ -283,10 +243,7 @@ input:focus{
     margin-bottom: 30px;
     overflow-y: auto;
     height: 380px;
-
-
 }
-
 
 #addGames ul {
     margin-left: -40px;
@@ -360,5 +317,33 @@ input:focus{
 }
 
 
+/* ===========================================
+   Model edit game
+   =========================================== */
+#modelSkilEditCansel {
+    float: left;
+    min-width: 110px;
+    padding: 12px 0;
+}
 
->>>>>>> 0292aa5b531b87cf5db0730d26fd7e5d48a05151
+#modelSkilEditEdit {
+    float: right;
+    min-width: 110px;
+    padding: 12px 0;
+}
+
+#modelSkilEditCansel .remodal-cancel, #modelSkilEditEdit .remodal-confirm {
+    padding-bottom: 30px;
+}
+
+#editGame label {
+    margin-left: -195px;
+}
+
+#editGame dt {
+    margin-bottom: 5px;
+}
+
+#skillset {
+    background-color: #4a4c51;
+}
