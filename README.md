@@ -4,6 +4,5 @@
 
 
 #GameNation
-_A GameNation project_
 
 [check out the wiki](https://github.com/vdhwouter/GameNation/wiki) for more info 
