@@ -21,6 +21,8 @@ public class UserRepositoryTest extends TestCase {
 
     @Before
     public void setUp() {
+        userRepo.deleteAll();
+
         User user1 = new User("lucas", "lucas@gmail.com", "wat? ja inderdaad!");
         User user2 = new User("matthias", "matthias@gmail.com", "mattie!");
         User user3 = new User("wouter", "wouter@gmail.com", "superwow");
