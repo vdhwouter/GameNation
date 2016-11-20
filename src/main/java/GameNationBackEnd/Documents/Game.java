@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * Created by tijs on 16/11/2016.
  */
 @Document
-public class Game {
+public class Game implements Comparable<Game>{
     @Id
     private String _id;
 
@@ -40,4 +40,17 @@ public class Game {
         return description;
     }
     public String getImageName(){ return imageName; }
+
+
+    public boolean equals(Game g){
+        return this._id == g._id && this.name == g.name;
+    }
+
+    @Override
+    public int compareTo(Game g){
+        return this.name.compareTo(g.name);
+    }
+
+
+
 }

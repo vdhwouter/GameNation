@@ -9,14 +9,13 @@ import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
+import GameNationBackEnd.Exceptions.*;
 
 /**
  * Created by lucas on 17/11/2016.
@@ -24,7 +23,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/users")
-public class UsersController {
+public class UsersController{
 
     @Autowired
     private UserRepository userDB;
@@ -44,18 +43,9 @@ public class UsersController {
         return user;
     }
 
-
-
-
-
-
-
     // Update all info for one specified user (returned as user object)
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
     public User UpdateUser(@PathVariable User user, @RequestParam(value = "image", required = false) MultipartFile image, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
-
-
-
 
 //Poging voor fileupload
 //        if (!image.isEmpty()) {
@@ -68,12 +58,6 @@ public class UsersController {
 //                e.printStackTrace();
 //            }
 //        }
-
-
-
-
-
-
 
 
         User userToEdit = user;
@@ -95,13 +79,14 @@ public class UsersController {
 
     // Save one user to database (used in registration). Object is returned for testing purposes
     @RequestMapping(method = RequestMethod.POST)
-    public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+    public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) throws UserAlreadyExistsException {
 
         // Test if username is already in use
         if (userDB.findByUsername(username) == null) {
             userDB.save(new User(username, email, password));
         } else {
-            // TODO: FOUTMELDING RETURNEN DAT GEBRUIKERNAAM AL BESATAAT
+            User user = userDB.findByUsername(username);
+            throw new UserAlreadyExistsException(user.getId());
         }
 
         // Return object for testing purposes
@@ -114,21 +99,16 @@ public class UsersController {
     }
 
     @RequestMapping(value="/{user}/games", method = RequestMethod.POST)
-    public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill) {
-        UserGame newUserGame = new UserGame();
+public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
 
-
-        // TODO (@TIJS):  IMPLEMENTEER COMPARE METHOD voor game zoda ge rechtstreeks game compare kunt doen
-        if (!userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().getId().equals(game.getId()))) {
-            newUserGame.setUser(user);
-            newUserGame.setGame(game);
-            newUserGame.setSkill_level(skill);
+        if (userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().equals(game))) {
+            UserGame newUserGame = new UserGame(user, game, skill);
             userGameDB.save(newUserGame);
         } else {
-            // TODO (@TIJS, @KJELL):THROW ERROR ALS DE GAME AL BESTAAT
+            throw new GameAlreadyExistsException(game.getId());
         }
 
         return userGameDB.findByUser(user);

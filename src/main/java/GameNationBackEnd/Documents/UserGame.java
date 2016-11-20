@@ -22,6 +22,12 @@ public class UserGame {
         game = new Game();
     }
 
+    public UserGame(User user, Game game, Integer skill_level){
+        this.user = user;
+        this.game = game;
+        this.skill_level = skill_level;
+    }
+
     public User getUser(){return this.user; }
     public Game getGame(){return this.game; }
     public int getSkill_level(){return  this.skill_level; }
