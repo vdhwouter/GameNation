@@ -1,70 +1,7 @@
-
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Profile settings</title>
-	<link rel="stylesheet" href="css/stylesProfile.css" />
-	<link rel="stylesheet" href="css/remodal.css">
-	<link rel="stylesheet" href="css/remodal-default-theme.css">
-</head>
-<body>
-
-<header>
-
-</header>
-
-
-
-<script type="text/javascript">
-
-	function findGetParameter(parameterName) {
-		var result = null,
-				tmp = [];
-		location.search
-				.substr(1)
-				.split("&")
-				.forEach(function (item) {
-					tmp = item.split("=");
-					if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-				});
-		return result;
-	}
-
-	var APICALL = function(){
-		var request = new XMLHttpRequest();
-		request.addEventListener('load',listen)
-		request.open("get", 'http://localhost:8080/api/users/' + findGetParameter('username'), true);
-		request.send();
-	};
-
-	var listen = function(){
-		document.getElementById('username').value = JSON.parse(this.responseText).username;
-		document.getElementById('email').value = JSON.parse(this.responseText).email;
-		document.getElementById('firstname').value = JSON.parse(this.responseText).firstname;
-		document.getElementById('lastname').value = JSON.parse(this.responseText).lastname;
-		document.getElementById('teamspeakAddr').value = JSON.parse(this.responseText).teamspeak;
-		document.getElementById('DiscordAddr').value = JSON.parse(this.responseText).discord;
-		document.getElementById('descriptionText').value = JSON.parse(this.responseText).description;
-	};
-
-	APICALL();
-
-</script>
-
-
-<script>
-
-
-</script>
-
-
 <div class="wrapper">
 <!-- content -->
     <h2>Profile</h2>
-    <a href="profile.html?username=" class="btn" id="set">Return</a>
+    <a href="" class="btn" id="set">Return</a>
     <div id="side">
     	<img id="profileImage" src="img/avatar-member.jpg"/>
     	<input type="submit" name="update-submit" id="submit-photo" class="btn" value="Edit photo" />
@@ -151,8 +88,6 @@
     	</ul>
     </div>
 
-
-
 	<!-- model dialog add games -->
 	<div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: false">
 		<button data-remodal-action="close" class="remodal-close"></button>
@@ -173,9 +108,6 @@
 			<button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
 		</form>
 	</div>
-
-
-
 
 	<!-- model dialog add games -->
 	<div class="remodal" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: false">
@@ -199,15 +131,6 @@
 
 </div>
 
-
-
-
-
-<script>
-	document.getElementById('set').href += findGetParameter('username')
-</script>
-
-
 <script type="text/javascript">
 	document.getElementById('profileImage').addEventListener('click', function() {
 		console.log('anchor');
@@ -215,13 +138,5 @@
 	});
 </script>
 
-
-
-<script src="js/jquery-1.12.4.js"></script>
-
 <script src="js/remodal.min.js"></script>
 <script src="js/settings.js"></script>
-
-
-</body>
-</html>

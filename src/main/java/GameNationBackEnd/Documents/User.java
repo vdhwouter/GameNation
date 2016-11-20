@@ -14,10 +14,10 @@ public class User{
 	@Id
 	private String _id;
 
-	@Indexed(unique = true)
+//	@Indexed(unique = true)
 	private String email;
 
-	@Indexed(unique = true)
+//	@Indexed(unique = true)
 	private String username;
 
 	private String password;
