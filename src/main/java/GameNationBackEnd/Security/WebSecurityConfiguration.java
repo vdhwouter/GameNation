@@ -10,6 +10,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by lucas on 19/11/2016.
@@ -22,7 +24,11 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
+        auth
+            .userDetailsService(userDetailsService())
+            // TODO: enable password encoding
+//            .passwordEncoder(new BCryptPasswordEncoder())
+            ;
     }
 
     @Bean
