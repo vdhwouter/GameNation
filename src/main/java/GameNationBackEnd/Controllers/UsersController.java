@@ -7,6 +7,7 @@ import GameNationBackEnd.Repositories.UserGameRepository;
 import GameNationBackEnd.Repositories.UserRepository;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import GameNationBackEnd.Exceptions.*;
 
@@ -112,5 +114,12 @@ public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam Game 
         }
 
         return userGameDB.findByUser(user);
+    }
+
+    @RequestMapping(value="/me", method = RequestMethod.GET)
+    public User GetAuthenticatedUser(Principal principal) {
+        // principal contains authenticated user name
+        User user = userDB.findByUsername(principal.getName());
+        return user;
     }
 }
