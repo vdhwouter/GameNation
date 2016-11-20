@@ -92,8 +92,16 @@ p{
     font-size: 3rem;
 }
 
-#submit{
+#updateSubmit{
 	width: 5rem;
+	padding: 12px 0;
+	padding-bottom: 30px;
+	margin-right: -9px;
+    margin-top: 10px;
+}
+
+#submit-photo {
+    width: 100%;
 }
 
 /* ===========================================
@@ -146,6 +154,11 @@ p{
 
 #games a{
 	text-decoration: none;
+}
+
+
+#games img:hover {
+    outline: #999999 solid 3px;
 }
 
 
@@ -218,12 +231,12 @@ label {
 }
 
 input {
-	width: 97%;
+	width: 98.5%;
 	margin-bottom: 1rem;
 }
 
 textarea {
-	width: 97%;
+	width: 98.5%;
 	height: 5.05rem;
 }
 
@@ -346,4 +359,5 @@ input:focus{
 
 #skillset {
     background-color: #4a4c51;
+    width: 97.5%;
 }
