@@ -83,6 +83,10 @@ public class UsersController{
         return userGameDB.findByUser(user);
     }
 
+
+    //two functions
+    //1. add a list of games to a user with default skill 0
+    //2. edit skill of a single game bij giving requestParam skill
     @RequestMapping(value="/{user}/games", method = RequestMethod.POST)
     public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 
@@ -93,12 +97,13 @@ public class UsersController{
             if (!userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().equals(game))) {
                 UserGame newUserGame = new UserGame(user, game, skill);
                 userGameDB.save(newUserGame);
-            /*} else if(userGameDB.findByUserAndGame(user,game).getSkill_level() != skill){
-                UserGame editskill = userGameDB.findByUserAndGame(user,game);
-                editskill.setSkill_level(skill);
-                userGameDB.save(editskill);*/
-            }else{
-                throw new GameAlreadyExistsException(game.getId());
+            } else {
+                UserGame editUserGame = userGameDB.findByUserAndGame(user,game);
+                if(editUserGame.getSkill_level() != skill){
+                    editUserGame.setSkill_level(skill);
+                    userGameDB.save(editUserGame);
+                }
+                else throw new GameAlreadyExistsException(game.getId());
             }
         }
 
