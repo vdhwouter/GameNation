@@ -17,6 +17,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeRequests()
                 .antMatchers(HttpMethod.GET).permitAll()
                 .antMatchers("/api/users").permitAll()
