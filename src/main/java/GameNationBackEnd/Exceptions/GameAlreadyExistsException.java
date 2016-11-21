@@ -5,6 +5,6 @@ package GameNationBackEnd.Exceptions;
  */
 public class GameAlreadyExistsException extends RuntimeException {
     public GameAlreadyExistsException(String gameId) {
-        super("game '" + gameId + "already exists'");
+        super("game '" + gameId + " already exists'");
     }
 }

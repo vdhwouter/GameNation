@@ -5,6 +5,6 @@ package GameNationBackEnd.Exceptions;
  */
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(String userId) {
-        super("user '" + userId + "already exists'");
+        super("user '" + userId + " already exists'");
     }
 }
