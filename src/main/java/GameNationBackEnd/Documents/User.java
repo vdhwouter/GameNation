@@ -1,5 +1,6 @@
 package GameNationBackEnd.Documents;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;

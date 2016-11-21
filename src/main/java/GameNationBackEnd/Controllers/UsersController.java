@@ -47,36 +47,21 @@ public class UsersController{
 
     // Update all info for one specified user (returned as user object)
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public User UpdateUser(@PathVariable User user, @RequestParam(value = "image", required = false) MultipartFile image, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
-
-//Poging voor fileupload
-//        if (!image.isEmpty()) {
-//            FileOutputStream fos = null;
-//            try {
-//                fos = new FileOutputStream("abc.jpg");
-//                fos.write(image.getBytes());
-//                fos.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-
-        User userToEdit = user;
+    public User UpdateUser(@PathVariable User user, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
 
         // Test if the new values aren't empty to prevent loss of data
-        if (!username.isEmpty()) { userToEdit.setUsername(username); }
-        if (!firstname.isEmpty()) { userToEdit.setFirstname(firstname); }
-        if (!lastname.isEmpty()) { userToEdit.setLastname(lastname); }
-        if (!teamspeak.isEmpty()) { userToEdit.setTeamspeak(teamspeak); }
-        if (!discord.isEmpty()) { userToEdit.setDiscord(discord); }
-        if (!description.isEmpty()) { userToEdit.setDescription(description); }
+        if (!username.isEmpty()) { user.setUsername(username); }
+        if (!firstname.isEmpty()) { user.setFirstname(firstname); }
+        if (!lastname.isEmpty()) { user.setLastname(lastname); }
+        if (!teamspeak.isEmpty()) { user.setTeamspeak(teamspeak); }
+        if (!discord.isEmpty()) { user.setDiscord(discord); }
+        if (!description.isEmpty()) { user.setDescription(description); }
 
         // Save edited user
-        userDB.save(userToEdit);
+        userDB.save(user);
 
         // Return user object for testing purposes
-        return userToEdit;
+        return user;
     }
 
     // Save one user to database (used in registration). Object is returned for testing purposes
