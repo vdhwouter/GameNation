@@ -101,16 +101,18 @@ public class UsersController{
     }
 
     @RequestMapping(value="/{user}/games", method = RequestMethod.POST)
-public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam Game game, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
+    public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam Game[] games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
 
-        if (userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().equals(game))) {
-            UserGame newUserGame = new UserGame(user, game, skill);
-            userGameDB.save(newUserGame);
-        } else {
-            throw new GameAlreadyExistsException(game.getId());
+        for(Game game: games){
+            if (userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().equals(game))) {
+                UserGame newUserGame = new UserGame(user, game, skill);
+                userGameDB.save(newUserGame);
+            } else {
+                throw new GameAlreadyExistsException(game.getId());
+            }
         }
 
         return userGameDB.findByUser(user);
