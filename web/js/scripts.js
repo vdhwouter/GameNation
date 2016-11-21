@@ -49,6 +49,6 @@ $(document).ready(function() {
 		});
 	}, 1);
 
-	crossroads.parse(document.location.pathname.replace('/gamenation', ''));
+	crossroads.parse(document.location.pathname.replace('/GameNation/web', ''));
 });
 
