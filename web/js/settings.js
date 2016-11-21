@@ -87,6 +87,7 @@ $(document).ready(function() {
     }
 
 
+
     // by click on the add button
     $('#addConfirm').click(function(){
         if (addedGames.length == 0) {
@@ -94,6 +95,16 @@ $(document).ready(function() {
         }
         else {
             console.log(addedGames);
+            $.ajax({
+                type: 'POST',
+                url: 'localhost:8080/api/users/58331d58d28b93294860ec20/games',
+                headers: {
+                    "Authorization":"Bearer supertoken"
+                },
+                data: {
+                    "games": addedGames
+                }
+            });
         }
     });
 
