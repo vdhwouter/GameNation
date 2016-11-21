@@ -109,7 +109,7 @@ function editGame(e) {
     var td_list = [];
     $(e).children().each(function(i, v) {
         if (i >= 0 && i < 5) {
-            td_list[i] = $(this).find("p").context.innerHTML;
+            td_list[i] = $(this)[0].innerHTML;
         }
     });
 

@@ -1,6 +1,11 @@
 $(document).ready(function() {
 	'use strict';
 
+	crossroads.addRoute('/', function() {
+		$('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
+		$('body').load('login.html');
+	}, 100);
+
 	crossroads.addRoute('/login', function() {
 		$('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
 		$('body').load('login.html');
@@ -19,7 +24,6 @@ $(document).ready(function() {
 			$.ajax({
 				url: 'http://localhost:8080/api/users/' + username,
 			}).done(function(data) {
-				console.log(data);
 				$('#set')[0].href = username;
 				$('#username')[0].value = data.username;
 				$('#email')[0].value = data.email;
