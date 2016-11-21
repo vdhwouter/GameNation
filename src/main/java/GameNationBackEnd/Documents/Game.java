@@ -43,7 +43,7 @@ public class Game implements Comparable<Game>{
 
 
     public boolean equals(Game g){
-        return this._id == g._id && this.name == g.name;
+        return this._id.equals(g._id);
     }
 
     @Override

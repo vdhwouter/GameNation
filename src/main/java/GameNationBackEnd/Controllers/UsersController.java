@@ -11,12 +11,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
 import GameNationBackEnd.Exceptions.*;
 
 /**
@@ -96,7 +93,11 @@ public class UsersController{
             if (!userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().equals(game))) {
                 UserGame newUserGame = new UserGame(user, game, skill);
                 userGameDB.save(newUserGame);
-            } else {
+            /*} else if(userGameDB.findByUserAndGame(user,game).getSkill_level() != skill){
+                UserGame editskill = userGameDB.findByUserAndGame(user,game);
+                editskill.setSkill_level(skill);
+                userGameDB.save(editskill);*/
+            }else{
                 throw new GameAlreadyExistsException(game.getId());
             }
         }
