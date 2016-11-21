@@ -75,10 +75,6 @@ p{
 	float: left;
 }
 
-#profileData li{
-	margin-left: -2rem;
-}
-
 .level{
 	position: absolute;
 	width: 5rem;
@@ -116,35 +112,34 @@ p{
    Games
    =========================================== */
 
-#games{
+#games, #games-overview, #lobby-overview{
 	float: left;
 	width: 100%;
 }
 
-#games h3{
+#games h3, #games-overview h3, #lobby-overview h3{
 	color: #db5f24;
 	margin: 1rem 0rem 0rem 0rem;
 }
 
-#games li{
+#games ul {
+    overflow: hidden;
+    margin-left: -40px;
+}
+
+#games li, #games-overview li, #lobby-overview li{
 	float: left;
 	width: 5.5rem;
 	list-style: none;
 	padding: 0.5rem 0.5rem 0.5rem 0rem;
-	margin-top: -1rem;
 }
 
-#games li img{
+#games li img, #games-overview li img, #lobby-overview li img{
 	width: 100%;
 	background-color: #36393e;
 }
 
-#games ul{
-	width: 100%;
-	margin-left: -2.5rem;
-}
-
-#games p{
+#games p, #games-overview p, #lobby-overview p{
 	border-bottom: 1px solid #db5f24;
 	margin-top: 0.2rem;
 	color: white;
@@ -152,15 +147,13 @@ p{
 	padding-bottom: 0.2rem;
 }
 
-#games a{
+#games a, #games-overview a, #lobby-overview a{
 	text-decoration: none;
 }
-
 
 #games img:hover {
     outline: #999999 solid 3px;
 }
-
 
 /* ===========================================
    Discord steam
@@ -314,21 +307,6 @@ input:focus{
     width: 100%;
     float: left;
 }
-
-::-webkit-scrollbar {
-    width:  5px;
-    height: 5px;
-}
-
-
-::-webkit-scrollbar-thumb {
-    background: #db5f24;
-}
-
-::-webkit-scrollbar-track {
-    background: #4a4c51;
-}
-
 
 /* ===========================================
    Model edit game

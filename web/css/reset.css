@@ -116,3 +116,18 @@ legend {
 #yui3-css-stamp.cssreset {
     display: none;
 }
+
+/* change scroller */
+::-webkit-scrollbar {
+    width:  5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #db5f24;
+}
+
+::-webkit-scrollbar-track {
+    background: #4a4c51;
+}
+
