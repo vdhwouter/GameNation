@@ -78,9 +78,9 @@ public class UsersController{
         return userDB.findByUsername(username);
     }
 
-    @RequestMapping(value="/{user}/games", method = RequestMethod.GET)
-    public List<UserGame> GetGamesFromUser(@PathVariable User user) {
-        return userGameDB.findByUser(user);
+    @RequestMapping(value="/{username}/games", method = RequestMethod.GET)
+    public List<UserGame> GetGamesFromUser(@PathVariable String username) {
+        return userGameDB.findByUser(userDB.findByUsername(username));
     }
 
 
@@ -91,6 +91,7 @@ public class UsersController{
     public List<UserGame> AddGameToUser(@PathVariable String username, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 
         User user = userDB.findByUsername(username);
+
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
 

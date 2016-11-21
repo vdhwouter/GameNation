@@ -149,7 +149,7 @@ $(document).ready(function() {
     var APICALL = function(){
 		var request = new XMLHttpRequest();
 		request.addEventListener('load',listen);
-		request.open("get", 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games');
+		request.open("get", 'http://localhost:8080/api/users/tijs/games');
 		request.send();
 	};
 
