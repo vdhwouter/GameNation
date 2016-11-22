@@ -20,9 +20,10 @@ import GameNationBackEnd.Exceptions.*;
  * Created by lucas on 17/11/2016.
  */
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RequestMapping("/api/users")
 public class UsersController{
+
 
     @Autowired
     private UserRepository userDB;
@@ -87,6 +88,7 @@ public class UsersController{
     //two functions
     //1. add a list of games to a user with default skill 0
     //2. edit skill of a single game bij giving requestParam skill
+    @CrossOrigin
     @RequestMapping(value="/{username}/games", method = RequestMethod.POST)
     public List<UserGame> AddGameToUser(@PathVariable String username, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 

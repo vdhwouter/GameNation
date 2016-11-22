@@ -97,22 +97,24 @@ $(document).ready(function() {
 
             //toevoegen game aan user werkt nog niet
 
-            /*var parameters = { "games": addedGames};
+   /*         var parameters = { "games": addedGames};
             $.post(
                 'localhost:8080/api/users/5830533b9e783a58e84d6a80/games',
                 parameters
             ).setRequestHeader("Authorization", "Bearer supertoken");*/
 
-            /*$.ajax({
+            $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games',
+                url: 'http://localhost:8080/api/users/DNSSinkhole/games',
+
                 headers: {
-                    "Authorization":"Bearer supertoken"
+                    "Access-Control-Allow-Origin" : "*",
+                    "Authorization" : "Bearer supertoken"
                 },
                 data: {
                     "games": addedGames
                 }
-            });*/
+            });
         }
     });
 
