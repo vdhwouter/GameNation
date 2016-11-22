@@ -15,7 +15,7 @@ public class SpringMongoConfiguration {
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
         // return embedded mongo client address
-        return new MongoTemplate(new MongoClient("localhost", 12345), "test");
+        return new MongoTemplate(new MongoClient("localhost", 12345), "test-database-do-not-use");
     }
 
 }
