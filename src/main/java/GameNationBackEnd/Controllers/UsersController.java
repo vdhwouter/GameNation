@@ -11,12 +11,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
 import GameNationBackEnd.Exceptions.*;
 
 /**
@@ -64,7 +61,7 @@ public class UsersController{
         return user;
     }
 
-    //TODO : ERROR voor duplicate users throwen
+
     // Save one user to database (used in registration). Object is returned for testing purposes
     @RequestMapping(method = RequestMethod.POST)
     public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) throws UserAlreadyExistsException {
@@ -81,13 +78,19 @@ public class UsersController{
         return userDB.findByUsername(username);
     }
 
-    @RequestMapping(value="/{user}/games", method = RequestMethod.GET)
-    public List<UserGame> GetGamesFromUser(@PathVariable User user) {
-        return userGameDB.findByUser(user);
+    @RequestMapping(value="/{username}/games", method = RequestMethod.GET)
+    public List<UserGame> GetGamesFromUser(@PathVariable String username) {
+        return userGameDB.findByUser(userDB.findByUsername(username));
     }
 
-    @RequestMapping(value="/{user}/games", method = RequestMethod.POST)
-    public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
+
+    //two functions
+    //1. add a list of games to a user with default skill 0
+    //2. edit skill of a single game bij giving requestParam skill
+    @RequestMapping(value="/{username}/games", method = RequestMethod.POST)
+    public List<UserGame> AddGameToUser(@PathVariable String username, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
+
+        User user = userDB.findByUsername(username);
 
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
@@ -97,7 +100,12 @@ public class UsersController{
                 UserGame newUserGame = new UserGame(user, game, skill);
                 userGameDB.save(newUserGame);
             } else {
-                throw new GameAlreadyExistsException(game.getId());
+                UserGame editUserGame = userGameDB.findByUserAndGame(user,game);
+                if(editUserGame.getSkill_level() != skill){
+                    editUserGame.setSkill_level(skill);
+                    userGameDB.save(editUserGame);
+                }
+                else throw new GameAlreadyExistsException(game.getId());
             }
         }
 

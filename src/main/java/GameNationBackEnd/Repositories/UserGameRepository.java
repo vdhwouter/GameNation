@@ -13,4 +13,5 @@ public interface UserGameRepository extends MongoRepository<UserGame, String> {
     List<UserGame> findByUser(User user);
     List<UserGame> findAll();
     List<Game> findGameByUser(User user);
+    UserGame findByUserAndGame(User user, Game game);
 }
