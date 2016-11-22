@@ -40,7 +40,6 @@ public class UserRepositoryTest extends TestCase {
         userRepo.save(user5);
     }
 
-
     @Test
     public void GetAllUsersDB() {
         List<User> all = userRepo.findAll();
