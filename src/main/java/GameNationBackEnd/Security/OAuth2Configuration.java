@@ -25,7 +25,7 @@ import java.util.*;
 @EnableAuthorizationServer
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
-    String applicationName = "gamenation";
+    public static String ApplicationName = "gamenation";
 
     // This is required for password grants, which we specify below as one of the options
     @Autowired
@@ -63,11 +63,11 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("web-" + applicationName)
+                .withClient("web-" + ApplicationName)
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token")
                 .authorities("ROLE_USER")
                 .scopes("write")
-                .resourceIds(applicationName)
+                .resourceIds(ApplicationName)
                 .secret("123456");
     }
 
