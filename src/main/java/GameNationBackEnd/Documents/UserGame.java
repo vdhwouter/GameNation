@@ -35,7 +35,7 @@ public class UserGame {
     public String getId() {
         return _id;
     }
-    public User getUser(){return this.user; }
+    //public User getUser(){return this.user; }
     public Game getGame(){return this.game; }
     public int getSkill_level(){return  this.skill_level; }
 

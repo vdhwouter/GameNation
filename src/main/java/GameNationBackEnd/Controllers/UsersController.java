@@ -61,7 +61,7 @@ public class UsersController{
         return user;
     }
 
-    //TODO : ERROR voor duplicate users throwen
+
     // Save one user to database (used in registration). Object is returned for testing purposes
     @RequestMapping(method = RequestMethod.POST)
     public User InsertUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) throws UserAlreadyExistsException {
