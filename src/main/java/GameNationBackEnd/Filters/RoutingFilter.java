@@ -13,7 +13,7 @@ public class RoutingFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)request;
         String uri = req.getRequestURI();
 
-        if (uri.startsWith("/api") || uri.endsWith(".html") || uri.endsWith(".css") || uri.endsWith(".jpg") || uri.endsWith(".png") || uri.endsWith(".ttf") || uri.endsWith(".js")) {
+        if (uri.startsWith("/api") || uri.startsWith("/oauth") || uri.endsWith(".html") || uri.endsWith(".css") || uri.endsWith(".jpg") || uri.endsWith(".png") || uri.endsWith(".ttf") || uri.endsWith(".js")) {
             chain.doFilter(request, response);
         } else {
             req.getRequestDispatcher("/index.html").forward(request, response);
