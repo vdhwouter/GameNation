@@ -17,6 +17,7 @@ $(document).ready(function() {
 	}, 100);
 
 	crossroads.addRoute('/settings/{username}', function(username) {
+		window.user = username;
 		$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'))
 		$('head').append($('<link rel="stylesheet" href="css/remodal.css">'))
 		$('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'))

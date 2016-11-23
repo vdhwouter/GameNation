@@ -20,7 +20,8 @@ import GameNationBackEnd.Exceptions.*;
  * Created by lucas on 17/11/2016.
  */
 @RestController
-@CrossOrigin("*")
+//@CrossOrigin(value = "*", methods = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS, RequestMethod.HEAD, RequestMethod.TRACE})
+@CrossOrigin
 @RequestMapping("/api/users")
 public class UsersController{
 
@@ -40,12 +41,14 @@ public class UsersController{
     // Get all info from database for one specified user (returned as user object)
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public User GetUser(@PathVariable String username) {
+
         return userDB.findByUsername(username);
     }
 
     // Update all info for one specified user (returned as user object)
-    @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public User UpdateUser(@PathVariable User user, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+    @RequestMapping(value = "/{usern}", method = RequestMethod.POST)
+    public User UpdateUser(@PathVariable String usern, @RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @RequestParam(required = false) String firstname, @RequestParam(required = false) String lastname, @RequestParam(required = false) String teamspeak, @RequestParam(required = false) String discord, @RequestParam(required = false) String description) {
+        User user = userDB.findByUsername(usern);
 
         // Test if the new values aren't empty to prevent loss of data
         if (!username.isEmpty()) { user.setUsername(username); }
@@ -61,7 +64,6 @@ public class UsersController{
         // Return user object for testing purposes
         return user;
     }
-
 
     // Save one user to database (used in registration). Object is returned for testing purposes
     @RequestMapping(method = RequestMethod.POST)
@@ -84,11 +86,9 @@ public class UsersController{
         return userGameDB.findByUser(userDB.findByUsername(username));
     }
 
-
     //two functions
     //1. add a list of games to a user with default skill 0
     //2. edit skill of a single game bij giving requestParam skill
-    @CrossOrigin
     @RequestMapping(value="/{username}/games", method = RequestMethod.POST)
     public List<UserGame> AddGameToUser(@PathVariable String username, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 
@@ -112,6 +112,12 @@ public class UsersController{
         }
 
         return userGameDB.findByUser(user);
+    }
+
+    @RequestMapping(value ="/{user}/games", method= RequestMethod.DELETE)
+    public void InsertGame(@RequestParam Game game, @PathVariable User user) {
+        UserGame ug = userGameDB.findByUserAndGame(user,game);
+        userGameDB.delete(ug);
     }
 
     @RequestMapping(value="/me", method = RequestMethod.GET)

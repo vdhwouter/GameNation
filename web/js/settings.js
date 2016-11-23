@@ -112,7 +112,7 @@ $(document).ready(function() {
                     "Authorization" : "Bearer supertoken"
                 },
                 data: {
-                    "games": addedGames
+                    "games": addedGames[0]
                 }
             });
         }
