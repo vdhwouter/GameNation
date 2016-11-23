@@ -1,4 +1,4 @@
-package GameNationBackEnd.Mongo;
+package GameNationBackEnd.Setup;
 
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;

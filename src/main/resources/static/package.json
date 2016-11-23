@@ -1,0 +1,18 @@
+{
+  "name": "gamenation-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.15.2",
+    "crossroads": "^0.12.2",
+    "jquery": "^3.1.1",
+    "signals": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

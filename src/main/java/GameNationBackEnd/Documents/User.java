@@ -1,6 +1,7 @@
 package GameNationBackEnd.Documents;
 
 import com.sun.org.apache.xpath.internal.operations.Equals;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -17,6 +18,7 @@ public class User{
 	private String _id;
 
 	@Indexed(unique = true)
+	@Email
 	@NotBlank(message = "Email must not be blank")
 	private String email;
 
@@ -24,7 +26,7 @@ public class User{
 	@NotBlank(message = "Username must not be blank")
 	private String username;
 
-	@NotBlank(message = "Username must not be blank")
+	@NotBlank(message = "Password must not be blank")
 	private String password;
 
 	private String firstname;

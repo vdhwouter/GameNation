@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document
 public class Game implements Comparable<Game>{
     @Id
-    private String _id;
+    private String id;
 
     @Indexed(unique = true)
     @NotBlank(message = "Name must not be blank")
@@ -37,7 +37,7 @@ public class Game implements Comparable<Game>{
         return "./img/" + imageName;
     }
     public String getId() {
-        return _id;
+        return id;
     }
     public String getName() {
         return name;
@@ -49,7 +49,7 @@ public class Game implements Comparable<Game>{
 
 
     public boolean equals(Game g){
-        return this._id.equals(g._id);
+        return this.id.equals(g.id);
     }
 
     @Override
