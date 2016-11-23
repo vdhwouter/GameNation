@@ -8,7 +8,7 @@ $(document).ready(function() {
     var apicallAddedGamesUser = function(){
 		var request = new XMLHttpRequest();
 		request.addEventListener('load',listen);
-		request.open("get", 'http://localhost:8080/api/users/wouter/games');
+		request.open("get", 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games');
 		request.send();
 	};
 
@@ -40,18 +40,25 @@ $(document).ready(function() {
 				img.setAttribute("title", value['game'].name);
 				img.className += "game";
 
+				var secondImg = document.createElement("img");
+                secondImg.setAttribute("class", "levelGames");
+                secondImg.setAttribute("src", "img/cirkel.png");
+
+                var thirdP = document.createElement("p");
+                thirdP.innerHTML = value.skill_level;
+                thirdP.setAttribute("class", "levelGames");
+
 				var secondP = document.createElement("p");
 				secondP.innerHTML = value['game'].name;
 
-				var thirdP = document.createElement("p");
-				thirdP.innerHTML = value.skill_level;
-                thirdP.setAttribute("style", "display: none");
+
 
                 a.appendChild(firstP);
-				a.appendChild(img);
-				a.appendChild(secondP);
-				a.appendChild(thirdP);
-				li.appendChild(a);
+                a.appendChild(img);
+                a.appendChild(secondImg);
+                a.appendChild(thirdP);
+                a.appendChild(secondP);
+                li.appendChild(a);
                 ul.appendChild(li);
 			}
 		}
@@ -176,12 +183,12 @@ $(document).ready(function() {
             console.log("no items selected");
         }
         else {
-            console.log(addedGames);
+            console.log("addedgames" + addedGames);
 
             //toevoegen game aan user
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/api/users/wouter/games',
+                url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games',
 
                 headers: {
                     "Access-Control-Allow-Origin" : "*",
@@ -200,29 +207,67 @@ $(document).ready(function() {
 
     ApicallShowAllGames();
 
+});
 
 
+/* ===========================================
+   edit skillset / delete game van user game modal
+   =========================================== */
+var td_list = [];
+var editGame = function(e) {
 
-    /* ===========================================
-       edit skillset game modal
-       =========================================== */
-    function editGame(e) {
-        var td_list = [];
-        $(e).children().each(function(i, v) {
-            if (i >= 0 && i < 5) {
-                td_list[i] = $(this)[0].innerHTML;
-            }
-        });
+    $(e).children().each(function(i, v) {
+       if (i >= 0 && i < 5) {
+           td_list[i] = $(this)[0].innerHTML;
+       }
+    });
+    console.log(td_list);
+    $('#editGameTitle').text("Edit " + td_list[4]);
+    $('#editGame input[type="number"]').val(td_list[3].replace(/[^0-9]/g, ''));
+}
 
-        $('#editGameTitle').text("Edit " + td_list[2]);
-        $('#editGame input[type="number"]').val(td_list[3].replace(/[^0-9]/g, ''));
+// by click on the add button
+$('#modelSkilEditEdit').click(function(){
+    var editskillIdInArray = new Array();
+    editskillIdInArray.push(td_list[0]);
 
-        // by click on the add button
-        $('#modelSkilEditEdit').click(function(){
-            console.log("edit");
-        });
-    }
+    //toevoegen game aan user
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games',
 
+        headers: {
+            "Access-Control-Allow-Origin" : "*",
+            "Authorization" : "Bearer supertoken"
+        },
+        data: {
+            "games": editskillIdInArray,
+            "skill": document.getElementById("skillset").value
+        },
+        success:function(data)
+        {
+            location.reload();
+        }
+    });
 
+});
+
+// by click on the delete button
+$('#modelSkilEditDelete').click(function(){
+    console.log("id " + td_list[0]);
+    //delete game van user
+    $.ajax({
+        type: 'DELETE',
+        url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games/' + td_list[0],
+
+        headers: {
+            "Access-Control-Allow-Origin" : "*",
+            "Authorization" : "Bearer supertoken"
+        },
+        success:function(data)
+        {
+            location.reload();
+        }
+    });
 
 });

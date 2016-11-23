@@ -122,26 +122,20 @@ p{
 	margin: 1rem 0rem 0rem 0rem;
 }
 
-#games ul {
-    overflow: hidden;
-    margin-left: -40px;
-}
-
 #games li, #games-overview li, #lobby-overview li{
 	float: left;
 	width: 5.5rem;
 	list-style: none;
-	padding: 0.5rem 0.5rem 0.5rem 0rem;
+	padding: 0.5rem 1.5rem 0.5rem 0rem;
 }
 
 #games li img, #games-overview li img, #lobby-overview li img{
 	width: 100%;
-	background-color: #36393e;
 }
 
 #games p, #games-overview p, #lobby-overview p{
 	border-bottom: 1px solid #db5f24;
-	margin-top: 0.2rem;
+	margin-top: 0.4rem;
 	color: white;
 	text-align: center;
 	padding-bottom: 0.2rem;
@@ -151,8 +145,25 @@ p{
 	text-decoration: none;
 }
 
-#games img:hover {
+#games img:nth-of-type(1):hover {
     outline: #999999 solid 3px;
+}
+
+/*for circle and skill level*/
+img.levelGames {
+    position: absolute;
+    width: 37px!important;
+    background-color: transparent!important;
+    margin-left: -29px;
+    margin-top: 59px;
+}
+
+p.levelGames {
+    position: absolute;
+    width: 20px;
+    margin-top: -23px!important;
+    margin-left: 68px;
+    border-bottom: none!important;
 }
 
 /* ===========================================
@@ -191,16 +202,12 @@ p{
    =========================================== */
 form{
 	width: 100%;
-	margin-top: -1rem;
+	margin-top: 1rem;
 }
 
 dt{
 	width: 15rem;
     margin-bottom: 5px
-}
-
-dd{
-	margin-left: 0rem;
 }
 
 input, textarea {
@@ -235,7 +242,7 @@ textarea {
 
 input:focus{
 	border: 0px;
-}*/
+}
 
 
 /* ===========================================
@@ -249,11 +256,6 @@ input:focus{
     margin-bottom: 30px;
     overflow-y: auto;
     height: 380px;
-}
-
-#addGames ul {
-    margin-left: -40px;
-    margin-top: -5px;
 }
 
 #addGames li p {
@@ -310,7 +312,12 @@ input:focus{
 /* ===========================================
    Model edit game
    =========================================== */
-#modelSkilEditCansel {
+#modelSkilEditDelete {
+    width: 110px;
+    margin-bottom: 10px;
+}
+
+#modelSkilEditCancel {
     float: left;
     min-width: 110px;
     padding: 12px 0;
@@ -322,7 +329,12 @@ input:focus{
     padding: 12px 0;
 }
 
-#modelSkilEditCansel .remodal-cancel, #modelSkilEditEdit .remodal-confirm {
+#modelSkilEditDelete input {
+    padding: 12px 0;
+    padding-bottom: 28px;
+}
+
+#modelSkilEditCancel .remodal-cancel, #modelSkilEditEdit .remodal-confirm {
     padding-bottom: 30px;
 }
 
