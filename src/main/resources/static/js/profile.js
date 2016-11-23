@@ -3,7 +3,9 @@
    =========================================== */
 $(document).ready(function() {
     axios.get("/users/5835cd4b0e402cf3a0f6a1ac/games")
-        .then(function(data) {
+        .then(function(response) {
+            var data = response.data;
+            
             // create html tage with added games
             var ul = document.createElement("ul");
             ul.setAttribute("id", "listAddedGames");
