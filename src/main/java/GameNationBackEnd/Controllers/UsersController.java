@@ -88,7 +88,7 @@ public class UsersController{
     //1. add a list of games to a user with default skill 0
     //2. edit skill of a single game bij giving requestParam skill
     @RequestMapping(value="/{user}/games", method = RequestMethod.POST)
-    public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
+    public List<UserGame> AddGameToUser(@PathVariable User user, @RequestParam(value = "games[]") List<Game> games, @RequestParam(required = false) Integer skill) throws GameAlreadyExistsException {
 
         //als skill niet ingevuld is moet deze een standaard waarde krijgen.
         if (skill == null) skill = new Integer(0);
