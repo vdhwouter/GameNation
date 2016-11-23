@@ -32,11 +32,16 @@ public class UsersController{
     @Autowired
     private UserGameRepository userGameDB;
 
-    // Get all users from database (Currently for testing purposes only)
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> GetAllUsers() {
-        return userDB.findAll();
+    public User GetUserByName(@RequestParam() String username) {
+        return userDB.findByUsername(username);
     }
+
+    // Get all users from database (Currently for testing purposes only)
+//    @RequestMapping(method = RequestMethod.GET)
+//    public List<User> GetAllUsers() {
+//        return userDB.findAll();
+//    }
 
     // Get all info from database for one specified user (returned as user object)
     @RequestMapping(value = "/{user}", method = RequestMethod.GET)

@@ -2,8 +2,7 @@ $(document).ready(function() {
 	'use strict';
 
 	crossroads.addRoute('/', function() {
-		$('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
-		$('body').load('login.html');
+        window.location += 'login';
 	}, 100);
 
 	crossroads.addRoute('/login', function() {
@@ -17,43 +16,42 @@ $(document).ready(function() {
 	}, 100);
 
 	crossroads.addRoute('/settings/{username}', function(username) {
-		window.user = username;
-		$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'))
-		$('head').append($('<link rel="stylesheet" href="css/remodal.css">'))
-		$('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'))
-		$('body').load('settings.html', function() {
-			$.ajax({
-				url: 'http://localhost:8080/api/users/' + username,
-			}).done(function(data) {
-				$('#set')[0].href = username;
-				$('#username')[0].value = data.username;
-				$('#email')[0].value = data.email;
-				$('#firstname')[0].value = data.firstname;
-				$('#lastname')[0].value = data.lastname;
-				$('#teamspeakAddr')[0].value = data.teamspeak;
-				$('#DiscordAddr')[0].value = data.discord;
-				$('#descriptionText')[0].value = data.description;
+        $.ajax({
+			url: '/api/users?username=' + username
+		}).done(function(user) {
+			$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'));
+			$('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
+			$('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
+			$('body').load('settings.html', function() {
+                $('#set')[0].href = username;
+                $('#username')[0].value = user.username;
+                $('#email')[0].value = user.email;
+                $('#firstname')[0].value = user.firstname;
+                $('#lastname')[0].value = user.lastname;
+                $('#teamspeakAddr')[0].value = user.teamspeak;
+                $('#DiscordAddr')[0].value = user.discord;
+                $('#descriptionText')[0].value = user.description;
+                $('#formdata')[0].action += user.id;
 			});
 		});
 	}, 100);
 
 	crossroads.addRoute('/{username}', function(username) {
-		$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'))
-		$('body').load('profile.html', function() {
-			$.ajax({
-				url: 'http://localhost:8080/api/users/' + username,
-			}).done(function(data) {
-				$('#set')[0].href += username;
-				$('#usernameVal')[0].innerHTML = data.username;
-				$('#emailVal')[0].innerHTML = data.email;
-				$('#namelVal')[0].innerHTML = data.firstname + ' ' + data.lastname;
-				$('#teamspeakVal')[0].innerHTML = data.teamspeak;
-				$('#descriptionVal')[0].innerHTML = data.description;
-				$('#discordVal')[0].innerHTML = data.discord;
+        $.ajax({
+			url: '/api/users?username=' + username
+		}).done(function(user) {
+			$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'))
+			$('body').load('profile.html', function() {
+                $('#set')[0].href += username;
+                $('#usernameVal')[0].innerHTML = user.username;
+                $('#emailVal')[0].innerHTML = user.email;
+                $('#namelVal')[0].innerHTML = user.firstname + ' ' + user.lastname;
+                $('#teamspeakVal')[0].innerHTML = user.teamspeak;
+                $('#descriptionVal')[0].innerHTML = user.description;
+                $('#discordVal')[0].innerHTML = user.discord;
 			});
 		});
 	}, 1);
 
-	crossroads.parse(document.location.pathname.replace('/GameNation/web', ''));
+	crossroads.parse(document.location.pathname);
 });
-
