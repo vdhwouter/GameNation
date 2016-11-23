@@ -1,5 +1,7 @@
 package GameNationBackEnd.Documents;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,9 +16,13 @@ public class Game implements Comparable<Game>{
     private String _id;
 
     @Indexed(unique = true)
+    @NotBlank(message = "Name must not be blank")
     private String name;
 
+    @NotBlank(message = "Description must not be blank")
     private String description;
+
+    @NotBlank(message = "Image must not be blank")
     private String imageName;
 
     public Game(){}
