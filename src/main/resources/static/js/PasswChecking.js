@@ -1,7 +1,7 @@
 /**
  * Created by tijs on 23/11/2016.
  */
-function CheckPassword(inputtxt, confirmation)
+var CheckPassword = function(inputtxt, confirmation)
 {
     if(inputtxt == confirmation){
         var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
