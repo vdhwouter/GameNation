@@ -1,6 +1,7 @@
 package GameNationBackEnd;
 
 import GameNationBackEnd.Documents.User;
+import GameNationBackEnd.Filters.RoutingFilter;
 import GameNationBackEnd.Repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,5 +33,10 @@ public class Application {
                                 userRepository.save(new User(name, name + "@test.com", "test"));
                             }
                         });
+    }
+
+    @Bean
+    RoutingFilter routingFilter() {
+        return new RoutingFilter();
     }
 }
