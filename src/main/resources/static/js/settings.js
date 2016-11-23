@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     /* ===========================================
        show all games that user added
        =========================================== */
@@ -8,7 +7,7 @@ $(document).ready(function() {
     var apicallAddedGamesUser = function(){
 		var request = new XMLHttpRequest();
 		request.addEventListener('load',listen);
-		request.open("get", 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games');
+		request.open("get", 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games');
 		request.send();
 	};
 
@@ -50,8 +49,6 @@ $(document).ready(function() {
 
 				var secondP = document.createElement("p");
 				secondP.innerHTML = value['game'].name;
-
-
 
                 a.appendChild(firstP);
                 a.appendChild(img);
@@ -188,7 +185,7 @@ $(document).ready(function() {
             //toevoegen game aan user
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games',
+                url: 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games',
 
                 headers: {
                     "Access-Control-Allow-Origin" : "*",
@@ -234,7 +231,7 @@ $('#modelSkilEditEdit').click(function(){
     //toevoegen game aan user
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games',
+        url: 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games',
 
         headers: {
             "Access-Control-Allow-Origin" : "*",
@@ -258,7 +255,7 @@ $('#modelSkilEditDelete').click(function(){
     //delete game van user
     $.ajax({
         type: 'DELETE',
-        url: 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games/' + td_list[0],
+        url: 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games/' + td_list[0],
 
         headers: {
             "Access-Control-Allow-Origin" : "*",
