@@ -5,7 +5,7 @@ $(document).ready(function() {
     var APICALL = function(){
 		var request = new XMLHttpRequest();
 		request.addEventListener('load',listen);
-		request.open("get", 'http://localhost:8080/api/users/58331d58d28b93294860ec20/games');
+		request.open("get", 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games');
 		request.send();
 	};
 
@@ -21,7 +21,7 @@ $(document).ready(function() {
 			if(data.hasOwnProperty(key)) {
 				var value = data[key];
 
-				var li = document.createElement("li");
+                var li = document.createElement("li");
 
                 var a = document.createElement('a');
                 a.setAttribute("data-remodal-target", "EditGameModal");
@@ -31,24 +31,29 @@ $(document).ready(function() {
                 firstP.innerHTML = value['game'].id;
                 firstP.setAttribute("style", "display: none");
 
-				var img = document.createElement("img");
-				img.setAttribute("src", "img/games/" + value['game'].imageName);
-				img.setAttribute("alt", value['game'].id);
-				img.setAttribute("title", value['game'].name);
-				img.className += "game";
+                var img = document.createElement("img");
+                img.setAttribute("src", "img/games/" + value['game'].imageName);
+                img.setAttribute("alt", value['game'].id);
+                img.setAttribute("title", value['game'].name);
+                img.className += "game";
 
-				var secondP = document.createElement("p");
-				secondP.innerHTML = value['game'].name;
+                var secondImg = document.createElement("img");
+                secondImg.setAttribute("class", "levelGames");
+                secondImg.setAttribute("src", "img/cirkel.png");
 
-				var thirdP = document.createElement("p");
-				thirdP.innerHTML = value.skill_level;
-                thirdP.setAttribute("style", "display: none");
+                var thirdP = document.createElement("p");
+                thirdP.innerHTML = value.skill_level;
+                thirdP.setAttribute("class", "levelGames");
+
+                var secondP = document.createElement("p");
+                secondP.innerHTML = value['game'].name;
 
                 a.appendChild(firstP);
-				a.appendChild(img);
-				a.appendChild(secondP);
-				a.appendChild(thirdP);
-				li.appendChild(a);
+                a.appendChild(img);
+                a.appendChild(secondImg);
+                a.appendChild(thirdP);
+                a.appendChild(secondP);
+                li.appendChild(a);
                 ul.appendChild(li);
 			}
 		}
