@@ -5,7 +5,7 @@ $(document).ready(function() {
     var APICALL = function(){
 		var request = new XMLHttpRequest();
 		request.addEventListener('load',listen);
-		request.open("get", 'http://localhost:8080/api/users/' + (window.location.href).substring((window.location.href).lastIndexOf("/") + 1, (window.location.href).length) + '/games');
+		request.open("get", 'http://localhost:8080/api/users/5830533b9e783a58e84d6a80/games');
 		request.send();
 	};
 

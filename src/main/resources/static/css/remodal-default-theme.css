@@ -140,7 +140,8 @@
 /* Dialog buttons */
 
 .remodal-confirm,
-.remodal-cancel {
+.remodal-cancel,
+.remodal-delete {
   font: inherit;
 
   display: inline-block;
@@ -183,11 +184,22 @@
   background: #c55520;
 }
 
+.remodal-delete {
+    color: #fff;
+    background: #db5f24;
+}
+
+.remodal-delete:hover,
+.remodal-delete:focus {
+    background: #c55520;
+}
+
 /* Remove inner padding and border in Firefox 4+ for the button tag. */
 
 .remodal-confirm::-moz-focus-inner,
 .remodal-cancel::-moz-focus-inner,
-.remodal-close::-moz-focus-inner {
+.remodal-close::-moz-focus-inner,
+.remodal-delete::-moz-focus-inner{
   padding: 0;
 
   border: 0;
