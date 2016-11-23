@@ -18,7 +18,8 @@ $(document).ready(function() {
 	crossroads.addRoute('/settings/{username}', function(username) {
         $.ajax({
 			url: '/api/users?username=' + username
-		}).done(function(user) {
+		}).done(function(users) {
+			var user = users[0]
 			$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'));
 			$('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
 			$('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
@@ -39,7 +40,8 @@ $(document).ready(function() {
 	crossroads.addRoute('/{username}', function(username) {
         $.ajax({
 			url: '/api/users?username=' + username
-		}).done(function(user) {
+		}).done(function(users) {
+			var user = users[0]
 			$('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'))
 			$('body').load('profile.html', function() {
                 $('#set')[0].href += username;
