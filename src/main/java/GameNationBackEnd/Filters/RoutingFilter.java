@@ -3,8 +3,14 @@ package GameNationBackEnd.Filters;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class RoutingFilter implements Filter {
+
+    String[] routeStartWith = { "/api", "/oauth", "/logout" };
+    String[] routeEndsWith = { ".html", ".css", ".jpg", ".png", ".ttf", ".js"};
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
@@ -13,7 +19,7 @@ public class RoutingFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)request;
         String uri = req.getRequestURI();
 
-        if (uri.startsWith("/api") || uri.startsWith("/oauth") || uri.endsWith(".html") || uri.endsWith(".css") || uri.endsWith(".jpg") || uri.endsWith(".png") || uri.endsWith(".ttf") || uri.endsWith(".js")) {
+        if (Arrays.stream(routeStartWith).anyMatch(start -> uri.startsWith(start)) || Arrays.stream(routeEndsWith).anyMatch(start -> uri.endsWith(start))) {
             chain.doFilter(request, response);
         } else {
             req.getRequestDispatcher("/index.html").forward(request, response);
