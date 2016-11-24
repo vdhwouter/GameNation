@@ -117,7 +117,7 @@ $(document).ready(function () {
 
                     var li = document.createElement("li");
                     li.className = "file";
-                    li.setAttribute("data-search-term", value.name);
+                    li.setAttribute("data-search-term", value.name.toLowerCase());
 
                     var img = document.createElement("img");
                     img.setAttribute("src", "img/games/" + value.imageName);

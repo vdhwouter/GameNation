@@ -37,6 +37,9 @@ $(document).ready(function () {
     }, 100);
 
     crossroads.addRoute('/games', function() {
+        $('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'));
+        $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
+        $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
         $('body').load('games.html');
     }, 100);
 

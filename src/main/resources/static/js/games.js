@@ -21,7 +21,7 @@ axios.get("/games").then(function (response) {
 
             var li = document.createElement("li");
             li.className = "file";
-            li.setAttribute("data-search-term", value.name);
+            li.setAttribute("data-search-term", value.name.toLowerCase());
 
             var img = document.createElement("img");
             img.setAttribute("src", "img/games/" + value.imageName);
@@ -39,7 +39,20 @@ axios.get("/games").then(function (response) {
     }
 });
 
+/* ===========================================
+ live search filter games
+ =========================================== */
+$('.live-search-box').on('keyup', function () {
+    var searchTerm = $(this).val().toLowerCase();
 
+    $('.live-search-list li').each(function () {
+        if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
 
 
 });
