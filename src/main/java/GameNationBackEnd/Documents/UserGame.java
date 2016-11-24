@@ -39,9 +39,6 @@ public class UserGame {
     public Game getGame(){return this.game; }
     public int getSkill_level(){return  this.skill_level; }
 
-    public void setId(String id) {
-        this._id = id;
-    }
     public void setUser(User user){ this.user=user; }
     public void setGame(Game game){ this.game=game; }
     public void setSkill_level(Integer skill_level){this.skill_level = skill_level; }

@@ -204,20 +204,27 @@ public class UsersControllerTest extends BaseControllerTest {
 
         Game game1 = this.gameList.get(2);
         Game game2 = this.gameList.get(4);
+        Game game3 = this.gameList.get(6);
 
         userGameRepository.save(new UserGame(user, game1, 0));
         userGameRepository.save(new UserGame(user, game2, 0));
+
+        UserGame ug = new UserGame();
+        ug.setGame(game3);
+        ug.setUser(user);
+        ug.setSkill_level(0);
+        userGameRepository.save(ug);
 
         mockMvc.perform(get("/api/users/" + user.getId() + "/games")
                 .header("Authorization", "Bearer supertoken")
                 .contentType(contentType))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].game.name", is(game1.getName())))
                 .andExpect(jsonPath("$[1].game.name", is(game2.getName())));
 
         List<UserGame> userGames = userGameRepository.findByUser(user);
-        assertEquals(2, userGames.size());
+        assertEquals(3, userGames.size());
     }
 
     @Test
