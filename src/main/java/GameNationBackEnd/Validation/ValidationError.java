@@ -3,12 +3,14 @@ package GameNationBackEnd.Validation;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ValidationError {
 
         @JsonInclude(JsonInclude.Include.NON_EMPTY)
-        private List<String> errors = new ArrayList<>();
+        private Map<String, String> errors = new HashMap<String, String>();
 
         private final String errorMessage;
 
@@ -16,13 +18,13 @@ public class ValidationError {
             this.errorMessage = errorMessage;
         }
 
-        public void addValidationError(String error) {
-            errors.add(error);
+        public void addValidationError(String object, String error) {
+            errors.put(object, error);
         }
 
-        public List<String> getErrors() {
-            return errors;
-        }
+        public Map<String, String> getErrors() {
+        return errors;
+    }
 
         public String getErrorMessage() {
             return errorMessage;

@@ -236,8 +236,8 @@ public class UsersControllerTest extends BaseControllerTest {
             .contentType(contentType)
             .content(json(user)))
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors", hasSize(1)))
-            .andExpect(jsonPath("$.errors[0]", is("Email must be a valid email")));
+            .andExpect(jsonPath("$.errors", hasKey("email")))
+            .andExpect(jsonPath("$.errors.email", is("Email must be a valid email")));
     }
 
 
