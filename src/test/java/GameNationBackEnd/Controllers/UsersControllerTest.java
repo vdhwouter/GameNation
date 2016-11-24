@@ -8,11 +8,13 @@ import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.StringHttpMessageConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -280,11 +282,68 @@ public class UsersControllerTest extends BaseControllerTest {
                 .andExpect(status().isConflict());
     }
 
+    @Test
+    public void deleteGameFromUser() throws Exception {
+        User user = userRepository.findByUsername("wouter");
+
+        Game game1 = this.gameList.get(2);
+        Game game2 = this.gameList.get(4);
+        Game game3 = this.gameList.get(6);
+
+        userGameRepository.save(new UserGame(user, game1, 0));
+        userGameRepository.save(new UserGame(user, game2, 0));
+        userGameRepository.save(new UserGame(user, game3, 0));
+
+        int startLength = userGameRepository.findByUser(user).size();
+
+        mockMvc.perform(delete("/api/users/" + user.getId() + "/games/" + game2.getId()))
+                .andExpect(status().isOk());
+
+        assertEquals(startLength - 1, userGameRepository.findByUser(user).size());
+        List<String> gameIdsByUser = userGameRepository
+                .findByUser(user)
+                .stream()
+                .map(ug -> ug.getGame().getId())
+                .collect(Collectors.toList());
+
+        assertTrue(gameIdsByUser.contains(game1.getId()));
+        assertTrue(gameIdsByUser.contains(game3.getId()));
+        assertFalse(gameIdsByUser.contains(game2.getId()));
+    }
+
+    @Test
+    public void addGameThatUserAlreadyHas() throws Exception {
+        User user = userRepository.findByUsername("wouter");
+
+        Game game1 = this.gameList.get(2);
+        Game game2 = this.gameList.get(4);
+        Game game3 = this.gameList.get(6);
+
+        userGameRepository.save(new UserGame(user, game1, 0));
+        userGameRepository.save(new UserGame(user, game2, 0));
+        userGameRepository.save(new UserGame(user, game3, 0));
+
+        List<String> gameIds = Arrays.asList(game2.getId());
+
+        int startSize = userGameRepository.findByUser(user).size();
+
+
+        mockMvc.perform(post("/api/users/" + user.getId() + "/games")
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType)
+                .content(json(gameIds)))
+                .andExpect(status().is4xxClientError());
+
+        assertEquals(userGameRepository.findByUser(user).size(), startSize);
+    }
+
     private User getRandomUser() {
         Random random = new Random();
         int startLength = this.userRepository.findAll().size();
         return this.userList.get(random.nextInt(startLength - 1));
     }
+
+
 
     /* tests te schrijven:
         - user verwijderen die niet bestaat?

@@ -122,10 +122,12 @@ public class UsersController {
         List<Game> gameList = gameRepository.findByIdIn(games);
 
         // check if any of the games already exist in the user's collection
-        userGameDB.findByUser(user).stream().forEach(ug -> {
-           if (gameList.contains(ug)) {
-               throw new GameAlreadyExistsException(ug.getGame().getName());
-           }
+        userGameDB.findByUser(user).stream().map(ug -> ug.getGame()).forEach(game -> {
+            gameList.forEach(g -> {
+                if (g.equals(game)) {
+                    throw new GameAlreadyExistsException(game.getName());
+                }
+            });
         });
 
         for (Game game : gameList) {
