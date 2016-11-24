@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * Created by tijs on 16/11/2016.
  */
 @Document
-public class Game implements Comparable<Game>{
+public class Game {
     @Id
     private String id;
 
@@ -33,9 +33,6 @@ public class Game implements Comparable<Game>{
         this.imageName = imageName;
     }
 
-    public String GetImagePath(){
-        return "./img/" + imageName;
-    }
     public String getId() {
         return id;
     }
@@ -51,12 +48,4 @@ public class Game implements Comparable<Game>{
     public boolean equals(Game g){
         return this.id.equals(g.id);
     }
-
-    @Override
-    public int compareTo(Game g){
-        return this.name.compareTo(g.name);
-    }
-
-
-
 }
