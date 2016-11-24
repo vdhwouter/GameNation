@@ -103,25 +103,20 @@ public class UsersControllerTest extends BaseControllerTest {
 
     @Test
     public void deleteUser() throws Exception {
-        Random random = new Random();
-        int startLength = this.userRepository.findAll().size();
-        User user = this.userList.get(random.nextInt(startLength - 1));
-
+        User user = getRandomUser();
+        long startLength = this.userRepository.count();
 
         mockMvc.perform(delete("/api/users/" + user.getId())
                 .header("Authorization", "Bearer supertoken"))
                 .andExpect(status().is2xxSuccessful());
 
-        assertEquals(startLength - 1, this.userRepository.findAll().size());
+        assertEquals(startLength - 1, this.userRepository.count());
         assertEquals(false, this.userRepository.exists(user.getId()));
     }
 
     @Test
     public void getUser() throws Exception {
-        Random random = new Random();
-        int startLength = this.userRepository.findAll().size();
-        User user = this.userList.get(random.nextInt(startLength - 1));
-
+        User user = getRandomUser();
 
         mockMvc.perform(get("/api/users/" + user.getId())
                 .header("Authorization", "Bearer supertoken"))
@@ -134,10 +129,8 @@ public class UsersControllerTest extends BaseControllerTest {
 
     @Test
     public void updateUser() throws Exception {
-        Random random = new Random();
-        int startLength = this.userRepository.findAll().size();
-        String userId = this.userList.get(random.nextInt(startLength - 1)).getId();
-        User oldUser = this.userRepository.findOne(userId);
+        User oldUser = getRandomUser();
+        String userId = oldUser.getId();
         User updatingValueUser = this.userRepository.findOne(userId);
 
         String newUsername = "test usernameke super yeey";
@@ -157,10 +150,8 @@ public class UsersControllerTest extends BaseControllerTest {
 
     @Test
     public void updateUserOtherValues() throws Exception {
-        Random random = new Random();
-        int startLength = this.userRepository.findAll().size();
-        String userId = this.userList.get(random.nextInt(startLength - 1)).getId();
-        User oldUser = this.userRepository.findOne(userId);
+        User oldUser = getRandomUser();
+        String userId = oldUser.getId();
         User updatingValueUser = this.userRepository.findOne(userId);
 
         updatingValueUser.setFirstname("Jotie");
@@ -251,7 +242,7 @@ public class UsersControllerTest extends BaseControllerTest {
 
     @Test
     public void askForNonExistingUserTest() throws Exception {
-        mockMvc.perform(get("/api/users?username=" + "asdfghjkl")
+        mockMvc.perform(get("/api/users?username=" + "asdfhjasdfhsjakldfhasjkdfhkjl")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -278,8 +269,24 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(15, ug.getSkill_level());
     }
 
+    @Test
+    public void addUserWithUsernameThatAlreadyExists() throws Exception {
+        User user = getRandomUser();
+        User newUser = new User(user.getUsername(), "copyc@t.com", "lalalala123");
+
+        mockMvc.perform(post("/api/users")
+                .contentType(contentType)
+                .content(json(newUser)))
+                .andExpect(status().isConflict());
+    }
+
+    private User getRandomUser() {
+        Random random = new Random();
+        int startLength = this.userRepository.findAll().size();
+        return this.userList.get(random.nextInt(startLength - 1));
+    }
+
     /* tests te schrijven:
-        - user toevoegen met naam die al bestaat
         - user verwijderen die niet bestaat?
         - game toevoegen aan user die niet bestaat
         - game verwijderen van user die niet bestaat
