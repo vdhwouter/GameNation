@@ -156,6 +156,11 @@ public class UsersControllerTest extends BaseControllerTest {
         String userId = oldUser.getId();
         User updatingValueUser = this.userRepository.findOne(userId);
 
+        // check if can update just other values, not email, pass, username
+        updatingValueUser.setUsername(null);
+        updatingValueUser.setPassword(null);
+        updatingValueUser.setEmail(null);
+
         updatingValueUser.setFirstname("Jotie");
         updatingValueUser.setLastname("T'Hooft");
         updatingValueUser.setTeamspeak("jotie.teamspeak.com");
