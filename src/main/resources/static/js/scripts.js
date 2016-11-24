@@ -2,15 +2,21 @@ $(document).ready(function () {
     'use strict';
 
     crossroads.addRoute('/', function () {
-        window.location += 'login';
+        navigateTo('/login', 'Login')
     }, 100);
 
-    crossroads.addRoute('/login', function () {
+    crossroads.addRoute('/login', function (query) {
+        console.log(query);
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
         $('body').load('login.html', function () {
             if (session.authenticated) {
-                console.log('already authenticated!, redirecting to profile...')
-                navigateTo(session.user.username, session.user.username)
+                console.info('already authenticated!, redirecting to profile...')
+                return navigateTo(session.user.username, session.user.username)
+            }
+
+            if (window.loginMessage) {
+                $('#login-message').text(window.loginMessage);
+                window.loginMessage = null
             }
 
             $('#login-form').on('submit', function (e) {
@@ -19,11 +25,11 @@ $(document).ready(function () {
                 var password = $('#login-form input[type=password]').val()
                 session.login(username, password)
                     .then(function (user) {
-                        console.log('successfully authenticated, redirecting to profile...')
+                        console.info('successfully authenticated, redirecting to profile...')
                         navigateTo(username, username)
                     })
-                    .catch(function(error) {
-                        console.log('bad credentials!')
+                    .catch(function (error) {
+                        console.warn('bad credentials!')
                         $('p#login-errors').text("BAD CREDENTIALS!")
                     })
             })
@@ -33,7 +39,66 @@ $(document).ready(function () {
     crossroads.addRoute('/register', function () {
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
         $('body').load('register.html', function () {
+            if (session.authenticated) {
+                console.info('already authenticated! no need to register - redirecting to profile...')
+                return navigateTo(session.user.username, session.user.username)
+            }
 
+            $('#register-form').on('submit', function (e) {
+                e.preventDefault()
+                console.log("ERAHAKDKASHD")
+                var username = $('#register-form input[name=username]').val()
+                var email = $('#register-form input[name=email]').val()
+                var password = $('#register-form input[name=password]').val()
+                var confirmation = $('#register-form input[name=confirmation]').val()
+
+                var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
+                var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+
+                var errors = []
+
+                if (!email.match(validEmail)) {
+                    errors.push('Email should be a valid email')
+                }
+
+                if (!password.match(securePassword)) {
+                    errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
+                }
+
+                if (password !== confirmation) {
+                    errors.push('Password and confirmation should match')
+                }
+
+                var parsedErrors = errors.reduce(function (prev, current) {
+                    if (prev) {
+                        prev += "</br>"
+                    }
+
+                    return prev += current
+                }, "")
+
+                $('#register-errors')[0].innerHTML = parsedErrors;
+
+                axios.get('/users?username=' + username)
+                    .then(res => {
+                        if (res.data.length > 0) {
+                            $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'
+                        }
+                    })
+
+                if (errors.length == 0 && !$('#register-errors')[0].innerHTML) {
+                    axios.post('/users', { username: username, password: password, email: email })
+                        .then((res) => {
+                            console.log(res);
+                            window.loginMessage = "success, you can now login!"
+                            navigateTo('login', 'Login')
+                        }).catch((err) => {
+                            console.log(err)
+                            $('#register-errors')[0].innerHTML = err.response.data.message;
+                        })
+                }
+
+            })
         });
     }, 100);
 
@@ -81,8 +146,6 @@ $(document).ready(function () {
         })
     }, 1);
 
-    crossroads.parse(document.location.pathname);
-
     var History, State;
 
     History = window.History;
@@ -111,4 +174,6 @@ $(document).ready(function () {
 
         History.pushState({ urlPath: urlPath }, title, urlPath)
     }
+
+    crossroads.parse(document.location.pathname);
 });
