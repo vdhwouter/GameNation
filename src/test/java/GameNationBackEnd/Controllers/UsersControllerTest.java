@@ -156,6 +156,35 @@ public class UsersControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void updateUserOtherValues() throws Exception {
+        Random random = new Random();
+        int startLength = this.userRepository.findAll().size();
+        String userId = this.userList.get(random.nextInt(startLength - 1)).getId();
+        User oldUser = this.userRepository.findOne(userId);
+        User updatingValueUser = this.userRepository.findOne(userId);
+
+        updatingValueUser.setFirstname("Jotie");
+        updatingValueUser.setLastname("T'Hooft");
+        updatingValueUser.setTeamspeak("jotie.teamspeak.com");
+        updatingValueUser.setDiscord("https://discord.com/jotie");
+        updatingValueUser.setDescription("I'm a poet, you don't rime");
+
+        mockMvc.perform(post("/api/users/" + userId)
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType)
+                .content(json(updatingValueUser)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstname", is("Jotie")))
+                .andExpect(jsonPath("$.lastname", is("T'Hooft")))
+                .andExpect(jsonPath("$.teamspeak", is("jotie.teamspeak.com")))
+                .andExpect(jsonPath("$.discord", is("https://discord.com/jotie")))
+                .andExpect(jsonPath("$.description", is("I'm a poet, you don't rime")));
+
+        User updatedUser = userRepository.findOne(oldUser.getId());
+        assertNotEquals(oldUser.getDescription(), updatedUser.getDescription());
+    }
+
+    @Test
     public void addGamesToUser() throws Exception {
         User user = userRepository.findByUsername("wouter");
 
@@ -250,7 +279,6 @@ public class UsersControllerTest extends BaseControllerTest {
     }
 
     /* tests te schrijven:
-        - user wijzigen!
         - user toevoegen met naam die al bestaat
         - user verwijderen die niet bestaat?
         - game toevoegen aan user die niet bestaat
