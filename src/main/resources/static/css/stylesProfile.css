@@ -312,16 +312,6 @@ input:focus{
 /* ===========================================
    Model edit game
    =========================================== */
-#modelSkilEditDelete {
-    width: 110px;
-    margin-bottom: 10px;
-}
-
-#modelSkilEditCancel {
-    float: left;
-    min-width: 110px;
-    padding: 12px 0;
-}
 
 #modelSkilEditEdit {
     float: right;
@@ -329,12 +319,13 @@ input:focus{
     padding: 12px 0;
 }
 
-#modelSkilEditDelete input {
-    padding: 12px 0;
-    padding-bottom: 28px;
+#modelSkilEditDelete {
+	float: left;
+	min-width: 110px;
+	padding: 12px 0;
 }
 
-#modelSkilEditCancel .remodal-cancel, #modelSkilEditEdit .remodal-confirm {
+#modelSkilEditDelete input,#modelSkilEditEdit input,.remodal-confirm {
     padding-bottom: 30px;
 }
 

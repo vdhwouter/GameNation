@@ -22,6 +22,8 @@ axios.get("/games").then(function (response) {
             var li = document.createElement("li");
             li.className = "file";
             li.setAttribute("data-search-term", value.name.toLowerCase());
+            li.setAttribute("data-remodal-target", "ShowGameDetailsModal");
+
 
             var img = document.createElement("img");
             img.setAttribute("src", "img/games/" + value.imageName);
