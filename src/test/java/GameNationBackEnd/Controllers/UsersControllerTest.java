@@ -62,6 +62,12 @@ public class UsersControllerTest extends BaseControllerTest {
         this.gameList.add(gameRepository.save(new Game("team fortress 2", "still popular", "wmm.jpg")));
     }
 
+    private User getRandomUser() {
+        Random random = new Random();
+        int startLength = this.userRepository.findAll().size();
+        return this.userList.get(random.nextInt(startLength - 1));
+    }
+
     @Test
     public void getUsers() throws Exception {
         User firstUser = this.userList.get(0);
@@ -342,11 +348,6 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(userGameRepository.findByUser(user).size(), startSize);
     }
 
-    private User getRandomUser() {
-        Random random = new Random();
-        int startLength = this.userRepository.findAll().size();
-        return this.userList.get(random.nextInt(startLength - 1));
-    }
 
 
 
