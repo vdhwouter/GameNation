@@ -105,6 +105,7 @@ public class GamesControllerTest extends BaseControllerTest {
         assertEquals(false, this.gameRepository.exists(game.getId()));
     }
 
+    @Test
     public void getGame() throws Exception {
         Random random = new Random();
         int startLength = this.gameRepository.findAll().size();
