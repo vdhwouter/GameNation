@@ -7,12 +7,34 @@ $(document).ready(function () {
 
     crossroads.addRoute('/login', function () {
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
-        $('body').load('login.html');
+        $('body').load('login.html', function () {
+            if (session.authenticated) {
+                console.log('already authenticated!, redirecting to profile...')
+                navigateTo(session.user.username, session.user.username)
+            }
+
+            $('#login-form').on('submit', function (e) {
+                e.preventDefault()
+                var username = $('#login-form input[type=text]').val()
+                var password = $('#login-form input[type=password]').val()
+                session.login(username, password)
+                    .then(function (user) {
+                        console.log('successfully authenticated, redirecting to profile...')
+                        navigateTo(username, username)
+                    })
+                    .catch(function(error) {
+                        console.log('bad credentials!')
+                        $('p#login-errors').text("BAD CREDENTIALS!")
+                    })
+            })
+        });
     }, 100);
 
     crossroads.addRoute('/register', function () {
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
-        $('body').load('register.html');
+        $('body').load('register.html', function () {
+
+        });
     }, 100);
 
     crossroads.addRoute('/settings/{username}', function (username) {
@@ -36,7 +58,7 @@ $(document).ready(function () {
             })
     }, 100);
 
-    crossroads.addRoute('/games', function() {
+    crossroads.addRoute('/games', function () {
         $('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'));
         $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
         $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
@@ -68,17 +90,25 @@ $(document).ready(function () {
     if (History.enabled) {
         State = History.getState();
 
-        History.pushState({urlPath: window.location.pathname}, $('title').text(), State.urlPath);
+        History.pushState({ urlPath: window.location.pathname }, $('title').text(), State.urlPath);
     }
 
-    History.Adapter.bind(window, 'statechange', function() {
+    History.Adapter.bind(window, 'statechange', function () {
         return crossroads.parse(document.location.pathname);
     })
 
-    $('body').on('click', 'a', function(e) {
+    $('body').on('click', 'a', function (e) {
         var urlPath = $(this).attr('href');
         e.preventDefault();
         var title = $(this).text();
-        return History.pushState({urlPath: urlPath}, title, urlPath);
+        return History.pushState({ urlPath: urlPath }, title, urlPath);
     });
+
+    window.navigateTo = function navigateTo(urlPath, title = 'GameNation') {
+        if (title) {
+            title = title + ' | GameNation'
+        }
+
+        History.pushState({ urlPath: urlPath }, title, urlPath)
+    }
 });

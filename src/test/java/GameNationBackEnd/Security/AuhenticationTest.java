@@ -62,7 +62,6 @@ public class AuhenticationTest {
                 .postForObject("/oauth/token", postParams, String.class);
     }
 
-    @Ignore
     @Test(expected = ResourceAccessException.class)
     public void unauthorizedTest() {
         MultiValueMap<String, String> postParams = new LinkedMultiValueMap<String, String>();
@@ -72,5 +71,10 @@ public class AuhenticationTest {
 
         String res = restTemplate
                 .postForObject("/api/games", postParams, String.class);
+    }
+
+    @Test
+    public void preflightOptionsTest() {
+        restTemplate.optionsForAllow("/api/games");
     }
 }

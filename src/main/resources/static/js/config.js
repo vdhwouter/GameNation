@@ -1,2 +1,5 @@
-axios.defaults.baseURL = 'http://localhost:8080/api';
-axios.defaults.headers.common['Authorization'] = "Bearer supertoken";
+// during testing
+// localStorage.clear()
+
+axios.defaults.baseURL = '/api';
+// axios.defaults.headers.common['Authorization'] = "Bearer supertoken";
