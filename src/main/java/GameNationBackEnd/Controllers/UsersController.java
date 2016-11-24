@@ -98,7 +98,7 @@ public class UsersController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public User InsertUser(@Valid @RequestBody User user) throws UserAlreadyExistsException {
         if (userDB.findByUsername(user.getUsername()) != null) {
-            throw new UserAlreadyExistsException(user.getId());
+            throw new UserAlreadyExistsException(user.getUsername());
         } else {
             return userDB.save(user);
         }
@@ -124,7 +124,7 @@ public class UsersController {
         // check if any of the games already exist in the user's collection
         userGameDB.findByUser(user).stream().forEach(ug -> {
            if (gameList.contains(ug)) {
-               throw new GameAlreadyExistsException(ug.getGame().getId());
+               throw new GameAlreadyExistsException(ug.getGame().getName());
            }
         });
 

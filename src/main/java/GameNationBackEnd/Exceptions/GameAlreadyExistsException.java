@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class GameAlreadyExistsException extends RuntimeException {
     public GameAlreadyExistsException(String gameId) {
-        super("game '" + gameId + " already exists'");
+        super("game '" + gameId + "' already exists");
     }
 }
