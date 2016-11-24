@@ -5,16 +5,20 @@ import GameNationBackEnd.Documents.User;
 import GameNationBackEnd.Repositories.UserRepository;
 import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import java.util.Set;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -29,8 +33,13 @@ public class UserRepositoryTest extends TestCase {
     private User user4 = new User("kjell", "kjell@gmail.com", "c <3");
     private User user5 = new User("tijs", "tijs@gmail.com", "tijsje123");
 
+    private Validator validator;
+
     @Before
     public void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+
         userRepo.deleteAll();
 
         userRepo.save(user1);
@@ -50,5 +59,14 @@ public class UserRepositoryTest extends TestCase {
     public void GetUserByUsername() {
         User user = userRepo.findByUsername("lucas");
         assertEquals("lucas@gmail.com", user.getEmail());
+    }
+
+//    @Test(expected = )
+    @Test
+    public void ValidateEmailTest() {
+        User user = new User("lucaske", "lucas_at_gmail_com", "lalala");
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assertEquals( 1, violations.size() );
+        assertEquals("Email must be a valid email", violations.iterator().next().getMessage());
     }
 }

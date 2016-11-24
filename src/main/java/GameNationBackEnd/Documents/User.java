@@ -18,7 +18,7 @@ public class User{
 	private String _id;
 
 	@Indexed(unique = true)
-	@Email
+	@Email(message = "Email must be a valid email")
 	@NotBlank(message = "Email must not be blank")
 	private String email;
 

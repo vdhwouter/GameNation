@@ -220,6 +220,20 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(2, userGames.size());
     }
 
+    @Test
+    public void EmailValidationTest() throws Exception {
+        User user = new User("borrel", "bale_at_gool.com", "superwachtwoord");
+
+        mockMvc.perform(post("/api/users")
+            .header("Authorization", "Bearer supertoken")
+            .contentType(contentType)
+            .content(json(user)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.errors", hasSize(1)))
+            .andExpect(jsonPath("$.errors[0]", is("Email must be a valid email")));
+    }
+
+
     /* tests te schrijven:
         - user wijzigen!
         - user toevoegen met naam die al bestaat
