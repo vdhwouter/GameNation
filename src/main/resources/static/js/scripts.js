@@ -36,6 +36,10 @@ $(document).ready(function () {
             })
     }, 100);
 
+    crossroads.addRoute('/games', function() {
+        $('body').load('games.html');
+    }, 100);
+
     crossroads.addRoute('/{username}', function (username) {
         axios.get('/users?username=' + username).then(function (data) {
             var user = data.data[0]
