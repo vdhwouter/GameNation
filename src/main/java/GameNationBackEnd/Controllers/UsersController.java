@@ -119,22 +119,17 @@ public class UsersController {
     // add games to user
     @RequestMapping(value = "/{user}/games", method = RequestMethod.POST)
     public List<UserGame> AddGamesToUser(@PathVariable User user, @RequestBody List<String> games) {
-        // skill moe wel hier nie peisk als ge het nie toevoegt van de eerste keer.
-        // of ja alleszins altijd 0 zijn zoals.. wel hier :p
-        int skill = new Integer(0);
-
         List<Game> gameList = gameRepository.findByIdIn(games);
+
+        // check if any of the games already exist in the user's collection
+        userGameDB.findByUser(user).stream().forEach(ug -> {
+           if (gameList.contains(ug)) {
+               throw new GameAlreadyExistsException(ug.getGame().getId());
+           }
+        });
+
         for (Game game : gameList) {
-            if (!userGameDB.findByUser(user).stream().anyMatch(ug -> ug.getGame().equals(game))) {
-                UserGame newUserGame = new UserGame(user, game, skill);
-                userGameDB.save(newUserGame);
-            } else {
-                UserGame editUserGame = userGameDB.findByUserAndGame(user, game);
-                if (editUserGame.getSkill_level() != skill) {
-                    editUserGame.setSkill_level(skill);
-                    userGameDB.save(editUserGame);
-                } else throw new GameAlreadyExistsException(game.getId());
-            }
+            userGameDB.save(new UserGame(user,game, 0));
         }
 
         return userGameDB.findByUser(user);
