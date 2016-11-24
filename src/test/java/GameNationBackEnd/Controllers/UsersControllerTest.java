@@ -1,33 +1,14 @@
 package GameNationBackEnd.Controllers;
 
 
-import GameNationBackEnd.Controllers.UsersController;
 import GameNationBackEnd.Documents.*;
 import GameNationBackEnd.Repositories.*;
 import GameNationBackEnd.Setup.BaseControllerTest;
-import org.codehaus.groovy.ast.expr.Expression;
-import org.codehaus.jackson.map.deser.ValueInstantiators;
+import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.WebApplicationContext;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +18,6 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 /**
  * Created by lucas on 23/11/2016.
@@ -85,12 +65,12 @@ public class UsersControllerTest extends BaseControllerTest {
         User firstUser = this.userList.get(0);
 
         mockMvc.perform(get("/api/users"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(contentType))
-            .andExpect(jsonPath("$", hasSize(this.userList.size())))
-            .andExpect(jsonPath("$[0].id", is(firstUser.getId())))
-            .andExpect(jsonPath("$[0].username", is(firstUser.getUsername())))
-            .andExpect(jsonPath("$[0].email", is(firstUser.getEmail())));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(this.userList.size())))
+                .andExpect(jsonPath("$[0].id", is(firstUser.getId())))
+                .andExpect(jsonPath("$[0].username", is(firstUser.getUsername())))
+                .andExpect(jsonPath("$[0].email", is(firstUser.getEmail())));
     }
 
 
@@ -125,7 +105,7 @@ public class UsersControllerTest extends BaseControllerTest {
     public void deleteUser() throws Exception {
         Random random = new Random();
         int startLength = this.userRepository.findAll().size();
-        User user = this.userList.get(random.nextInt(startLength-1));
+        User user = this.userList.get(random.nextInt(startLength - 1));
 
 
         mockMvc.perform(delete("/api/users/" + user.getId())
@@ -140,7 +120,7 @@ public class UsersControllerTest extends BaseControllerTest {
     public void getUser() throws Exception {
         Random random = new Random();
         int startLength = this.userRepository.findAll().size();
-        User user = this.userList.get(random.nextInt(startLength-1));
+        User user = this.userList.get(random.nextInt(startLength - 1));
 
 
         mockMvc.perform(get("/api/users/" + user.getId())
@@ -156,7 +136,7 @@ public class UsersControllerTest extends BaseControllerTest {
     public void updateUser() throws Exception {
         Random random = new Random();
         int startLength = this.userRepository.findAll().size();
-        String userId = this.userList.get(random.nextInt(startLength-1)).getId();
+        String userId = this.userList.get(random.nextInt(startLength - 1)).getId();
         User oldUser = this.userRepository.findOne(userId);
         User updatingValueUser = this.userRepository.findOne(userId);
 
@@ -232,14 +212,42 @@ public class UsersControllerTest extends BaseControllerTest {
         User user = new User("borrel", "bale_at_gool.com", "superwachtwoord");
 
         mockMvc.perform(post("/api/users")
-            .header("Authorization", "Bearer supertoken")
-            .contentType(contentType)
-            .content(json(user)))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors", hasKey("email")))
-            .andExpect(jsonPath("$.errors.email", is("Email must be a valid email")));
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType)
+                .content(json(user)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors", hasKey("email")))
+                .andExpect(jsonPath("$.errors.email", is("Email must be a valid email")));
     }
 
+    @Test
+    public void askForNonExistingUserTest() throws Exception {
+        mockMvc.perform(get("/api/users?username=" + "asdfghjkl")
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+
+    @Test
+    public void addSkillLevelToUserGame() throws Exception {
+        User user = userRepository.save(new User("gaming-user", "gaming@user.be", "Azerty123"));
+        Game game = gameList.get(2);
+        userGameRepository.save(new UserGame(user, game, 0));
+
+        SkillLevelRequest skillLevel = new SkillLevelRequest();
+        skillLevel.level = 15;
+
+        mockMvc.perform(post("/api/users/" + user.getId() + "/games/" + game.getId())
+                .contentType(contentType)
+                .content(json(skillLevel)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.game.id", is(game.getId())))
+                .andExpect(jsonPath("$.skill_level", is(15)));
+
+        UserGame ug = userGameRepository.findByUserAndGame(user, game);
+        assertEquals(15, ug.getSkill_level());
+    }
 
     /* tests te schrijven:
         - user wijzigen!
