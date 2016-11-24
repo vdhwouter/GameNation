@@ -49,17 +49,6 @@ public class User{
 		this.password = password;
 	}
 
-	public User(String username, String email, String password, String firstname, String lastname, String teamspeak, String discord, String description) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.teamspeak = teamspeak;
-		this.discord = discord;
-		this.description = description;
-	}
-
 	public String getId() {
 		return  _id;
 	}
