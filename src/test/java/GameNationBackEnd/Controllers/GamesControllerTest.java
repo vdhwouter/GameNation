@@ -105,6 +105,21 @@ public class GamesControllerTest extends BaseControllerTest {
         assertEquals(false, this.gameRepository.exists(game.getId()));
     }
 
+    public void getGame() throws Exception {
+        Random random = new Random();
+        int startLength = this.gameRepository.findAll().size();
+        Game game = this.gameList.get(random.nextInt(startLength-1));
+
+        mockMvc.perform(get("/api/games/" + game.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.id", is(game.getId())))
+                .andExpect(jsonPath("$.name", is(game.getName())))
+                .andExpect(jsonPath("$.description", is(game.getDescription())))
+                .andExpect(jsonPath("$.imageName", is(game.getImageName())));
+    }
+
+
     /* tests te schrijven:
         - game wijzigen!
         - game toevoegen met naam die al bestaat
