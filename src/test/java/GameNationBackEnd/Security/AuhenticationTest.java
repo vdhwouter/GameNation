@@ -2,6 +2,7 @@ package GameNationBackEnd.Security;
 
 import GameNationBackEnd.Repositories.UserRepository;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class AuhenticationTest {
     }
 
     @Test
-    public void getAuthenticationToken() throws IOException {
+    public void getAuthenticationTokenTest() throws IOException {
         MultiValueMap<String, String> postParams = new LinkedMultiValueMap<String, String>();
         postParams.add("username", "test");
         postParams.add("password", "test");
@@ -60,21 +62,15 @@ public class AuhenticationTest {
                 .postForObject("/oauth/token", postParams, String.class);
     }
 
-    class OAuthRequest {
-        public String username;
-        public String password;
-        public String grant_type;
+    @Ignore
+    @Test(expected = ResourceAccessException.class)
+    public void unauthorizedTest() {
+        MultiValueMap<String, String> postParams = new LinkedMultiValueMap<String, String>();
+        postParams.add("name", "testgame");
+        postParams.add("image", "testimage");
+        postParams.add("description", "aweosome game");
 
-        public String GetUsername() {return username;}
-        public String GetPassword() {return password;}
-        public String GetGrant_type() {return grant_type;}
-    }
-
-    class OAuthResponse {
-        String access_token;
-        String token_type;
-        String refresh_token;
-        String expires_in;
-        String scope;
+        String res = restTemplate
+                .postForObject("/api/games", postParams, String.class);
     }
 }
