@@ -53,4 +53,25 @@ $(document).ready(function () {
     }, 1);
 
     crossroads.parse(document.location.pathname);
+
+    var History, State;
+
+    History = window.History;
+
+    if (History.enabled) {
+        State = History.getState();
+
+        History.pushState({urlPath: window.location.pathname}, $('title').text(), State.urlPath);
+    }
+
+    History.Adapter.bind(window, 'statechange', function() {
+        return crossroads.parse(document.location.pathname);
+    })
+
+    $('body').on('click', 'a', function(e) {
+        var urlPath = $(this).attr('href');
+        e.preventDefault();
+        var title = $(this).text();
+        return History.pushState({urlPath: urlPath}, title, urlPath);
+    });
 });
