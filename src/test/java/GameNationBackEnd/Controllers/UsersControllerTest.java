@@ -197,6 +197,29 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(2, userGames.size());
     }
 
+
+    @Test
+    public void getGamesForUser() throws Exception {
+        User user = userRepository.findByUsername("wouter");
+
+        Game game1 = this.gameList.get(2);
+        Game game2 = this.gameList.get(4);
+
+        userGameRepository.save(new UserGame(user, game1, 0));
+        userGameRepository.save(new UserGame(user, game2, 0));
+
+        mockMvc.perform(get("/api/users/" + user.getId() + "/games")
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].game.name", is(game1.getName())))
+                .andExpect(jsonPath("$[1].game.name", is(game2.getName())));
+
+        List<UserGame> userGames = userGameRepository.findByUser(user);
+        assertEquals(2, userGames.size());
+    }
+
     /* tests te schrijven:
         - user wijzigen!
         - user toevoegen met naam die al bestaat
