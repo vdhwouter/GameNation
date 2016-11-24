@@ -18,8 +18,6 @@ $(document).ready(function() {
                     var li = document.createElement("li");
 
                     var a = document.createElement('a');
-                    a.setAttribute("data-remodal-target", "EditGameModal");
-                    a.setAttribute("onclick", "editGame(this)");
 
                     var firstP = document.createElement("p");
                     firstP.innerHTML = value['game'].id;
