@@ -1,35 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="wrapper">
+    <div >
+        <form action="" method="post" role="form">
+            <dl>
+                <dt style="display: none"><label>Zoeken</label></dt>
+                <dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
+            </dl>
+        </form>
+    </div>
 
     <div id="games">
         <h3>Games</h3>
     </div>
-
+    
     <!-- model dialog add games -->
     <div class="remodal" data-remodal-id="ShowGameDetailsModal" data-remodal-options="closeOnOutsideClick: false">
         <button data-remodal-action="close" class="remodal-close"></button>
-        <h1>Add new Game</h1>
-        <div id="searchAddGames">
-            <form action="" method="post" role="form">
-                <dl>
-                    <dt style="display: none"><label>Zoeken</label></dt>
-                    <dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
-                </dl>
-            </form>
-        </div>
-
-        <div class="grid" id="addGames"></div>
-
-        <form action="">
-            <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
-            <button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
-        </form>
+        <h1>Game properties</h1>
+        <div id="ShowDetailsGames"></div>
     </div>
-
-</body>
-</html>
+</div>
+<script src="js/remodal.min.js"></script>
+<script src="js/settings.js"></script>
