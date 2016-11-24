@@ -198,13 +198,9 @@ var editGame = function (e) {
 
 // by click on the add button
 $('#modelSkilEditEdit').click(function () {
-    var editskillIdInArray = new Array();
-    editskillIdInArray.push(td_list[0]);
-
     //toevoegen game aan user
-    axios.post('/users/5835cd4b0e402cf3a0f6a1ac/games', {
-        games: editskillIdInArray,
-        skill: document.getElementById("skillset").value
+    axios.post('/users/5835cd4b0e402cf3a0f6a1ac/games/' + td_list[0], {
+        level: document.getElementById("skillset").value
     }).then(function (result) {
         console.log("toevoegen game aan user", result)
         location.reload()
