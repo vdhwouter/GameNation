@@ -6,7 +6,6 @@ $(document).ready(function () {
     /* ===========================================
      show all games
      =========================================== */
-
     axios.get("/games").then(function (response) {
         var data = response.data
 
@@ -65,16 +64,15 @@ $(document).ready(function () {
 });
 
 
-
-
-var allGames = [];
+// give info about the game in the modal
 var infoGame = function (e) {
+    var allGames = [];
 
     $(e).children().each(function (i, v) {
         if (i >= 0 && i < 5) {
             allGames[i] = $(this)[0].innerHTML;
         }
     });
-    console.log(allGames);
+
     $('#detailsGames p').text(allGames[2]);
 }
