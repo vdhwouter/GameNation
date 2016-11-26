@@ -1,6 +1,6 @@
 $(document).ready(function () {
     'use strict';
-    console.log("test: " + session.id);
+
     crossroads.addRoute('/', function () {
         navigateTo('/login', 'Login')
     }, 100);

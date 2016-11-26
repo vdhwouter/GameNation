@@ -3,7 +3,6 @@
     src: url(../fonts/WhitneyMedium.ttf);
 }
 
-
 html{
 	background-color:#36393e;
 	font-family: WhitneyMedium, Helvetica, sans-serif;
@@ -30,6 +29,19 @@ h2{
 	margin-top: 0rem;
 	font-size: 3rem;
 	margin-bottom: 1rem;
+}
+
+h3{
+    font-size: 2rem;
+	color: #db5f24;
+	margin: 3rem 0rem 0rem 0rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    color: #db5f24;
+    text-align: left;
+    margin-top: 1.5rem;
 }
 
 li{
@@ -115,11 +127,6 @@ p{
 #games, #games-overview, #lobby-overview{
 	float: left;
 	width: 100%;
-}
-
-#games h3, #games-overview h3, #lobby-overview h3{
-	color: #db5f24;
-	margin: 1rem 0rem 0rem 0rem;
 }
 
 #games li, #games-overview li, #lobby-overview li{
@@ -251,6 +258,10 @@ input:focus{
 .remodal h1 {
 }
 
+.remodal h3 {
+    margin: 0;
+}
+
 #addGames {
     overflow: hidden;
     margin-bottom: 30px;
@@ -340,4 +351,15 @@ input:focus{
 #skillset {
     background-color: #4a4c51;
     width: 97.5%;
+}
+
+
+
+
+/* ===========================================
+   Model details game (games.html)
+   =========================================== */
+#detailsGames p {
+    text-align: left;
+    margin-top: 0.5rem;
 }

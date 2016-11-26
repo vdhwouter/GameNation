@@ -3,7 +3,6 @@ $(document).ready(function () {
     /* ===========================================
      show all games that user added
      =========================================== */
-     console.log("SettingUser: " + session.id);
     axios.get("/users/" + session.id + "/games")
         .then(function (result) {
             var data = result.data
