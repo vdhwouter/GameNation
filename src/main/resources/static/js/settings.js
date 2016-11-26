@@ -17,10 +17,8 @@ $(document).ready(function () {
                     var value = data[key];
 
                     var li = document.createElement("li");
-
-                    var a = document.createElement('a');
-                    a.setAttribute("data-remodal-target", "EditGameModal");
-                    a.setAttribute("onclick", "editGame(this)");
+                    li.setAttribute("data-remodal-target", "EditGameModal");
+                    li.setAttribute("onclick", "editGame(this)");
 
                     var firstP = document.createElement("p");
                     firstP.innerHTML = value['game'].id;
@@ -43,12 +41,11 @@ $(document).ready(function () {
                     var secondP = document.createElement("p");
                     secondP.innerHTML = value['game'].name;
 
-                    a.appendChild(firstP);
-                    a.appendChild(img);
-                    a.appendChild(secondImg);
-                    a.appendChild(thirdP);
-                    a.appendChild(secondP);
-                    li.appendChild(a);
+                    li.appendChild(firstP);
+                    li.appendChild(img);
+                    li.appendChild(secondImg);
+                    li.appendChild(thirdP);
+                    li.appendChild(secondP);
                     ul.appendChild(li);
                 }
             }
