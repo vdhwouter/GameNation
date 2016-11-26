@@ -3,8 +3,8 @@ $(document).ready(function () {
     /* ===========================================
      show all games that user added
      =========================================== */
-
-    axios.get("/users/5835cd4b0e402cf3a0f6a1ac/games")
+     console.log("SettingUser: " + session.id);
+    axios.get("/users/" + session.id + "/games")
         .then(function (result) {
             var data = result.data
 
@@ -170,7 +170,7 @@ $(document).ready(function () {
             console.log("addedgames" + addedGames);
 
             //toevoegen game aan user
-            axios.post("/users/5835cd4b0e402cf3a0f6a1ac/games", addedGames)
+            axios.post("/users/" + session.id + "/games", addedGames)
                 .then(function (data) {
                     console.log(data)
                     location.reload();
@@ -199,7 +199,7 @@ var editGame = function (e) {
 // by click on the add button
 $('#modelSkilEditEdit').click(function () {
     //toevoegen game aan user
-    axios.post('/users/5835cd4b0e402cf3a0f6a1ac/games/' + td_list[0], {
+    axios.post('/users/' + session.id + '/games/' + td_list[0], {
         level: document.getElementById("skillset").value
     }).then(function (result) {
         console.log("toevoegen game aan user", result)
@@ -211,7 +211,7 @@ $('#modelSkilEditEdit').click(function () {
 $('#modelSkilEditDelete').click(function () {
     console.log("id " + td_list[0]);
     //delete game van user
-    axios.delete('/users/5835cd4b0e402cf3a0f6a1ac/games/' + td_list[0])
+    axios.delete('/users/' + session.id + '/games/' + td_list[0])
         .then(function (result) {
             location.reload()
         })

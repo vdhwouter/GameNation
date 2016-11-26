@@ -2,7 +2,8 @@
    show all games that user added
    =========================================== */
 $(document).ready(function() {
-    axios.get("/users/5835cd4b0e402cf3a0f6a1ac/games")
+    console.log("profileUser: " + session.id);
+    axios.get("/users/" + session.id + "/games")
         .then(function(response) {
             var data = response.data;
             
