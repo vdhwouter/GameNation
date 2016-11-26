@@ -71,7 +71,28 @@ $(document).ready(function () {
             a.appendChild(p);
             li.appendChild(a);
             ul.appendChild(li);
+
+            getIdAddedUserGames();
+            showAllGamesModal();
         })
+
+    // get id's from all games that user added
+    var getIdAddedUserGames = function() {
+        var td_list = [];
+        var ul = document.getElementById("listAddedGames");
+
+        $(ul).children().each(function (i, v) {
+            var str = $(this)[0].innerHTML;
+            var tmp = document.createElement('div');
+            tmp.innerHTML = str;
+            var alt = tmp.getElementsByTagName('img')[0].alt;
+            td_list[i] = alt;
+        });
+        // remove last item in array
+        td_list.splice(-1,1)
+
+        return td_list;
+    }
 
 
     /* ===========================================
@@ -94,56 +115,66 @@ $(document).ready(function () {
      show all games in remodal
      make an array from all selected games
      =========================================== */
-    // array with selected games
-    var addedGames = new Array();
+     // array with selected games
+     var addedGames = new Array();
 
+     var showAllGamesModal = function() {
 
-    axios.get("/games")
-        .then(function (response) {
-            var data = response.data
+         var gamesAlreadyExists = getIdAddedUserGames();
+         console.log(gamesAlreadyExists);
 
-            // create html tage with games
-            var ul = document.createElement("ul");
-            ul.className = "live-search-list";
-            document.getElementById('addGames').appendChild(ul);
+         axios.get("/games")
+             .then(function (response) {
+                 var data = response.data
 
-            for (key in data) {
-                if (data.hasOwnProperty(key)) {
-                    var value = data[key];
+                 // create html tage with games
+                 var ul = document.createElement("ul");
+                 ul.className = "live-search-list";
+                 document.getElementById('addGames').appendChild(ul);
 
-                    var li = document.createElement("li");
-                    li.className = "file";
-                    li.setAttribute("data-search-term", value.name.toLowerCase());
+                 for (key in data) {
+                     if (data.hasOwnProperty(key)) {
+                         var value = data[key];
 
-                    var img = document.createElement("img");
-                    img.setAttribute("src", "img/games/" + value.imageName);
-                    img.setAttribute("alt", value.id);
-                    img.setAttribute("title", value.name);
-                    img.className += "addGamesImg";
+                         if (!eleContainsInArray(gamesAlreadyExists, value.id)) {
+                             console.log(value);
+                             var li = document.createElement("li");
+                             li.className = "file";
+                             li.setAttribute("data-search-term", value.name.toLowerCase());
 
-                    var p = document.createElement("p");
-                    p.innerHTML = value.name;
+                             var img = document.createElement("img");
+                             img.setAttribute("src", "img/games/" + value.imageName);
+                             img.setAttribute("alt", value.id);
+                             img.setAttribute("title", value.name);
+                             img.className += "addGamesImg";
 
-                    li.appendChild(img);
-                    li.appendChild(p);
-                    ul.appendChild(li);
-                }
-            }
+                             var p = document.createElement("p");
+                             p.innerHTML = value.name;
 
-            // what if a user click on a game?
-            $('.addGamesImg').click(function () {
-                $(this).toggleClass('active');
+                             li.appendChild(img);
+                             li.appendChild(p);
+                             ul.appendChild(li);
+                         }
 
-                if (!eleContainsInArray(addedGames, $(this).attr("alt"))) {
-                    addedGames.push($(this).attr("alt"));
-                }
-                else {
-                    var index = addedGames.indexOf($(this).attr("alt"));
-                    addedGames.splice(index, 1);
-                }
+                     }
+                 }
 
-            });
-        });
+                 // what if a user click on a game?
+                 $('.addGamesImg').click(function () {
+                     $(this).toggleClass('active');
+
+                     if (!eleContainsInArray(addedGames, $(this).attr("alt"))) {
+                         addedGames.push($(this).attr("alt"));
+                     }
+                     else {
+                         var index = addedGames.indexOf($(this).attr("alt"));
+                         addedGames.splice(index, 1);
+                     }
+
+                 });
+             });
+     }
+
 
     // check if game is already in array
     function eleContainsInArray(arr, element) {
@@ -173,6 +204,13 @@ $(document).ready(function () {
                 })
         }
     });
+
+
+
+
+
+
+
 });
 
 
@@ -181,7 +219,6 @@ $(document).ready(function () {
  =========================================== */
 var td_list = [];
 var editGame = function (e) {
-
     $(e).children().each(function (i, v) {
         if (i >= 0 && i < 5) {
             td_list[i] = $(this)[0].innerHTML;
