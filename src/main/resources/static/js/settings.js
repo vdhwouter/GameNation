@@ -250,19 +250,22 @@ $('#modelSkilEditDelete').click(function () {
 
 $('#settings-form').on('submit', function (e) {
     e.preventDefault();
-    console.log('Test');
-    alert('Test');
 
-    var userID = $('#settings-form input[name=userID]').val();
-    var firstname = $('#settings-form input[name=firstname]').val();
-    var lastname = $('#settings-form input[name=lastname]').val();
+    var firstname= $('#settings-form input[name=firstname]').val();
+    var lastname= $('#settings-form input[name=lastname]').val();
+    var username= $('#settings-form input[name=username]').val();
+    var email= $('#settings-form input[name=email]').val();
+    var password= $('#settings-form input[name=password]').val();
+    var teamspeak= $('#settings-form input[name=teamspeak]').val();
+    var discord= $('#settings-form input[name=discord]').val();
+    var description= $('#settings-form input[name=description]').val();
 
-    // POST TO USER ID
-    // firstname: firstname, lastname: lastname, username: username, email: email, password: password, confirmpass: confirmpass, teamspeak: teamspeak, discord: discord, description: description
-    axios.post('/users/' + userID, { firstname: firstname, lastname: lastname })
+    var userID= $('#settings-form input[name=userID]').val();
+
+    axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description })
         .then((res) => {
             console.log(res);
-            //navigateTo('login', 'Login')
+            navigateTo(username, username)
         }).catch((err) => {
             console.log(err)
 
