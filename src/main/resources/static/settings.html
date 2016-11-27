@@ -8,7 +8,8 @@
     </div>
 
     <div id="profileData">
-		<form action="http://localhost:8080/api/users/" method="post" role="form" id="formdata">
+		<!-- http://localhost:8080/api/users/ -->
+		<form action="#" method="post" role="form" id="settings-form" name="settings-form">
 		    <dl>
 		    	<dt><label>First Name</label></dt>
 		        <dd><input type="text" name="firstname" id="firstname" autocomplete="off"/></dd>
@@ -37,6 +38,7 @@
 		    	<dt><label>Description</label></dt>
 				<dd><textarea name="description" id="descriptionText" rows="10" value=""></textarea></dd>
 
+				<dd><input type="hidden" name="userID" id="userID" value="" /></dd>
 				<dd><input type="submit" name="update-submit" class="btn" id="updateSubmit" value="Save" /></dd>
 		    </dl>
 		</form>

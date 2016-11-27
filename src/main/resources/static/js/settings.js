@@ -199,6 +199,11 @@ $(document).ready(function () {
 
 
 
+
+
+
+
+
 });
 
 
@@ -233,4 +238,33 @@ $('#modelSkilEditDelete').click(function () {
     axios.delete('/users/' + session.id + '/games/' + td_list[0]).then(function (result) {
         location.reload()
     });
+});
+
+
+
+
+/* ===========================================
+ Update user info via axios post
+ =========================================== */
+
+
+$('#settings-form').on('submit', function (e) {
+    e.preventDefault();
+    console.log('Test');
+    alert('Test');
+
+    var userID = $('#settings-form input[name=userID]').val();
+    var firstname = $('#settings-form input[name=firstname]').val();
+    var lastname = $('#settings-form input[name=lastname]').val();
+
+    // POST TO USER ID
+    // firstname: firstname, lastname: lastname, username: username, email: email, password: password, confirmpass: confirmpass, teamspeak: teamspeak, discord: discord, description: description
+    axios.post('/users/' + userID, { firstname: firstname, lastname: lastname })
+        .then((res) => {
+            console.log(res);
+            //navigateTo('login', 'Login')
+        }).catch((err) => {
+            console.log(err)
+
+        })
 });

@@ -57,34 +57,19 @@ $(document).ready(function () {
 
                 var errors = []
 
-                if (!email.match(validEmail)) {
-                    errors.push('Email should be a valid email')
-                }
-
-                if (!password.match(securePassword)) {
-                    errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
-                }
-
-                if (password !== confirmation) {
-                    errors.push('Password and confirmation should match')
-                }
+                // Error message generation
+                if (!email.match(validEmail)) errors.push('Email should be a valid email')
+                if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
+                if (password !== confirmation) errors.push('Password and confirmation should match')
 
                 var parsedErrors = errors.reduce(function (prev, current) {
-                    if (prev) {
-                        prev += "</br>"
-                    }
-
+                    if (prev) prev += "</br>"
                     return prev += current
                 }, "")
 
                 $('#register-errors')[0].innerHTML = parsedErrors;
 
-                axios.get('/users?username=' + username)
-                    .then(res => {
-                        if (res.data.length > 0) {
-                            $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'
-                        }
-                    })
+                axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
 
                 if (errors.length == 0 && !$('#register-errors')[0].innerHTML) {
                     axios.post('/users', { username: username, password: password, email: email })
@@ -118,7 +103,9 @@ $(document).ready(function () {
                     $('#teamspeakAddr')[0].value = user.teamspeak;
                     $('#DiscordAddr')[0].value = user.discord;
                     $('#descriptionText')[0].value = user.description;
-                    $('#formdata')[0].action += user.id;
+                    $('#userID')[0].value = user.id;
+
+                    //$('#formdata')[0].action += user.id;
                 });
             })
     }, 100);
@@ -177,3 +164,11 @@ $(document).ready(function () {
 
     crossroads.parse(document.location.pathname);
 });
+
+
+
+
+
+
+
+
