@@ -251,23 +251,50 @@ $('#modelSkilEditDelete').click(function () {
 $('#settings-form').on('submit', function (e) {
     e.preventDefault();
 
+    // Getting all vars from profile editing form
     var firstname= $('#settings-form input[name=firstname]').val();
     var lastname= $('#settings-form input[name=lastname]').val();
     var username= $('#settings-form input[name=username]').val();
     var email= $('#settings-form input[name=email]').val();
     var password= $('#settings-form input[name=password]').val();
+    var confirmation= $('#settings-form input[name=confirmpass]').val();
     var teamspeak= $('#settings-form input[name=teamspeak]').val();
     var discord= $('#settings-form input[name=discord]').val();
     var description= $('#settings-form input[name=description]').val();
-
+    var level= $('#settings-form input[name=level]').val();
     var userID= $('#settings-form input[name=userID]').val();
 
-    axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description })
-        .then((res) => {
-            console.log(res);
-            navigateTo(username, username)
-        }).catch((err) => {
-            console.log(err)
+    //
+    $('#register-errors')[0].innerHTML = CheckFormInput(email, password, confirmation, username);
 
-        })
+    if (!$('#register-errors')[0].innerHTML) {
+        axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level })
+            .then((res) => {
+                console.log(res);
+                navigateTo(username, username);
+            }).catch((err) => {
+                console.log(err)
+            });
+    }
 });
+
+
+var CheckFormInput = function(email, password, confirmation, username){
+    var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
+    var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    var errors = []
+
+    if (!email.match(validEmail)) errors.push('Email should be a valid email')
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
+    if (password !== confirmation) errors.push('Password and confirmation should match')
+    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
+
+    var parsedErrors = errors.reduce(function (prev, current) {
+        if (prev) prev += "</br>"
+        return prev += current
+    }, "")
+
+
+
+    return errors;
+}

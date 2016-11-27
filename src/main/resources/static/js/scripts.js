@@ -52,26 +52,12 @@ $(document).ready(function () {
                 var password = $('#register-form input[name=password]').val()
                 var confirmation = $('#register-form input[name=confirmation]').val()
 
-                var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
-                var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+                // INFO: moved password checking to separate function (see eof) to be used also in profile editing
+                $('#register-errors')[0].innerHTML = CheckFormInput(email, password, confirmation, username);
 
-                var errors = []
 
-                // Error message generation
-                if (!email.match(validEmail)) errors.push('Email should be a valid email')
-                if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
-                if (password !== confirmation) errors.push('Password and confirmation should match')
 
-                var parsedErrors = errors.reduce(function (prev, current) {
-                    if (prev) prev += "</br>"
-                    return prev += current
-                }, "")
-
-                $('#register-errors')[0].innerHTML = parsedErrors;
-
-                axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
-
-                if (errors.length == 0 && !$('#register-errors')[0].innerHTML) {
+                if (!$('#register-errors')[0].innerHTML) {
                     axios.post('/users', { username: username, password: password, email: email })
                         .then((res) => {
                             console.log(res);
@@ -104,8 +90,7 @@ $(document).ready(function () {
                     $('#DiscordAddr')[0].value = user.discord;
                     $('#descriptionText')[0].value = user.description;
                     $('#userID')[0].value = user.id;
-
-                    //$('#formdata')[0].action += user.id;
+                    $('#level')[0].value = user.level;
                 });
             })
     }, 100);
@@ -129,17 +114,16 @@ $(document).ready(function () {
                 $('#teamspeakVal')[0].innerHTML = user.teamspeak;
                 $('#descriptionVal')[0].innerHTML = user.description;
                 $('#discordVal')[0].innerHTML = user.discord;
+                $('#levelVal')[0].innerHTML = user.level;
             });
         })
     }, 1);
 
     var History, State;
-
     History = window.History;
 
     if (History.enabled) {
         State = History.getState();
-
         History.pushState({ urlPath: window.location.pathname }, $('title').text(), State.urlPath);
     }
 
@@ -164,6 +148,27 @@ $(document).ready(function () {
 
     crossroads.parse(document.location.pathname);
 });
+
+
+
+var CheckFormInput = function(email, password, confirmation, username){
+    var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
+    var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    var errors = []
+
+    if (!email.match(validEmail)) errors.push('Email should be a valid email')
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
+    if (password !== confirmation) errors.push('Password and confirmation should match')
+
+    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
+
+    var parsedErrors = errors.reduce(function (prev, current) {
+        if (prev) prev += "</br>"
+        return prev += current
+    }, "")
+
+    return errors;
+}
 
 
 
