@@ -120,3 +120,29 @@ span.nation {
   margin: 1rem;
   margin-top: 2 rem;
 }
+
+#register-errors {
+    display: none;
+    text-align: center;
+}
+
+#register-errors li {
+    font-size: 0.5rem;
+    background-color: #36393E;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin: 0.5rem;
+
+}
+
+#register-errors li img {
+    float: left;
+    width: 1rem;
+    margin-right: 1rem
+}
+
+#register-errors li p {
+    line-height: 1rem;
+    text-align: left;
+}

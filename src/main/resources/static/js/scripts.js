@@ -53,11 +53,17 @@ $(document).ready(function () {
                 var confirmation = $('#register-form input[name=confirmation]').val()
 
                 // INFO: moved password checking to separate function (see eof) to be used also in profile editing
-                $('#register-errors')[0].innerHTML = CheckFormInput(email, password, confirmation, username);
+                //$('#register-errors')[0].innerHTML = CheckFormInput(email, password, confirmation, username);
 
 
+                var errorArray = CheckFormInput(email, password, confirmation, username);
+                $('#register-errors').empty();
+                $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
+                $('#register-errors').slideDown();
 
-                if (!$('#register-errors')[0].innerHTML) {
+                console.log(errorArray.length);
+                console.log(errorArray.length == 0);
+                if (errorArray.length == 0) {
                     axios.post('/users', { username: username, password: password, email: email })
                         .then((res) => {
                             console.log(res);
@@ -157,7 +163,9 @@ var CheckFormInput = function(email, password, confirmation, username){
     var errors = []
 
     if (!email.match(validEmail)) errors.push('Email should be a valid email')
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
+    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
+    if (!password.match(securePassword)) errors.push('Password should contain one digit')
     if (password !== confirmation) errors.push('Password and confirmation should match')
 
     axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
