@@ -186,6 +186,7 @@ public class UsersControllerTest extends BaseControllerTest {
 
         User updatedUser = userRepository.findOne(oldUser.getId());
         assertNotEquals(oldUser.getDescription(), updatedUser.getDescription());
+        assertEquals(oldUser.getEmail(), userRepository.findByUsername(updatedUser.getUsername()).getEmail());
     }
 
     @Test
