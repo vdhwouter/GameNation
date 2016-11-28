@@ -60,7 +60,7 @@ public class UsersController {
 
     // update user
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public void UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
+    public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
 
         updatedUser.setId(user.getId());
 
@@ -71,8 +71,8 @@ public class UsersController {
             userDB.save(updatedUser);
             userDB.delete(user);
             userDB.save(updatedUser);
-        } catch (Exception e) {
-
+        } finally {
+            return updatedUser;
         }
 
 
