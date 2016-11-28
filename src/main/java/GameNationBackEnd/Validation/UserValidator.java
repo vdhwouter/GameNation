@@ -1,5 +1,9 @@
 package GameNationBackEnd.Validation;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
+import GameNationBackEnd.Repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import GameNationBackEnd.Documents.User;
 import org.springframework.validation.ValidationUtils;
@@ -10,7 +14,8 @@ import GameNationBackEnd.Controllers.UsersController;
  */
 public class UserValidator implements org.springframework.validation.Validator {
 
-    public UsersController userC = new UsersController();
+    @Autowired
+    private UserRepository userDB;
 
     public boolean supports(Class clazz) {
         return User.class.equals(clazz);
@@ -18,9 +23,8 @@ public class UserValidator implements org.springframework.validation.Validator {
 
     @Override
     public void validate(Object obj, Errors e) {
-        ValidationUtils.rejectIfEmpty(e, "name", "name.empty");
         User u = (User) obj;
-        if (userC.GetUser(u) != null) {
+        if (userDB.findByUsername(u.getUsername()) != null) {
             e.rejectValue("username", "username "+ u.getUsername() +" already exists");
         }
     }

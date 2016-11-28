@@ -5,8 +5,10 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import GameNationBackEnd.Validation.UserValidator;
 
-
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import java.util.*;
 
 
@@ -67,7 +69,6 @@ public class User{
 	public String getTeamspeak() { return teamspeak; }
 	public String getDiscord() { return discord; }
 	public String getDescription() { return description; }
-
 	public int getLevel() { return level; }
 
 	public void setId(String id) {
