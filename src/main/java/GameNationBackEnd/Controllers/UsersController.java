@@ -8,6 +8,7 @@ import GameNationBackEnd.Repositories.GameRepository;
 import GameNationBackEnd.Repositories.UserGameRepository;
 import GameNationBackEnd.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.Fields;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,19 +63,23 @@ public class UsersController {
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
     public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
 
-        // TODO: Much shorter then previous update but user can submit empty parameters, stop this clientside? -MM
-        updatedUser.setId(user.getId());
+        if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
+        if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
+        if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
+        if (updatedUser.getFirstname() != null) user.setFirstname(updatedUser.getFirstname());
+        if (updatedUser.getLastname() != null) user.setLastname(updatedUser.getLastname());
+        if (updatedUser.getTeamspeak() != null) user.setTeamspeak(updatedUser.getTeamspeak());
+        if (updatedUser.getDiscord() != null) user.setDiscord(updatedUser.getDiscord());
+        if (updatedUser.getDescription() != null) user.setDescription(updatedUser.getDescription());
 
-        try {
-            // TMP FIX
-            userDB.save(updatedUser);
+        if (userDB.findByUsername(user.getUsername()) != null) {
+            throw new UserAlreadyExistsException(user.getUsername());
+        } else {
             userDB.delete(user);
-            userDB.save(updatedUser);
-        } finally {
-            return updatedUser;
+            userDB.save(user);
         }
 
-
+        return user;
     }
 
     // create a user
