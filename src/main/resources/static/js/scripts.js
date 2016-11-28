@@ -150,12 +150,6 @@ $(document).ready(function () {
     crossroads.parse(document.location.pathname);
 });
 
-
-
-
-
-
-
 var CheckFormInput = function(email, password, confirmation, username){
     var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
     var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/

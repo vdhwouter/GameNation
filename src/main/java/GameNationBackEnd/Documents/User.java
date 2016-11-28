@@ -32,7 +32,6 @@ public class User{
 	private String description;
 
 	private int level;
-	private String steam;
 	private String discord;
 	private String teamspeak;
 
