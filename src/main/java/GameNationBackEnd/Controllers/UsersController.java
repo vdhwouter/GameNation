@@ -62,9 +62,8 @@ public class UsersController {
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
     public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
 
+        // TODO: Much shorter then previous update but user can submit empty parameters, stop this clientside? -MM
         updatedUser.setId(user.getId());
-
-
 
         try {
             // TMP FIX

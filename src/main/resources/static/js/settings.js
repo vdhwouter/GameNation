@@ -196,14 +196,6 @@ $(document).ready(function () {
             });
         }
     });
-
-
-
-
-
-
-
-
 });
 
 
@@ -260,41 +252,56 @@ $('#settings-form').on('submit', function (e) {
     var confirmation= $('#settings-form input[name=confirmpass]').val();
     var teamspeak= $('#settings-form input[name=teamspeak]').val();
     var discord= $('#settings-form input[name=discord]').val();
-    var description= $('#settings-form input[name=description]').val();
+    var description= $('#descriptionText').val();
     var level= $('#settings-form input[name=level]').val();
     var userID= $('#settings-form input[name=userID]').val();
 
-    //
-    $('#register-errors')[0].innerHTML = CheckFormInput(email, password, confirmation, username);
+    // Validate user input
+    // Return error array as list items
+    var errorArray = HierKanHetTochNietAanLiggen(email, password, confirmation, username, userID);
+    $('#register-errors').empty();
+    $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
+    $('#register-errors').slideDown();
 
+    // Post user data to db
     if (!$('#register-errors')[0].innerHTML) {
         axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level })
             .then((res) => {
-                console.log(res);
+                console.info("User edited succesfully, redirecting to profile page")
                 navigateTo(username, username);
             }).catch((err) => {
-                console.log(err)
+                console.log("Error when updating user:" + err)
             });
+    } else {
+        console.log("From validation not passed!")
+        console.log(CheckFormInput(email, password, confirmation, username));
     }
 });
 
 
-var CheckFormInput = function(email, password, confirmation, username){
+
+
+
+
+
+
+
+
+
+var HierKanHetTochNietAanLiggen = function(email, password, confirmation, username, id){
+
+    console.info(id);
     var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
     var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
     var errors = []
 
     if (!email.match(validEmail)) errors.push('Email should be a valid email')
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6 and should contain atleast 1 lowercase, 1 uppercase and 1 digit')
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
+    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
+    if (!password.match(securePassword)) errors.push('Password should contain one digit')
     if (password !== confirmation) errors.push('Password and confirmation should match')
-    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
 
-    var parsedErrors = errors.reduce(function (prev, current) {
-        if (prev) prev += "</br>"
-        return prev += current
-    }, "")
-
-
+    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0 && res.data[0].id != id) errors.push('This username is already taken')})
 
     return errors;
 }

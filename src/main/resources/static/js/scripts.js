@@ -52,17 +52,12 @@ $(document).ready(function () {
                 var password = $('#register-form input[name=password]').val()
                 var confirmation = $('#register-form input[name=confirmation]').val()
 
-                // INFO: moved password checking to separate function (see eof) to be used also in profile editing
-                //$('#register-errors')[0].innerHTML = CheckFormInput(email, password, confirmation, username);
-
-
+                // Return error array as list items
                 var errorArray = CheckFormInput(email, password, confirmation, username);
                 $('#register-errors').empty();
                 $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
                 $('#register-errors').slideDown();
 
-                console.log(errorArray.length);
-                console.log(errorArray.length == 0);
                 if (errorArray.length == 0) {
                     axios.post('/users', { username: username, password: password, email: email })
                         .then((res) => {
@@ -154,6 +149,10 @@ $(document).ready(function () {
 
     crossroads.parse(document.location.pathname);
 });
+
+
+
+
 
 
 
