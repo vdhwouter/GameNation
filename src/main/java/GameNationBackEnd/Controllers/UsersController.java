@@ -72,13 +72,13 @@ public class UsersController {
         if (updatedUser.getDiscord() != null) user.setDiscord(updatedUser.getDiscord());
         if (updatedUser.getDescription() != null) user.setDescription(updatedUser.getDescription());
 
-        if (userDB.findByUsername(user.getUsername()) != null) {
-            throw new UserAlreadyExistsException(user.getUsername());
-        } else {
+        if (userDB.findByUsername(user.getUsername()) == null || (userDB.findByUsername(user.getUsername())).getId() != user.getId()){
             userDB.delete(user);
             userDB.save(user);
+        } else {
+            throw new UserAlreadyExistsException(user.getUsername());
         }
-
+        
         return user;
     }
 
