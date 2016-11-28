@@ -346,7 +346,36 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(userGameRepository.findByUser(user).size(), startSize);
     }
 
+    @Test
+    public void updateUserToExistingUsername() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
 
+        // updated values
+        User updatedUser = new User();
+        updatedUser.setUsername(user1.getUsername());
+
+
+        mockMvc.perform(post("/api/users/" + user2.getId())
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType)
+                .content(json(updatedUser)))
+                .andExpect(status().isConflict());
+
+
+        // expect user 1 to exist
+        assertNotNull(this.userRepository.findByUsername(user1.getUsername()));
+
+        // expect user 2 to exist
+        assertNotNull(this.userRepository.findByUsername(user1.getUsername()));
+
+        // expect user1 to still have its username
+        assertEquals(user1.getId(), this.userRepository.findByUsername(user1.getUsername()).getId());
+
+        // expect user2 to still have its old username
+        assertEquals(user2.getUsername(), this.userRepository.findOne(user2.getId()).getUsername());
+
+    }
 
 
     /* tests te schrijven:
