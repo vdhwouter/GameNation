@@ -160,12 +160,9 @@ public class UsersControllerTest extends BaseControllerTest {
     public void updateUserOtherValues() throws Exception {
         User oldUser = getRandomUser();
         String userId = oldUser.getId();
-        User updatingValueUser = this.userRepository.findOne(userId);
 
-        // check if can update just other values, not email, pass, username
-        updatingValueUser.setUsername(null);
-        updatingValueUser.setPassword(null);
-        updatingValueUser.setEmail(null);
+        // check if we can update just other values, not email, pass, username
+        User updatingValueUser = new User();
 
         updatingValueUser.setFirstname("Jotie");
         updatingValueUser.setLastname("T'Hooft");
