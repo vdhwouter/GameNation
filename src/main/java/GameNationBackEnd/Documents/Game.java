@@ -44,7 +44,6 @@ public class Game {
     }
     public String getImageName(){ return imageName; }
 
-
     public boolean equals(Game g){
         return this.id.equals(g.id);
     }
