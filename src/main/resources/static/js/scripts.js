@@ -66,7 +66,7 @@ $(document).ready(function () {
                             navigateTo('login', 'Login')
                         }).catch((err) => {
                             console.log(err)
-                            $('#register-errors')[0].innerHTML = err.response.data.message;
+                            $('#register-errors')[0].innerHTML = '<li><img src="img/error.png" /><p>' + err.response.data.message + '</p></li>';
                         })
                 }
 
@@ -161,10 +161,10 @@ var CheckFormInput = function(email, password, confirmation, username){
     if (!password.match(securePassword)) errors.push('Password should contain one digit')
     if (password !== confirmation) errors.push('Password and confirmation should match')
 
-    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '</br> a user with this username already exists'})
+    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '<li><img src="img/error.png" /><p> a user with this username already exists'})
 
     var parsedErrors = errors.reduce(function (prev, current) {
-        if (prev) prev += "</br>"
+        if (prev) prev += "</p></li>"
         return prev += current
     }, "")
 
