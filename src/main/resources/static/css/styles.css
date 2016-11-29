@@ -29,6 +29,10 @@ html{
   background-color: rgb(243,101,35);
 }
 
+#main .sidebar li a {
+    color: white;
+}
+
 
 #main .content {
   background-color: rgb(46,49,54);

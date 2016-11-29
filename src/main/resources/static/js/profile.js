@@ -2,8 +2,10 @@
    show all games that user added
    =========================================== */
 $(document).ready(function() {
+    // HACK , CHANGE THI
+    var currentUser = window.profileUser;
 
-    axios.get("/users/" + session.id + "/games")
+    axios.get("/users/" + currentUser.id + "/games")
         .then(function(response) {
             var data = response.data;
             
