@@ -281,14 +281,17 @@ $('#settings-form').on('submit', function (e) {
 var HierKanHetTochNietAanLiggen = function(email, password, confirmation, username, id){
 
     console.info(id);
-    var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
+    var regexDigit = /^(?=.*\d)$/;
+    var regexLowercase = /^(?=.*[a-z])$/;
+    var regexUppercase = /^(?=.*[A-Z])$/;
     var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
     var errors = []
 
     if (!email.match(validEmail)) errors.push('Email should be a valid email')
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
-    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
-    if (!password.match(securePassword)) errors.push('Password should contain one digit')
+    if (password.length < 6) errors.push('Password should have a minimum length of 6')
+    if (!password.match(regexLowercase)) errors.push('Password should contain one lowercase letter')
+    if (!password.match(regexUppercase)) errors.push('Password should contain one uppercase letter')
+    if (!password.match(regexDigit)) errors.push('Password should contain one digit')
     if (password !== confirmation) errors.push('Password and confirmation should match')
 
     axios.get('/users?username=' + username).then(res => { if (res.data.length > 0 && res.data[0].id != id) errors.push('This username is already taken')})
