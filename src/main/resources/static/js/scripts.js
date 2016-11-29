@@ -5,6 +5,11 @@ $(document).ready(function () {
         navigateTo('/login', 'Login')
     }, 100);
 
+    crossroads.addRoute('/logout', function() {
+        session.logout();
+        window.location = '/login';
+    }, 100);
+
     crossroads.addRoute('/login', function (query) {
         console.log(query);
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
@@ -81,16 +86,16 @@ $(document).ready(function () {
         });
     }, 100);
 
-    crossroads.addRoute('/settings/{username}', function (username) {
-        axios.get('/users?username=' + username)
+    crossroads.addRoute('/settings', function () {
+        axios.get('/users/' + session.id)
             .then(function (data) {
-                var user = data.data[0]
+                var user = data.data
                 $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
                 $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
                 $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
                 $('.sidebar').load('sidebar/logged_in.html');
                 $('.content').load('content/settings.html', function () {
-                    $('#set')[0].href = username;
+                    $('#set')[0].href = user.username;
                     $('#username')[0].value = user.username;
                     $('#email')[0].value = user.email;
                     $('#firstname')[0].value = user.firstname;
@@ -118,7 +123,6 @@ $(document).ready(function () {
             $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
             $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
             $('.content').load('content/profile.html', function () {
-                $('#set')[0].href += username;
                 $('#usernameVal')[0].innerHTML = user.username;
                 $('#emailVal')[0].innerHTML = user.email;
                 $('#namelVal')[0].innerHTML = user.firstname + ' ' + user.lastname;
