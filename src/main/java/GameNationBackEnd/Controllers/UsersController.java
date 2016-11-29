@@ -62,17 +62,21 @@ public class UsersController {
     // update user
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
     public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
+        //String id1 = userDB.findByUsername(user.getUsername()).getId();
+       // String id2 = userDB.findByUsername(updatedUser.getUsername()).getId();
 
-        if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
-        if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
-        if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
-        if (updatedUser.getFirstname() != null) user.setFirstname(updatedUser.getFirstname());
-        if (updatedUser.getLastname() != null) user.setLastname(updatedUser.getLastname());
-        if (updatedUser.getTeamspeak() != null) user.setTeamspeak(updatedUser.getTeamspeak());
-        if (updatedUser.getDiscord() != null) user.setDiscord(updatedUser.getDiscord());
-        if (updatedUser.getDescription() != null) user.setDescription(updatedUser.getDescription());
+        if(userDB.findByUsername(updatedUser.getUsername()) == null || (userDB.findByUsername(updatedUser.getUsername()).getId().equals(userDB.findByUsername(user.getUsername()).getId()))){
+            if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
+            if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
+            if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
+            if (updatedUser.getFirstname() != null) user.setFirstname(updatedUser.getFirstname());
+            if (updatedUser.getLastname() != null) user.setLastname(updatedUser.getLastname());
+            if (updatedUser.getTeamspeak() != null) user.setTeamspeak(updatedUser.getTeamspeak());
+            if (updatedUser.getDiscord() != null) user.setDiscord(updatedUser.getDiscord());
+            if (updatedUser.getDescription() != null) user.setDescription(updatedUser.getDescription());
+        //}
 
-        if (userDB.findByUsername(user.getUsername()) == null || (userDB.findByUsername(user.getUsername())).getId() != user.getId()){
+       // if (userDB.findByUsername(user.getUsername()) == null || (userDB.findByUsername(user.getUsername())).getId() != user.getId()){
             userDB.delete(user);
             userDB.save(user);
         } else {
