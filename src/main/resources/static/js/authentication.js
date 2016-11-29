@@ -2,32 +2,32 @@ class Authentication2 {
 
     constructor() {
         // just to set axios headers
-        this.token = this.token;
+        this.token = this.token
 
         // check if token is still valid on page refresh and similar events
-        this.checkAuthentication();
+        this.checkAuthentication()
     }
 
     /* GETTERS */
 
     get id() {
-        return this.user ? this.user.id : null;
+        return this.user ? this.user.id : null
     }
 
     get user() {
-        return JSON.parse(localStorage.getItem("__user"));
+        return JSON.parse(localStorage.getItem("__user"))
     }
 
     get token() {
-        return localStorage.getItem("__token");
+        return localStorage.getItem("__token")
     }
 
     get refreshToken() {
-        return localStorage.getItem("__refresh_token");
+        return localStorage.getItem("__refresh_token")
     }
 
     get authenticated() {
-        return (this.token && !this.expired) ? true : false;
+        return (this.token && !this.expired) ? true : false
     }
 
     get expired() {
@@ -39,7 +39,7 @@ class Authentication2 {
     /* SETTERS */
 
     set user(value) {
-        localStorage.setItem("__user", JSON.stringify(value));
+        localStorage.setItem("__user", JSON.stringify(value))
     }
 
     set token(value) {
@@ -48,27 +48,27 @@ class Authentication2 {
     }
 
     set refreshToken(value) {
-        localStorage.setItem("__refresh_token", value);
+        localStorage.setItem("__refresh_token", value)
     }
 
     set expires(value) {
-        localStorage.setItem("__expires", new Date().getTime() + value);
+        localStorage.setItem("__expires", new Date().getTime() + value)
     }
 
     set authenticated(value) {
         if (!value) {
-            this.user = "";
-            this.token = "";
-            this.refreshToken = "";
+            this.user = ""
+            this.token = ""
+            this.refreshToken = ""
         }
     }
 
     /* FUNCTIONS */
 
     setAuthenticationData(data) {
-        this.token = data.access_token;
-        this.refreshToken = data.refresh_token;
-        this.expires = data.expires_in;
+        this.token = data.access_token
+        this.refreshToken = data.refresh_token
+        this.expires = data.expires_in
     }
 
     login(username, password) {
@@ -86,38 +86,38 @@ class Authentication2 {
         }).then((response) => {
             if (response.status === 200) {
                 // on success: return user data
-                console.info('LOGIN SUCCEEDED', response);
-                this.setAuthenticationData(response.data);
+                console.info('LOGIN SUCCEEDED', response)
+                this.setAuthenticationData(response.data)
 
-                return this.fetchUser();
+                return this.fetchUser()
 
             } else {
                 // on failure: return false
-                console.warn('LOGIN FAILED', response);
+                console.warn('LOGIN FAILED', response)
 
-                return Promise.reject(this.authenticated);
+                return Promise.reject(this.authenticated)
             }
         }).catch((error) => {
-            console.warn('LOGIN FAILED WITH ERROR', error);
+            console.warn('LOGIN FAILED WITH ERROR', error)
 
-            return Promise.reject(false);
+            return Promise.reject(false)
         })
     }
 
     fetchUser() {
         return axios.get('/users/me')
             .then(response => {
-                return this.user = response.data;
+                return this.user = response.data
             })
             .catch(error => {
-                console.log('fetching user failed, probably invalid token', error);
-                return Promise.reject(this.authenticated = false);
+                console.log('fetching user failed, probably invalid token', error)
+                return Promise.reject(this.authenticated = false)
             })
     }
 
     // TODO: post to server to deauth
     logout() {
-        this.authenticated = false;
+        this.authenticated = false
     }
 
     // check Authentication
@@ -176,7 +176,7 @@ axios.interceptors.response.use(function(response) {
 }, function(error) {
 
 
-    console.log(this);
+    console.log(this)
     console.log(error);
 
     // Do something with response error

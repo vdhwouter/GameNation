@@ -4,7 +4,7 @@ $(document).ready(function () {
      show all games that user added
      =========================================== */
     axios.get("/users/" + session.id + "/games").then(function (result) {
-        var data = result.data;
+        var data = result.data
 
         // create html tage with added games
         var ul = document.createElement("ul");
@@ -88,7 +88,7 @@ $(document).ready(function () {
             td_list[i] = alt;
         });
         // remove last item in array
-        td_list.splice(-1,1);
+        td_list.splice(-1,1)
 
         return td_list;
     }
@@ -122,7 +122,7 @@ $(document).ready(function () {
         var gamesAlreadyExists = getIdAddedUserGames();
 
         axios.get("/games").then(function (response) {
-            var data = response.data;
+            var data = response.data
 
             // create html tage with games
             var ul = document.createElement("ul");
@@ -267,13 +267,13 @@ $('#settings-form').on('submit', function (e) {
     if (!$('#register-errors')[0].innerHTML) {
         axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level })
             .then((res) => {
-                console.info("User edited succesfully, redirecting to profile page");
+                console.info("User edited succesfully, redirecting to profile page")
                 navigateTo(username, username);
             }).catch((err) => {
-                console.log("Error when updating user:" + err);
+                console.log("Error when updating user:" + err)
             });
     } else {
-        console.log("From validation not passed!");
+        console.log("From validation not passed!")
         console.log(CheckFormInput(email, password, confirmation, username));
     }
 });
@@ -281,19 +281,19 @@ $('#settings-form').on('submit', function (e) {
 var HierKanHetTochNietAanLiggen = function(email, password, confirmation, username, id){
     var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
     var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
-    var errors = [];
+    var errors = []
 
-    if (!email.match(validEmail)) errors.push('Email should be a valid email');
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6');
-    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter');
-    if (!password.match(securePassword)) errors.push('Password should contain one digit');
-    if (password !== confirmation) errors.push('Password and confirmation should match');
+    if (!email.match(validEmail)) errors.push('Email should be a valid email')
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
+    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
+    if (!password.match(securePassword)) errors.push('Password should contain one digit')
+    if (password !== confirmation) errors.push('Password and confirmation should match')
 
     axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '<li><img src="img/error.png" /><p> A user with username \'' + username +'\' already exists'})
 
     var parsedErrors = errors.reduce(function (prev, current) {
-        if (prev) prev += "</p></li>";
-        return prev += current;
+        if (prev) prev += "</p></li>"
+        return prev += current
     }, "")
 
     return errors;

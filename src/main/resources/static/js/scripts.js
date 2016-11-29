@@ -2,7 +2,7 @@ $(document).ready(function () {
     'use strict';
 
     crossroads.addRoute('/', function () {
-        navigateTo('/login', 'Login');
+        navigateTo('/login', 'Login')
     }, 100);
 
     crossroads.addRoute('/me', function() {
@@ -21,27 +21,27 @@ $(document).ready(function () {
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/login.html', function () {
             if (session.authenticated) {
-                console.info('already authenticated!, redirecting to profile...');
-                return navigateTo(session.user.username, session.user.username);
+                console.info('already authenticated!, redirecting to profile...')
+                return navigateTo(session.user.username, session.user.username)
             }
 
             if (window.loginMessage) {
                 $('#login-message').text(window.loginMessage);
-                window.loginMessage = null;
+                window.loginMessage = null
             }
 
             $('#login-form').on('submit', function (e) {
-                e.preventDefault();
-                var username = $('#login-form input[type=text]').val();
-                var password = $('#login-form input[type=password]').val();
+                e.preventDefault()
+                var username = $('#login-form input[type=text]').val()
+                var password = $('#login-form input[type=password]').val()
                 session.login(username, password)
                     .then(function (user) {
-                        console.info('successfully authenticated, redirecting to profile...');
-                        navigateTo(username, username);
+                        console.info('successfully authenticated, redirecting to profile...')
+                        navigateTo(username, username)
                     })
                     .catch(function (error) {
-                        console.warn('bad credentials!');
-                        $('p#login-errors').text("BAD CREDENTIALS!");
+                        console.warn('bad credentials!')
+                        $('p#login-errors').text("BAD CREDENTIALS!")
                     })
             })
         });
@@ -53,17 +53,17 @@ $(document).ready(function () {
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/register.html', function () {
             if (session.authenticated) {
-                console.info('already authenticated! no need to register - redirecting to profile...');
-                return navigateTo(session.user.username, session.user.username);
+                console.info('already authenticated! no need to register - redirecting to profile...')
+                return navigateTo(session.user.username, session.user.username)
             }
 
             $('#register-form').on('submit', function (e) {
-                e.preventDefault();
-                console.log("ERAHAKDKASHD");
-                var username = $('#register-form input[name=username]').val();
-                var email = $('#register-form input[name=email]').val();
-                var password = $('#register-form input[name=password]').val();
-                var confirmation = $('#register-form input[name=confirmation]').val();
+                e.preventDefault()
+                console.log("ERAHAKDKASHD")
+                var username = $('#register-form input[name=username]').val()
+                var email = $('#register-form input[name=email]').val()
+                var password = $('#register-form input[name=password]').val()
+                var confirmation = $('#register-form input[name=confirmation]').val()
 
                 // Return error array as list items
                 var errorArray = CheckFormInput(email, password, confirmation, username);
@@ -75,8 +75,8 @@ $(document).ready(function () {
                     axios.post('/users', { username: username, password: password, email: email })
                         .then((res) => {
                             console.log(res);
-                            window.loginMessage = "success, you can now login!";
-                            navigateTo('login', 'Login');
+                            window.loginMessage = "success, you can now login!"
+                            navigateTo('login', 'Login')
                         }).catch((err) => {
                             console.log(err)
                             $('#register-errors')[0].innerHTML = '<li><img src="img/error.png" /><p>' + err.response.data.message + '</p></li>';
@@ -171,17 +171,17 @@ var CheckFormInput = function(email, password, confirmation, username){
     var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
     var errors = []
 
-    if (!email.match(validEmail)) errors.push('Email should be a valid email');
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6');
-    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter');
-    if (!password.match(securePassword)) errors.push('Password should contain one digit');
-    if (password !== confirmation) errors.push('Password and confirmation should match');
+    if (!email.match(validEmail)) errors.push('Email should be a valid email')
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
+    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
+    if (!password.match(securePassword)) errors.push('Password should contain one digit')
+    if (password !== confirmation) errors.push('Password and confirmation should match')
 
     axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '<li><img src="img/error.png" /><p> A user with username \'' + username +'\' already exists'})
 
     var parsedErrors = errors.reduce(function (prev, current) {
-        if (prev) prev += "</p></li>";
-        return prev += current;
+        if (prev) prev += "</p></li>"
+        return prev += current
     }, "")
 
     return errors;
