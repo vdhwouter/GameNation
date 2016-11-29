@@ -5,6 +5,10 @@ $(document).ready(function () {
         navigateTo('/login', 'Login')
     }, 100);
 
+    crossroads.addRoute('/me', function() {
+        window.location = session.user.username;
+    }, 100);
+
     crossroads.addRoute('/logout', function() {
         session.logout();
         window.location = '/login';
