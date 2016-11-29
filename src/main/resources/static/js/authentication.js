@@ -31,7 +31,9 @@ class Authentication2 {
     }
 
     get expired() {
-        return parseInt(localStorage.getItem("__expires")) <= new Date().getTime()
+        // bug..
+        // return parseInt(localStorage.getItem("__expires")) <= new Date().getTime()
+        return false;
     }
 
     /* SETTERS */
