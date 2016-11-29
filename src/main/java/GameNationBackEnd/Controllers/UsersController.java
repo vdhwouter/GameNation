@@ -25,8 +25,7 @@ import GameNationBackEnd.Exceptions.*;
 @CrossOrigin
 @RequestMapping("/api/users")
 public class UsersController {
-
-
+     
     @Autowired
     private UserRepository userDB;
 
@@ -62,8 +61,6 @@ public class UsersController {
     // update user
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
     public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
-        //String id1 = userDB.findByUsername(user.getUsername()).getId();
-       // String id2 = userDB.findByUsername(updatedUser.getUsername()).getId();
 
         if(!(userDB.findByEmail(updatedUser.getEmail()) == null) && !(userDB.findByEmail(updatedUser.getEmail()).getId().equals(userDB.findByEmail(user.getEmail()).getId()))) {
             throw new UserEmailAlreadyExistsException(updatedUser.getEmail());
@@ -78,9 +75,7 @@ public class UsersController {
             if (updatedUser.getTeamspeak() != null) user.setTeamspeak(updatedUser.getTeamspeak());
             if (updatedUser.getDiscord() != null) user.setDiscord(updatedUser.getDiscord());
             if (updatedUser.getDescription() != null) user.setDescription(updatedUser.getDescription());
-        //}
 
-       // if (userDB.findByUsername(user.getUsername()) == null || (userDB.findByUsername(user.getUsername())).getId() != user.getId()){
             userDB.delete(user);
             userDB.save(user);
         } else {
