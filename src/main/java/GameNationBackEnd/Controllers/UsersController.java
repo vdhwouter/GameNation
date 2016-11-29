@@ -89,10 +89,12 @@ public class UsersController {
     // create a user
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public User InsertUser(@Valid @RequestBody User user) throws UserAlreadyExistsException {
+    public User InsertUser(@Valid @RequestBody User user) throws UserAlreadyExistsException, UserEmailAlreadyExistsException{
         if (userDB.findByUsername(user.getUsername()) != null) {
             throw new UserAlreadyExistsException(user.getUsername());
-        } else {
+        } else if(userDB.findByEmail(user.getEmail()) != null){
+            throw new UserEmailAlreadyExistsException(user.getEmail());
+        }else {
             return userDB.save(user);
         }
     }

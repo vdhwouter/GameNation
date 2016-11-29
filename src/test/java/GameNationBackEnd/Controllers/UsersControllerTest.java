@@ -376,7 +376,35 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(user2.getUsername(), this.userRepository.findOne(user2.getId()).getUsername());
 
     }
+    @Test
+    public void updateUserWithSameUsername() throws Exception {
+        User oldUser = getRandomUser();
+        String userId = oldUser.getId();
 
+        // check if we can update just other values, not email, pass, username
+        User updatingValueUser = new User();
+
+        updatingValueUser.setUsername(oldUser.getUsername());
+        updatingValueUser.setLastname("T'Hooft");
+        updatingValueUser.setTeamspeak("jotie.teamspeak.com");
+        updatingValueUser.setDiscord("https://discord.com/jotie");
+        updatingValueUser.setDescription("I'm a poet, you don't rime");
+
+        mockMvc.perform(post("/api/users/" + userId)
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType)
+                .content(json(updatingValueUser)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is(oldUser.getUsername())))
+                .andExpect(jsonPath("$.lastname", is("T'Hooft")))
+                .andExpect(jsonPath("$.teamspeak", is("jotie.teamspeak.com")))
+                .andExpect(jsonPath("$.discord", is("https://discord.com/jotie")))
+                .andExpect(jsonPath("$.description", is("I'm a poet, you don't rime")));
+
+        User updatedUser = userRepository.findOne(oldUser.getId());
+        assertNotEquals(oldUser.getDescription(), updatedUser.getDescription());
+        assertEquals(oldUser.getEmail(), userRepository.findByUsername(updatedUser.getUsername()).getEmail());
+    }
 
     /* tests te schrijven:
         - user verwijderen die niet bestaat?

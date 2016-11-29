@@ -278,16 +278,6 @@ $('#settings-form').on('submit', function (e) {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
 var HierKanHetTochNietAanLiggen = function(email, password, confirmation, username, id){
 
     console.info(id);
