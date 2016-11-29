@@ -485,12 +485,8 @@ p.levelGames {
     padding: 12px 0;
 }
 
-#modelSkilEditDelete input,#modelSkilEditEdit input,.remodal-confirm {
-    padding-bottom: 30px;
-}
-
 #editGame label {
-    margin-left: -195px;
+    float: left;
 }
 
 #editGame dt {
@@ -518,7 +514,7 @@ p.levelGames {
     liveSearchbox
    =========================================== */
 
-.live-search-box{
+.live-search-box, #skillset{
     border: 0px;
     border-bottom: 1px solid #db5f24;
     background-color: #36393e;
