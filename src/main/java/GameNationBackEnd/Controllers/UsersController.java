@@ -65,6 +65,10 @@ public class UsersController {
         //String id1 = userDB.findByUsername(user.getUsername()).getId();
        // String id2 = userDB.findByUsername(updatedUser.getUsername()).getId();
 
+        if(!(userDB.findByEmail(updatedUser.getEmail()) == null) && !(userDB.findByEmail(updatedUser.getEmail()).getId().equals(userDB.findByEmail(user.getEmail()).getId()))) {
+            throw new UserEmailAlreadyExistsException(updatedUser.getEmail());
+        }
+
         if(userDB.findByUsername(updatedUser.getUsername()) == null || (userDB.findByUsername(updatedUser.getUsername()).getId().equals(userDB.findByUsername(user.getUsername()).getId()))){
             if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
             if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
@@ -80,7 +84,7 @@ public class UsersController {
             userDB.delete(user);
             userDB.save(user);
         } else {
-            throw new UserAlreadyExistsException(user.getUsername());
+            throw new UserAlreadyExistsException(updatedUser.getUsername());
         }
         
         return user;

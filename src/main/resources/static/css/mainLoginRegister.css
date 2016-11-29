@@ -133,13 +133,13 @@ span.nation {
 }
 
 #register-errors li {
-    font-size: 0.5rem;
+    font-size: 1rem;
     background-color: #36393E;
     text-align: center;
     padding: 0.5rem;
     border-radius: 10px;
     margin: 0.5rem;
-
+    margin-left: 0rem;
 }
 
 #register-errors li img {

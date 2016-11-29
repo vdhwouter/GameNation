@@ -283,6 +283,18 @@ public class UsersControllerTest extends BaseControllerTest {
     @Test
     public void addUserWithUsernameThatAlreadyExists() throws Exception {
         User user = getRandomUser();
+        User newUser = new User("my super cool username", user.getEmail(), "lalalala123");
+
+        mockMvc.perform(post("/api/users")
+                .contentType(contentType)
+                .content(json(newUser)))
+                .andExpect(status().isConflict());
+    }
+
+
+    @Test
+    public void addUserWithEmailThatAlreadyExists() throws Exception {
+        User user = getRandomUser();
         User newUser = new User(user.getUsername(), "copyc@t.com", "lalalala123");
 
         mockMvc.perform(post("/api/users")
@@ -404,6 +416,38 @@ public class UsersControllerTest extends BaseControllerTest {
         User updatedUser = userRepository.findOne(oldUser.getId());
         assertNotEquals(oldUser.getDescription(), updatedUser.getDescription());
         assertEquals(oldUser.getEmail(), userRepository.findByUsername(updatedUser.getUsername()).getEmail());
+    }
+
+
+    @Test
+    public void updateUserToExistingEmail() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // updated values
+        User updatedUser = new User();
+        updatedUser.setEmail(user1.getEmail());
+
+
+        mockMvc.perform(post("/api/users/" + user2.getId())
+                .header("Authorization", "Bearer supertoken")
+                .contentType(contentType)
+                .content(json(updatedUser)))
+                .andExpect(status().isConflict());
+
+
+        // expect user 1 to exist
+        assertNotNull(this.userRepository.findByEmail(user1.getEmail()));
+
+        // expect user 2 to exist
+        assertNotNull(this.userRepository.findByEmail(user1.getEmail()));
+
+        // expect user1 to still have its email
+        assertEquals(user1.getId(), this.userRepository.findByEmail(user1.getEmail()).getId());
+
+        // expect user2 to still have its old email
+        assertEquals(user2.getEmail(), this.userRepository.findOne(user2.getId()).getEmail());
+
     }
 
     /* tests te schrijven:
