@@ -118,7 +118,7 @@ legend {
 }
 
 /* change scroller */
-::-webkit-scrollbar, ::-moz-scrollbar {
+::-webkit-scrollbar {
     width:  5px;
     height: 5px;
 }

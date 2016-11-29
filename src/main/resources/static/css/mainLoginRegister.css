@@ -1,14 +1,17 @@
-html{
-  background-color: rgb(46,49,54);
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 30px;
-  color: white;
+@font-face {
+    font-family: WhitneyMedium;
+    src: url(../fonts/WhitneyMedium.ttf);
 }
 
+html{
+    background-color:#36393e;
+    font-family: WhitneyMedium, Helvetica, sans-serif;
+    color: white;
+}
 
 #main {
   display: flex;
-  direction: row;
+  flex-direction: row;
 }
 
 #main .sidebar {
@@ -17,7 +20,8 @@ html{
 }
 
 #main .sidebar li {
-  width: 1.4rem;
+    font-size: 2rem;
+    padding: 0.2rem;
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -40,10 +44,10 @@ html{
 
 .content h1 {
   margin: 1rem;
-  font-size: 2rem;
+  font-size: 4rem;
 }
 
-.content form {
+.content #login-form {
  display: flex;
  margin: 1rem;
  margin-bottom: 0rem;
@@ -51,18 +55,18 @@ html{
 }
 
 
-.content form > div {
+.content #login-form > div, #register-form > div {
   display: flex;
   flex-direction: column;
 }
 
-.content form input {
-  font-size: 1rem;
+.content #login-form input, #register-form input  {
+  font-size: 1.5rem;
   padding: 3px 6px;
   border-style: none;
 }
 
-.content form button {
+.content #login-form button, #register-form button  {
     border-radius: 100%;
     background: #f36523;
     border-style: none;
@@ -78,20 +82,20 @@ html{
     flex-direction: column;
 }
 
-.content form input  {
+.content #login-form input, #register-form input  {
   margin-bottom: 0.1rem;
 }
 
-.content form input:first-child {
+.content #login-form input:first-child, #register-form input:first-child {
   border-radius: 10px 10px 0 0;
 }
 
-.content form input:last-child {
+.content #login-form input:last-child, #register-form input:last-child {
   border-radius: 0 0 10px 10px;
 }
 
 .content > p {
-  font-size: 0.4rem;
+  font-size: 1rem;
 }
 
 .content > p a {
@@ -99,7 +103,8 @@ html{
 }
 
 .content .explanation-text {
-  font-size: 0.6rem;
+    font-size: 1rem;
+    padding-bottom: 0.75rem;
 }
 
 
@@ -108,6 +113,7 @@ html{
     background: none;
     border-style: none;
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 span.nation {
@@ -115,7 +121,7 @@ span.nation {
 }
 
 #main #explanation {
-  width: 15rem;
+  width: 23rem;
   max-width: 100%;
   margin: 1rem;
   margin-top: 2 rem;
@@ -145,4 +151,378 @@ span.nation {
 #register-errors li p {
     line-height: 1rem;
     text-align: left;
+}
+
+/********************** profile***********************************/
+
+.wrapper{
+    min-width: 320px;
+    max-width: 60rem;
+    margin: 0 auto;
+    position: relative;
+    background-color: #2e3136;
+    height: 100rem;
+    padding: 2rem;
+}
+
+.structural {
+    position: absolute;
+    left: -9999px;
+}
+
+h2{
+    color:  #db5f24;
+    margin-top: 0rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+h3{
+    font-size: 2rem;
+    color: #db5f24;
+    margin: 3rem 0rem 0rem 0rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    color: #db5f24;
+    text-align: left;
+    margin-top: 1.5rem;
+}
+
+li{
+    list-style: none;
+}
+
+p{
+    color: white;
+    margin: 0rem 0rem 0rem 0rem;
+}
+
+.btn{
+    background-color:  #db5f24;
+    color: white;
+    float: right;
+    border: 0px;
+    padding: 0.5rem;
+}
+/* ===========================================
+   set button
+   =========================================== */
+#set{
+    padding: 0.75rem;
+    margin-top: -5rem;
+    text-decoration: none;
+}
+
+/* ===========================================
+   profile
+   =========================================== */
+#profileImage{
+    width: 18rem;
+}
+
+#side{
+    float: left;
+    width: 18rem;
+    margin-top:1.20rem;
+    margin-right: 2rem;
+}
+
+#profileData{
+    width: 56%;
+    float: left;
+}
+
+.level{
+    position: absolute;
+    width: 5rem;
+    top: 21.5rem;
+    left: 16rem;
+}
+
+#side p{
+    text-align: center;
+    margin-top: 0.75rem;
+    font-size: 3rem;
+}
+
+#updateSubmit{
+    width: 5rem !important;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#submit-photo {
+    width: 100%;
+}
+
+/* ===========================================
+   Data
+   =========================================== */
+.title{
+    color: #db5f24;
+    margin-top: 1rem;
+}
+
+/* ===========================================
+   Games
+   =========================================== */
+
+#games, #games-overview, #lobby-overview{
+    float: left;
+    width: 100%;
+}
+
+#games li, #games-overview li, #lobby-overview li{
+    float: left;
+    width: 5.5rem;
+    list-style: none;
+    padding: 0.5rem 1.5rem 0.5rem 0rem;
+}
+
+#games li img, #games-overview li img, #lobby-overview li img{
+    width: 100%;
+}
+
+#games p, #games-overview p, #lobby-overview p{
+    border-bottom: 1px solid #db5f24;
+    margin-top: 0.4rem;
+    color: white;
+    text-align: center;
+    padding-bottom: 0.2rem;
+}
+
+#games a, #games-overview a, #lobby-overview a{
+    text-decoration: none;
+}
+
+#games img:nth-of-type(1):hover {
+    outline: #999999 solid 3px;
+}
+
+/*for circle and skill level*/
+img.levelGames {
+    position: absolute;
+    width: 37px!important;
+    background-color: transparent!important;
+    margin-left: -29px;
+    margin-top: 59px;
+}
+
+p.levelGames {
+    position: absolute;
+    width: 20px;
+    margin-top: -23px!important;
+    margin-left: 68px;
+    border-bottom: none!important;
+}
+
+/* ===========================================
+   Discord steam
+   =========================================== */
+#discordSteam{
+    float: left;
+    width: 48%;
+    margin-right: 2rem;
+}
+
+#submitDiscord{
+    width: 5rem;
+    margin-right: -0.3rem;
+}
+
+
+
+
+/* ===========================================
+   Description
+   =========================================== */
+#description{
+    float: left;
+    width: 48%;
+}
+
+#submitDescription{
+    width: 5rem;
+    margin-top: 0.5rem;
+}
+
+
+/* ===========================================
+   Form
+   =========================================== */
+#settings-form{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#settings-form dt{
+    width: 15rem;
+    margin-bottom: 5px
+}
+
+#settings-form input[type=text], #settings-form input[type=password], #settings-form input[type=number], #settings-form textarea {
+    border: 0px;
+    border-bottom: 1px solid #db5f24;
+    background-color: #36393e;
+    font-size: 1rem;
+    font-weight: normal;
+    height: 1.5rem;
+    padding-left: 1rem;
+    color: white;
+}
+
+#profileData > dd input {
+    width: 97.7%;
+    margin-top: 0.5rem;
+}
+
+#settings-form label {
+    color: #db5f24;
+}
+
+#settings-form input {
+    width: 95.5%;
+    margin-bottom: 1rem;
+}
+
+#settings-form textarea {
+    width: 95.5%;
+    height: 5.05rem;
+}
+
+#settings-form input:focus{
+    border: 0px;
+}
+
+
+/* ===========================================
+   Model add games
+   =========================================== */
+.remodal h1 {
+}
+
+.remodal h3 {
+    margin: 0;
+}
+
+#addGames {
+    overflow: hidden;
+    margin-bottom: 30px;
+    overflow-y: auto;
+    height: 380px;
+}
+
+#addGames li p {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#addGames li {
+    width: 142px;
+    display: block;
+    float: left;
+    margin: 5px;
+}
+
+#addGames li img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+    margin-top: 3px;
+}
+
+#addGames li img:hover {
+    outline: #999999 solid 3px;
+}
+
+#addGames li img:active{
+    outline: #999999 solid 3px;
+}
+
+#addGames > ul > li > img.active {
+    outline: #999999 solid 3px;
+}
+
+#searchAddGames {
+    overflow: hidden;
+}
+
+#searchAddGames dt {
+    width: 10%;
+    float: left;
+}
+
+#searchAddGames input {
+    background-color: #4a4c51;
+}
+
+#searchAddGames dd {
+    margin-left:4px;
+    width: 100%;
+    float: left;
+}
+
+/* ===========================================
+   Model edit game
+   =========================================== */
+
+#modelSkilEditEdit {
+    float: right;
+    min-width: 110px;
+    padding: 12px 0;
+}
+
+#modelSkilEditDelete {
+    float: left;
+    min-width: 110px;
+    padding: 12px 0;
+}
+
+#modelSkilEditDelete input,#modelSkilEditEdit input,.remodal-confirm {
+    padding-bottom: 30px;
+}
+
+#editGame label {
+    margin-left: -195px;
+}
+
+#editGame dt {
+    margin-bottom: 5px;
+}
+
+#skillset {
+    background-color: #4a4c51;
+    width: 97.5%;
+}
+
+
+
+
+/* ===========================================
+   Model details game (games.html)
+   =========================================== */
+#detailsGames p {
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+
+/* ===========================================
+    liveSearchbox
+   =========================================== */
+
+.live-search-box{
+    border: 0px;
+    border-bottom: 1px solid #db5f24;
+    background-color: #36393e;
+    font-size: 1rem;
+    font-weight: normal;
+    height: 1.5rem;
+    padding-left: 1rem;
+    color: white;
+    width: 100%;
+    margin-bottom: 0.5rem;
 }

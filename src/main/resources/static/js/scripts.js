@@ -8,6 +8,8 @@ $(document).ready(function () {
     crossroads.addRoute('/login', function (query) {
         console.log(query);
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
+        $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
+        $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/login.html', function () {
             if (session.authenticated) {
@@ -39,6 +41,9 @@ $(document).ready(function () {
 
     crossroads.addRoute('/register', function () {
         $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
+
+        $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
+        $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/register.html', function () {
             if (session.authenticated) {
@@ -80,7 +85,7 @@ $(document).ready(function () {
         axios.get('/users?username=' + username)
             .then(function (data) {
                 var user = data.data[0]
-                $('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'));
+                $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
                 $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
                 $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
                 $('.sidebar').load('sidebar/logged_in.html');
@@ -100,7 +105,7 @@ $(document).ready(function () {
     }, 100);
 
     crossroads.addRoute('/games', function () {
-        $('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'));
+        $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
         $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
         $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
         $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
@@ -110,7 +115,7 @@ $(document).ready(function () {
     crossroads.addRoute('/{username}', function (username) {
         axios.get('/users?username=' + username).then(function (data) {
             var user = data.data[0]
-            $('head').append($('<link rel="stylesheet" href="css/stylesProfile.css">'))
+            $('head').append($('<link rel="stylesheet" href="css/mainLoginRegister.css">'))
             $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
             $('.content').load('content/profile.html', function () {
                 $('#set')[0].href += username;
