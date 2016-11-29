@@ -1,0 +1,23 @@
+<h1>Game<span class="nation">nation</span></h1>
+
+<p class="explanation-text">Fill in this form to complete your registration</p>
+
+<!--<p id="register-errors" style="background: pink; color: blue;"></p>-->
+<ul id="register-errors"></ul>
+
+<form action="http://localhost:8080/api/users" method="POST" id="register-form" name="reg-form">
+    <div>
+        <input type="text" placeholder="username" name="username" value="">
+        <input type="text" placeholder="email" name="email" value="">
+        <input type="password" placeholder="password" name="password" value="">
+        <input type="password" placeholder="confirm password" name="confirmation" value="">
+    </div>
+    <input type="submit" name="submit" id="register-button">
+    <!-- <input type="submit" name="submit" id="register-button" onclick="CheckPassword(password.innerHTML,confirmation.innerHTML)"> -->
+</form>
+
+<!-- <button id="register-button">register</button> -->
+
+<p>Already have an account? <a href="login">Login</a></p>
+
+<!--<script src=" js/PasswChecking.js"></script>-->

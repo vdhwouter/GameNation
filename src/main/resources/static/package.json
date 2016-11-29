@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.15.2",
     "crossroads": "^0.12.2",
+    "font-awesome": "^4.7.0",
     "historyjs": "^1.8.0-b2",
     "jquery": "^3.1.1",
     "signals": "^1.0.0"
