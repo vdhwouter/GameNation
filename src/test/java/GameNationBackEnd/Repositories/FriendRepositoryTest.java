@@ -62,13 +62,13 @@ public class FriendRepositoryTest extends TestCase {
 
     @Test
     public void GetReceiverBySender() {
-        Friend friend = friendRepo.findBySender(user1);
+        Friend friend = friendRepo.findBySender(user1).get(0);
         assertEquals("matthias", friend.getReceiver().getUsername());
     }
 
     @Test
     public void GetSenderByReceiver() {
-        Friend friend = friendRepo.findByReceiver(user3);
+        Friend friend = friendRepo.findByReceiver(user3).get(0);
         assertEquals("matthias", friend.getSender().getUsername());
     }
 
