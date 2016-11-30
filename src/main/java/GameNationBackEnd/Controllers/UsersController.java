@@ -25,7 +25,7 @@ import GameNationBackEnd.Exceptions.*;
 @CrossOrigin
 @RequestMapping("/api/users")
 public class UsersController {
-     
+
     @Autowired
     private UserRepository userDB;
 

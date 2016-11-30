@@ -38,7 +38,7 @@ public class User{
 	private String teamspeak;
 
 	//private List<Lobby> lobbies;
-	private List<String> friends;
+	//private List<String> friends;
 
 	public User(){}
 
