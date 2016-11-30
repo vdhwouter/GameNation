@@ -37,6 +37,12 @@ public class User{
 	private String discord;
 	private String teamspeak;
 
+
+	// only set if authenticated user has sent or received a friend request to this user
+	// it shows the current relationship state
+	// and can be used to show UI for cancel/accept/show friend request
+	private Friend relation;
+
 	//private List<Lobby> lobbies;
 	//private List<String> friends;
 
