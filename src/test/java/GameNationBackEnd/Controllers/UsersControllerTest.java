@@ -5,6 +5,7 @@ import GameNationBackEnd.Documents.*;
 import GameNationBackEnd.Repositories.*;
 import GameNationBackEnd.Setup.BaseControllerTest;
 import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
+import GameNationBackEnd.Setup.UserPrincipal;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -104,7 +105,6 @@ public class UsersControllerTest extends BaseControllerTest {
         int startLength = this.userRepository.findAll().size();
 
         mockMvc.perform(post("/api/users")
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(userJson))
                 .andExpect(status().isCreated());
@@ -117,8 +117,7 @@ public class UsersControllerTest extends BaseControllerTest {
         User user = getRandomUser();
         long startLength = this.userRepository.count();
 
-        mockMvc.perform(delete("/api/users/" + user.getId())
-                .header("Authorization", "Bearer supertoken"))
+        mockMvc.perform(delete("/api/users/" + user.getId()))
                 .andExpect(status().is2xxSuccessful());
 
         assertEquals(startLength - 1, this.userRepository.count());
@@ -129,8 +128,7 @@ public class UsersControllerTest extends BaseControllerTest {
     public void getUser() throws Exception {
         User user = getRandomUser();
 
-        mockMvc.perform(get("/api/users/" + user.getId())
-                .header("Authorization", "Bearer supertoken"))
+        mockMvc.perform(get("/api/users/" + user.getId()))
                 .andExpect(content().contentType(contentType))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(user.getId())))
@@ -148,7 +146,6 @@ public class UsersControllerTest extends BaseControllerTest {
         updatingValueUser.setUsername(newUsername);
 
         mockMvc.perform(post("/api/users/" + userId)
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(updatingValueUser)))
                 .andExpect(status().isOk())
@@ -174,7 +171,6 @@ public class UsersControllerTest extends BaseControllerTest {
         updatingValueUser.setDescription("I'm a poet, you don't rime");
 
         mockMvc.perform(post("/api/users/" + userId)
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(updatingValueUser)))
                 .andExpect(status().isOk())
@@ -199,7 +195,6 @@ public class UsersControllerTest extends BaseControllerTest {
         List<String> gameIds = Arrays.asList(game1.getId(), game2.getId());
 
         mockMvc.perform(post("/api/users/" + user.getId() + "/games")
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(gameIds)))
                 .andExpect(status().isOk())
@@ -230,7 +225,6 @@ public class UsersControllerTest extends BaseControllerTest {
         userGameRepository.save(ug);
 
         mockMvc.perform(get("/api/users/" + user.getId() + "/games")
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -246,7 +240,6 @@ public class UsersControllerTest extends BaseControllerTest {
         User user = new User("borrel", "bale_at_gool.com", "superwachtwoord");
 
         mockMvc.perform(post("/api/users")
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(user)))
                 .andExpect(status().isBadRequest())
@@ -353,7 +346,6 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
         mockMvc.perform(post("/api/users/" + user.getId() + "/games")
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(gameIds)))
                 .andExpect(status().is4xxClientError());
@@ -372,7 +364,6 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
         mockMvc.perform(post("/api/users/" + user2.getId())
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(updatedUser)))
                 .andExpect(status().isConflict());
@@ -406,7 +397,6 @@ public class UsersControllerTest extends BaseControllerTest {
         updatingValueUser.setDescription("I'm a poet, you don't rime");
 
         mockMvc.perform(post("/api/users/" + userId)
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(updatingValueUser)))
                 .andExpect(status().isOk())
@@ -433,7 +423,6 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
         mockMvc.perform(post("/api/users/" + user2.getId())
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(updatedUser)))
                 .andExpect(status().isConflict());
@@ -453,30 +442,15 @@ public class UsersControllerTest extends BaseControllerTest {
 
     }
 
-    @Ignore
     @Test
-    public void GetFriendsForUser() throws Exception {
-        User user1 = userList.get(0);
-        User user2 = userList.get(1);
-        User user3 = userList.get(2);
-        User user4 = userList.get(3);
+    public void TestPersonalMeRoute() throws Exception {
+        User user = getRandomUser();
 
-        Friend friend1 = new Friend(user1, user2);
-        Friend friend2 = new Friend(user3, user1);
-        Friend friend3 = new Friend(user1, user4);
-
-        friend1.setAccepted(true);
-        friend2.setAccepted(true);
-        friend3.setAccepted(true);
-
-        friendRepository.save(friend1);
-        friendRepository.save(friend2);
-        friendRepository.save(friend3);
-
-        mockMvc.perform(get("/api/users/" + user2.getId() + "/friends")
-                .contentType(contentType))
+        mockMvc.perform(get("/api/users/me")
+                .principal(new UserPrincipal(user)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
     /* tests te schrijven:

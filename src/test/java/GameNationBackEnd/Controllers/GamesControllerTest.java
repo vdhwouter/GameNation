@@ -79,7 +79,6 @@ public class GamesControllerTest extends BaseControllerTest {
         int startLength = this.gameRepository.findAll().size();
 
         mockMvc.perform(post("/api/games")
-                .header("Authorization", "Bearer supertoken")
                 .contentType(contentType)
                 .content(json(newGame)))
                 .andExpect(status().isCreated())
@@ -97,8 +96,7 @@ public class GamesControllerTest extends BaseControllerTest {
         Game game = this.gameList.get(random.nextInt(startLength-1));
 
 
-        mockMvc.perform(delete("/api/games/" + game.getId())
-                .header("Authorization", "Bearer supertoken"))
+        mockMvc.perform(delete("/api/games/" + game.getId()))
                 .andExpect(status().is2xxSuccessful());
 
         assertEquals(startLength - 1, this.gameRepository.findAll().size());
