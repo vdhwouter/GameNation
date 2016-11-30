@@ -1,6 +1,7 @@
 package GameNationBackEnd.Controllers;
 
 import GameNationBackEnd.Documents.Game;
+import GameNationBackEnd.Repositories.FriendRepository;
 import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
 import GameNationBackEnd.Documents.User;
 import GameNationBackEnd.Documents.UserGame;
@@ -17,6 +18,7 @@ import java.security.Principal;
 import java.util.*;
 
 import GameNationBackEnd.Exceptions.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by lucas on 17/11/2016.
@@ -33,6 +35,9 @@ public class UsersController {
 
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
 
     // get all users
     @RequestMapping(method = RequestMethod.GET)
@@ -151,5 +156,19 @@ public class UsersController {
         // principal contains authenticated user name
         User user = userDB.findByUsername(principal.getName());
         return user;
+    }
+
+    /* FRIENDS AREA */
+
+    @RequestMapping(value = "/{user}/friends", method = RequestMethod.GET)
+    public List<User> GetFriendsForUser(@PathVariable User user) {
+        // TODO: return resultaat van methode om alle vrienden van een gebruiker op te vragen
+        throw new NotImplementedException();
+    }
+
+    @RequestMapping(value = "/{user}/friendrequests", method = RequestMethod.GET)
+    public List<User> GetFriendrequestsForUser(@PathVariable User user) {
+        // TODO: return resultaat van methode om alle vriendschapverzoekne van een gebruiker op te vragen
+        throw new NotImplementedException();
     }
 }
