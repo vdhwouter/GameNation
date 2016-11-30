@@ -40,9 +40,6 @@ public class UsersControllerTest extends BaseControllerTest {
     @Autowired
     private UserGameRepository userGameRepository;
 
-    @Autowired
-    private FriendRepository friendRepository;
-
     @Before
     public void setup() throws Exception {
         this.userGameRepository.deleteAll();
