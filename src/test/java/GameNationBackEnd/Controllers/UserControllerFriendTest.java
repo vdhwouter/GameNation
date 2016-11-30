@@ -103,7 +103,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)));
     }
 
-    @Ignore
     @Test
     public void GetFriendRequestForUser() throws Exception {
         User user1 = userList.get(0);
@@ -124,7 +123,7 @@ public class UserControllerFriendTest extends BaseControllerTest {
         friendRepository.save(friend2);
         friendRepository.save(friend3);
 
-        mockMvc.perform(get("/api/users/me/friendrequests")
+        mockMvc.perform(get("/api/users/" + user1.getId() + "/friendrequests?direction=to")
                 .contentType(contentType)
                 .principal(new UserPrincipal(user1)))
                 .andExpect(status().isOk())
@@ -133,7 +132,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
         // TODO: extend test expectations when structure is known
     }
 
-    @Ignore
     @Test
     public void GetSentFriendrequestsForUser() throws Exception {
         User user1 = userList.get(0);
@@ -154,11 +152,75 @@ public class UserControllerFriendTest extends BaseControllerTest {
         friendRepository.save(friend2);
         friendRepository.save(friend3);
 
-        mockMvc.perform(get("/api/users/me/friendrequests")
+        mockMvc.perform(get("/api/users/" + user1.getId() + "/friendrequests?direction=from")
                 .contentType(contentType)
                 .principal(new UserPrincipal(user1)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+
+        // TODO: extend test expectations when structure is known
+    }
+
+    @Test
+    public void GetSentAndReceivedFriendrequestsForUser() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+        User user3 = userList.get(2);
+        User user4 = userList.get(3);
+        User user5 = userList.get(4);
+
+        // send friend request to user 2 and 4
+        Friend friend1 = new Friend(user1, user2);
+        Friend friend2 = new Friend(user1, user4);
+
+        // receive friend request from user 3 and 5
+        Friend friend3 = new Friend(user3, user1);
+        Friend friend4 = new Friend(user5, user1);
+
+        // so user should have 2 friendrequests
+
+        friendRepository.save(friend1);
+        friendRepository.save(friend2);
+        friendRepository.save(friend3);
+        friendRepository.save(friend4);
+
+        mockMvc.perform(get("/api/users/" + user1.getId() + "/friendrequests")
+                .contentType(contentType)
+                .principal(new UserPrincipal(user1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(4)));
+
+        // TODO: extend test expectations when structure is known
+    }
+
+    @Test
+    public void GetFriendRequestsWithDirectionBoth() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+        User user3 = userList.get(2);
+        User user4 = userList.get(3);
+        User user5 = userList.get(4);
+
+        // send friend request to user 2 and 4
+        Friend friend1 = new Friend(user1, user2);
+        Friend friend2 = new Friend(user1, user4);
+
+        // receive friend request from user 3 and 5
+        Friend friend3 = new Friend(user3, user1);
+        Friend friend4 = new Friend(user5, user1);
+
+        // so user should have 2 friendrequests
+
+        friendRepository.save(friend1);
+        friendRepository.save(friend2);
+        friendRepository.save(friend3);
+        friendRepository.save(friend4);
+
+        mockMvc.perform(get("/api/users/" + user1.getId() + "/friendrequests?direction=both")
+                .contentType(contentType)
+                .principal(new UserPrincipal(user1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(4)));
 
         // TODO: extend test expectations when structure is known
     }

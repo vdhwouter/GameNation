@@ -14,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import GameNationBackEnd.Exceptions.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -167,8 +169,40 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/{user}/friendrequests", method = RequestMethod.GET)
-    public List<User> GetFriendrequestsForUser(@PathVariable User user) {
-        // TODO: return resultaat van methode om alle vriendschapverzoekne van een gebruiker op te vragen
-        throw new NotImplementedException();
+    public List<User> GetFriendrequestsForUser(@PathVariable User user, @RequestParam(value="direction", required = false, defaultValue = "both") String direction) {
+        switch (direction) {
+            case "from":
+                return friendRepository
+                        .findBySender(user)
+                        .stream()
+                        .map(friend -> friend.getReceiver())
+                        .collect(Collectors.toList());
+            case "to":
+                return friendRepository
+                        .findByReceiver(user)
+                        .stream()
+                        .map(friend -> friend.getSender())
+                        .collect(Collectors.toList());
+
+            case "both":
+                List<User> allFrom = friendRepository
+                        .findBySender(user)
+                        .stream()
+                        .map(friend -> friend.getReceiver())
+                        .collect(Collectors.toList());
+
+                List<User> allTo = friendRepository
+                        .findByReceiver(user)
+                        .stream()
+                        .map(friend -> friend.getSender())
+                        .collect(Collectors.toList());
+
+                allFrom.addAll(allTo);
+
+                return allFrom;
+
+            default:
+                throw new IllegalArgumentException("direction can only have the following values: [from, to, both]");
+        }
     }
 }
