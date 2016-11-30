@@ -6,6 +6,7 @@ import GameNationBackEnd.Repositories.*;
 import GameNationBackEnd.Setup.BaseControllerTest;
 import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -38,6 +39,8 @@ public class UsersControllerTest extends BaseControllerTest {
     @Autowired
     private UserGameRepository userGameRepository;
 
+    @Autowired
+    private FriendRepository friendRepository;
 
     @Before
     public void setup() throws Exception {
@@ -448,6 +451,32 @@ public class UsersControllerTest extends BaseControllerTest {
         // expect user2 to still have its old email
         assertEquals(user2.getEmail(), this.userRepository.findOne(user2.getId()).getEmail());
 
+    }
+
+    @Ignore
+    @Test
+    public void GetFriendsForUser() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+        User user3 = userList.get(2);
+        User user4 = userList.get(3);
+
+        Friend friend1 = new Friend(user1, user2);
+        Friend friend2 = new Friend(user3, user1);
+        Friend friend3 = new Friend(user1, user4);
+
+        friend1.setAccepted(true);
+        friend2.setAccepted(true);
+        friend3.setAccepted(true);
+
+        friendRepository.save(friend1);
+        friendRepository.save(friend2);
+        friendRepository.save(friend3);
+
+        mockMvc.perform(get("/api/users/" + user2.getId() + "/friends")
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 
     /* tests te schrijven:
