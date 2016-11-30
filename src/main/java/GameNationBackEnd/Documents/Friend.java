@@ -27,10 +27,16 @@ public class Friend {
         receiver = new User();
     }
 
-    public Friend(User sender, User receiver){
+    public Friend(User sender, User receiver) {
+        this(sender, receiver, false);
+    }
+
+    public Friend(User sender, User receiver, boolean accepted){
         this.sender = sender;
         this.receiver = receiver;
         this.sended = true;
+
+        this.accepted = accepted;
     }
 
     public User getSender() {
