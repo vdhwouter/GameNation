@@ -27,6 +27,7 @@ public class UserRepositoryTest extends TestCase {
     @Autowired
     UserRepository userRepo;
 
+
     private User user1 = new User("lucas", "lucas@gmail.com", "wat? ja inderdaad!");
     private User user2 = new User("matthias", "matthias@gmail.com", "mattie!");
     private User user3 = new User("wouter", "wouter@gmail.com", "superwow");
