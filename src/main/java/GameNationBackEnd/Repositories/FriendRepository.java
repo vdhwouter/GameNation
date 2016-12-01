@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface FriendRepository extends MongoRepository<Friend, String> {
     List<Friend> findBySender(User sender);
     List<Friend> findByReceiver(User receiver);
+    List<Friend> findBySenderAndAccepted(User sender, Boolean accepted);
+    List<Friend> findByReceiverAndAccepted(User receiver, Boolean accepted);
     Friend findBySenderAndReceiver(User sender, User Receiver);
     List<Friend> findAll();
 }
