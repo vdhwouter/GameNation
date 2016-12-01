@@ -33,6 +33,7 @@ public class FriendRepositoryTest extends TestCase {
     private User user5 = new User("tijs", "tijs@gmail.com", "tijsje123");
 
     private Friend friend1 = new Friend(user1,user2);
+    private Friend friend5 = new Friend(user1,user3);
     private Friend friend2 = new Friend(user2,user3);
     private Friend friend3 = new Friend(user3,user4);
     private Friend friend4 = new Friend(user4,user5);
@@ -52,24 +53,27 @@ public class FriendRepositoryTest extends TestCase {
         friendRepo.save(friend2);
         friendRepo.save(friend3);
         friendRepo.save(friend4);
+        friendRepo.save(friend5);
     }
 
     @Test
     public void GetAllUsersDB() {
         List<Friend> all = friendRepo.findAll();
-        assertEquals(4, all.size());
+        assertEquals(5, all.size());
     }
 
     @Test
     public void GetReceiverBySender() {
-        Friend friend = friendRepo.findBySender(user1).get(0);
-        assertEquals("matthias", friend.getReceiver().getUsername());
+        List<Friend> friends = friendRepo.findBySender(user1);
+        assertEquals("matthias", friends.get(0).getReceiver().getUsername());
+        assertEquals("wouter", friends.get(1).getReceiver().getUsername());
     }
 
     @Test
     public void GetSenderByReceiver() {
-        Friend friend = friendRepo.findByReceiver(user3).get(0);
-        assertEquals("matthias", friend.getSender().getUsername());
+        List<Friend> friends = friendRepo.findByReceiver(user3);
+        assertEquals("matthias", friends.get(0).getSender().getUsername());
+        assertEquals("lucas", friends.get(1).getSender().getUsername());
     }
 
     @Test
