@@ -3,6 +3,7 @@ package GameNationBackEnd.Controllers;
 import GameNationBackEnd.Documents.Friend;
 import GameNationBackEnd.Documents.Game;
 import GameNationBackEnd.Repositories.FriendRepository;
+import GameNationBackEnd.RequestDocuments.FriendRequest;
 import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
 import GameNationBackEnd.Documents.User;
 import GameNationBackEnd.Documents.UserGame;
@@ -204,5 +205,52 @@ public class UsersController {
             default:
                 throw new IllegalArgumentException("direction can only have the following values: [from, to, both]");
         }
+    }
+
+
+    @RequestMapping(value = "/{sender}/friends", method = RequestMethod.POST)
+    public Friend CreateOrAcceptFriendRequest(@PathVariable User sender, @RequestBody FriendRequest friendRequest) {
+        User receiver = userDB.findOne(friendRequest.user);
+
+        // is there a relation in place already?
+        Friend relation = getRelation(sender, receiver);
+
+        // no relation yet? create one from the sender to the receiver
+        if (relation == null) {
+            return friendRepository.save(new Friend(sender, receiver));
+        }
+
+        // is there a relation?
+        // check if it was started by the receiver
+        if (relation.getSender().getId().equals(receiver.getId())) {
+            // if so, accept and return
+            relation.setAccepted(true);
+            return friendRepository.save(relation);
+        }
+
+        // final option:
+        // if sender has resent the request, just return again.
+        return relation;
+    }
+
+    @RequestMapping(value = "/{user}/friends/{friend}", method = RequestMethod.DELETE)
+    public void DeclineOrRemoveFriendship(@PathVariable User user, @PathVariable User friend) {
+        // is there a relation?
+        Friend relation = getRelation(user, friend);
+
+        if (relation == null) {
+//            throw error?
+        }
+
+        friendRepository.delete(relation);
+    }
+
+    private Friend getRelation(User user1, User user2) {
+        Friend relation = friendRepository.findBySenderAndReceiver(user1, user2);
+        if (relation == null) {
+            return friendRepository.findBySenderAndReceiver(user2, user1);
+        }
+
+        return relation;
     }
 }

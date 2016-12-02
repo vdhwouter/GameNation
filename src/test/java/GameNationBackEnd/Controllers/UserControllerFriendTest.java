@@ -7,8 +7,12 @@ import GameNationBackEnd.Repositories.FriendRepository;
 import GameNationBackEnd.Repositories.GameRepository;
 import GameNationBackEnd.Repositories.UserGameRepository;
 import GameNationBackEnd.Repositories.UserRepository;
+import GameNationBackEnd.RequestDocuments.FriendRequest;
 import GameNationBackEnd.Setup.BaseControllerTest;
 import GameNationBackEnd.Setup.UserPrincipal;
+
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,7 +23,10 @@ import java.util.List;
 import java.util.Random;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -221,5 +228,79 @@ public class UserControllerFriendTest extends BaseControllerTest {
                 .andExpect(jsonPath("$", hasSize(4)));
 
         // TODO: extend test expectations when structure is known
+    }
+
+    @Test
+    public void AddFriend() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // friend request from user 1 to user 2
+        FriendRequest request = new FriendRequest(user2);
+        mockMvc.perform(post("/api/users/" + user1.getId() + "/friends")
+                .contentType(contentType)
+                .content(json(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sender.username", is(user1.getUsername())))
+                .andExpect(jsonPath("$.receiver.username", is(user2.getUsername())))
+                .andExpect(jsonPath("$.accepted", is(false)));
+
+
+        assertNotNull(friendRepository.findBySenderAndReceiver(user1, user2));
+        assertFalse(friendRepository.findBySenderAndReceiver(user1,user2).isAccepted());
+    }
+
+    @Test
+    public void AcceptFriend() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // user 2 requests to be friends
+        friendRepository.save(new Friend(user2, user1));
+
+        // user 1 accepts friend request
+        mockMvc.perform(post("/api/users/" + user1.getId() + "/friends")
+                .contentType(contentType)
+                .content(json(new FriendRequest(user2))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sender.username", is(user2.getUsername())))
+                .andExpect(jsonPath("$.receiver.username", is(user1.getUsername())))
+                .andExpect(jsonPath("$.accepted", is(true)));
+
+        assertNotNull(friendRepository.findBySenderAndReceiver(user2, user1));
+        assertTrue(friendRepository.findBySenderAndReceiver(user2, user1).isAccepted());
+    }
+
+    @Test
+    public void DeclineFriendRequest() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // user 2 requests to be friends
+        friendRepository.save(new Friend(user2, user1));
+
+        // user 1 declines friend request
+        mockMvc.perform(delete("/api/users/" + user1.getId() + "/friends/" + user2.getId()))
+                .andExpect(status().isOk());
+
+        assertNull(friendRepository.findBySenderAndReceiver(user2, user1));
+        assertNull(friendRepository.findBySenderAndReceiver(user1, user2));
+    }
+
+
+    @Test
+    public void EndFriendship() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // user 1 and 2 are friends
+        friendRepository.save(new Friend(user1, user2, true));
+
+        // user 1 ends the friendship
+        mockMvc.perform(delete("/api/users/" + user1.getId() + "/friends/" + user2.getId()))
+                .andExpect(status().isOk());
+
+        assertNull(friendRepository.findBySenderAndReceiver(user2, user1));
+        assertNull(friendRepository.findBySenderAndReceiver(user1, user2));
     }
 }
