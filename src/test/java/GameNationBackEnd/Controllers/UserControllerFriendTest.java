@@ -332,4 +332,21 @@ public class UserControllerFriendTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.relation").doesNotExist());
     }
+
+    @Test
+    public void GetUserByUsernameThatIsFriend() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // user 1 and 2 are friends
+        friendRepository.save(new Friend(user1, user2, true));
+
+        mockMvc.perform(get("/api/users?username=" + user1.getUsername())
+                .principal(new UserPrincipal(user2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].relation", notNullValue()))
+                .andExpect(jsonPath("$[0].relation.accepted", is(true)))
+                .andExpect(jsonPath("$[0].relation.sender.username", is(user1.getUsername())))
+                .andExpect(jsonPath("$[0].relation.receiver.username", is(user2.getUsername())));
+    }
 }

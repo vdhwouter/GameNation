@@ -49,10 +49,16 @@ public class UsersController {
 
     // get user by username
     @RequestMapping(method = RequestMethod.GET, params = {"username"})
-    public List<User> GetUserByUsername(@RequestParam String username) {
+    public List<User> GetUserByUsername(@RequestParam String username, Principal principal) {
         User user = userDB.findByUsername(username);
         if (user != null) {
-            return Arrays.asList(userDB.findByUsername(username));
+            // if authenticated, add relation between users.
+            if (principal != null) {
+                User principalUser = userDB.findByUsername(principal.getName());
+                user.setRelation(getRelation(user, principalUser));
+            }
+
+            return Arrays.asList(user);
         } else {
             return new ArrayList<>();
         }
