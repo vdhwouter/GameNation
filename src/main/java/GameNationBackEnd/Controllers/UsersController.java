@@ -1,5 +1,6 @@
 package GameNationBackEnd.Controllers;
 
+import GameNationBackEnd.Documents.Friend;
 import GameNationBackEnd.Documents.Game;
 import GameNationBackEnd.Repositories.FriendRepository;
 import GameNationBackEnd.RequestDocuments.SkillLevelRequest;
@@ -9,18 +10,16 @@ import GameNationBackEnd.Repositories.GameRepository;
 import GameNationBackEnd.Repositories.UserGameRepository;
 import GameNationBackEnd.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.Fields;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import GameNationBackEnd.Exceptions.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by lucas on 17/11/2016.
@@ -164,8 +163,15 @@ public class UsersController {
 
     @RequestMapping(value = "/{user}/friends", method = RequestMethod.GET)
     public List<User> GetFriendsForUser(@PathVariable User user) {
-        // TODO: return resultaat van methode om alle vrienden van een gebruiker op te vragen
-        throw new NotImplementedException();
+        Stream<User> receivedStream = friendRepository.findByReceiverAndAccepted(user, true)
+                .stream()
+                .map(f -> f.getSender());
+
+        Stream<User> sentStream = friendRepository.findBySenderAndAccepted(user, true)
+                .stream()
+                .map(f -> f.getReceiver());
+
+        return Stream.concat(receivedStream, sentStream).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/{user}/friendrequests", method = RequestMethod.GET)
@@ -173,33 +179,27 @@ public class UsersController {
         switch (direction) {
             case "from":
                 return friendRepository
-                        .findBySender(user)
+                        .findBySenderAndAccepted(user, false)
                         .stream()
                         .map(friend -> friend.getReceiver())
                         .collect(Collectors.toList());
             case "to":
                 return friendRepository
-                        .findByReceiver(user)
+                        .findByReceiverAndAccepted(user, false)
                         .stream()
                         .map(friend -> friend.getSender())
                         .collect(Collectors.toList());
 
             case "both":
-                List<User> allFrom = friendRepository
-                        .findBySender(user)
+                Stream<User> receivedStream = friendRepository.findByReceiverAndAccepted(user, false)
                         .stream()
-                        .map(friend -> friend.getReceiver())
-                        .collect(Collectors.toList());
+                        .map(f -> f.getSender());
 
-                List<User> allTo = friendRepository
-                        .findByReceiver(user)
+                Stream<User> sentStream = friendRepository.findBySenderAndAccepted(user, false)
                         .stream()
-                        .map(friend -> friend.getSender())
-                        .collect(Collectors.toList());
+                        .map(f -> f.getReceiver());
 
-                allFrom.addAll(allTo);
-
-                return allFrom;
+                return Stream.concat(receivedStream, sentStream).collect(Collectors.toList());
 
             default:
                 throw new IllegalArgumentException("direction can only have the following values: [from, to, both]");

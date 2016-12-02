@@ -74,7 +74,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
         return this.userList.get(random.nextInt(startLength - 1));
     }
 
-    @Ignore
     @Test
     public void GetFriendsForUser() throws Exception {
         User user1 = userList.get(0);
@@ -101,7 +100,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)));
     }
 
-    @Ignore
     @Test
     public void GetFriendRequestForUser() throws Exception {
         User user1 = userList.get(0);
@@ -131,7 +129,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
         // TODO: extend test expectations when structure is known
     }
 
-    @Ignore
     @Test
     public void GetSentFriendrequestsForUser() throws Exception {
         User user1 = userList.get(0);
@@ -162,7 +159,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
         // TODO: extend test expectations when structure is known
     }
 
-    @Ignore
     @Test
     public void GetSentAndReceivedFriendrequestsForUser() throws Exception {
         User user1 = userList.get(0);
@@ -182,8 +178,8 @@ public class UserControllerFriendTest extends BaseControllerTest {
         Friend friend4 = friendRepository.save(new Friend(user5, user1));
 
         // add users that the user is already friends with
-        Friend friend5 = friendRepository.save(new Friend(user6, user1));
-        Friend friend6 = friendRepository.save(new Friend(user1, user7));
+        Friend friend5 = friendRepository.save(new Friend(user6, user1, true));
+        Friend friend6 = friendRepository.save(new Friend(user1, user7, true));
 
         // so total should be 4
         mockMvc.perform(get("/api/users/" + user1.getId() + "/friendrequests")
@@ -195,7 +191,6 @@ public class UserControllerFriendTest extends BaseControllerTest {
         // TODO: extend test expectations when structure is known
     }
 
-    @Ignore
     @Test
     public void GetFriendRequestsWithDirectionBoth() throws Exception {
         User user1 = userList.get(0);
@@ -215,8 +210,8 @@ public class UserControllerFriendTest extends BaseControllerTest {
         Friend friend4 = friendRepository.save(new Friend(user5, user1));
 
         // add users that the user is already friends with
-        Friend friend5 = friendRepository.save(new Friend(user6, user1));
-        Friend friend6 = friendRepository.save(new Friend(user1, user7));
+        Friend friend5 = friendRepository.save(new Friend(user6, user1, true));
+        Friend friend6 = friendRepository.save(new Friend(user1, user7, true));
 
         // so total should be 4
         mockMvc.perform(get("/api/users/" + user1.getId() + "/friendrequests?direction=both")
