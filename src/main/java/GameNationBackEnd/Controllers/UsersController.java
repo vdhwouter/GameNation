@@ -60,7 +60,12 @@ public class UsersController {
 
     // get user by id
     @RequestMapping(value = "/{user}", method = RequestMethod.GET)
-    public User GetUser(@PathVariable User user) {
+    public User GetUser(@PathVariable User user, Principal principal) {
+        // if authenticated, add relation between users.
+        if (principal != null) {
+            User principalUser = userDB.findByUsername(principal.getName());
+            user.setRelation(getRelation(user, principalUser));
+        }
         return user;
     }
 

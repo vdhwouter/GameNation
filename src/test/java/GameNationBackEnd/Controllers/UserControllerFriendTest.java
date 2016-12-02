@@ -11,7 +11,7 @@ import GameNationBackEnd.RequestDocuments.FriendRequest;
 import GameNationBackEnd.Setup.BaseControllerTest;
 import GameNationBackEnd.Setup.UserPrincipal;
 
-import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -302,5 +300,36 @@ public class UserControllerFriendTest extends BaseControllerTest {
 
         assertNull(friendRepository.findBySenderAndReceiver(user2, user1));
         assertNull(friendRepository.findBySenderAndReceiver(user1, user2));
+    }
+
+
+    @Test
+    public void GetUserThatIsFriend() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // user 1 and 2 are friends
+        friendRepository.save(new Friend(user1, user2, true));
+
+        mockMvc.perform(get("/api/users/" + user1.getId())
+                .principal(new UserPrincipal(user2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.relation", notNullValue()))
+                .andExpect(jsonPath("$.relation.accepted", is(true)))
+                .andExpect(jsonPath("$.relation.sender.username", is(user1.getUsername())))
+                .andExpect(jsonPath("$.relation.receiver.username", is(user2.getUsername())));
+    }
+
+    @Test
+    public void GetUserThatIsNotFriend() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
+
+        // user 1 and 2 are not friends.
+
+        mockMvc.perform(get("/api/users/" + user1.getId())
+                .principal(new UserPrincipal(user2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.relation").doesNotExist());
     }
 }

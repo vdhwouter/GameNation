@@ -43,9 +43,6 @@ public class User{
 	// and can be used to show UI for cancel/accept/show friend request
 	private Friend relation;
 
-	//private List<Lobby> lobbies;
-	//private List<String> friends;
-
 	public User(){}
 
 	public User(String username, String email, String password) {
@@ -76,6 +73,7 @@ public class User{
 	public String getDiscord() { return discord; }
 	public String getDescription() { return description; }
 	public int getLevel() { return level; }
+	public Friend getRelation() { return relation; }
 
 	public void setId(String id) {
 		this._id = id;
@@ -98,6 +96,6 @@ public class User{
 	public void setTeamspeak(String teamspeak) { this.teamspeak = teamspeak; }
 	public void setDiscord(String discord) { this.discord = discord; }
 	public void setDescription(String description) { this.description = description; }
-
 	public void setLevel(int level) { this.level = level; }
+	public void setRelation(Friend relation) { this.relation = relation; }
 }
