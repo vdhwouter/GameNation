@@ -9,6 +9,20 @@ html{
     color: white;
 }
 
+/* change scroller */
+::-webkit-scrollbar {
+    width:  5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #db5f24;
+}
+
+::-webkit-scrollbar-track {
+    background: #4a4c51;
+}
+
 #main {
   display: flex;
   flex-direction: row;
@@ -527,3 +541,10 @@ p.levelGames {
     width: 100%;
     margin-bottom: 0.5rem;
 }
+
+
+
+
+
+
+
