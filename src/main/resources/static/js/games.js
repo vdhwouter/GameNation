@@ -3,6 +3,14 @@
  */
 $(document).ready(function () {
 
+    // show the add button if user is logged in
+    if (session.authenticated) {
+        $("#addConfirm").css('display',null);
+    }
+    else {
+        $("#addConfirm").css('display',"none");
+    }
+
     /* ===========================================
      show all games
      =========================================== */
@@ -63,16 +71,67 @@ $(document).ready(function () {
 
 });
 
+/* ===========================================
+ create info in game modal
+ =========================================== */
+// array with selected game
+var addedGame = new Array();
 
 // give info about the game in the modal
 var infoGame = function (e) {
     var allGames = [];
+    $("#detailsGames").html("");
 
     $(e).children().each(function (i, v) {
-        if (i >= 0 && i < 5) {
-            allGames[i] = $(this)[0].innerHTML;
-        }
+        allGames[i] = $(this)[0].innerHTML;
     });
 
-    $('#detailsGames p').text(allGames[2]);
+    // get id from img alt attribute
+    var str = $(e)[0].innerHTML;
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    var alt = tmp.getElementsByTagName('img')[0].alt;
+    addedGame[0]= alt;
+
+
+    // create html tags with info about the game
+    var h4 = document.createElement("h4");
+    h4.innerHTML = "Over dit spel";
+
+    var firstP = document.createElement("p");
+    firstP.innerHTML = addedGame[0];
+    firstP.setAttribute('style', 'display: none');
+
+    var secondP = document.createElement("p");
+    secondP.innerHTML = allGames[2];
+
+    var element = document.getElementById('detailsGames');
+    element.appendChild(h4);
+    element.appendChild(firstP);
+    element.appendChild(secondP);
+
+    console.log(addedGame);
+    console.log(allGames);
 }
+
+
+/* ===========================================
+ add a game to user profile
+ =========================================== */
+// by click on the add button
+$('#addConfirm').click(function () {
+    if (addedGame.length == 0) {
+        console.log("no items selected");
+    }
+    else {
+        if (session.authenticated) {
+            //toevoegen game aan user
+            axios.post("/users/" + session.id + "/games", addedGame).then(function (data) {
+                location.reload();
+            });
+        }
+        else {
+            console.log("user moet inloggen om game te kunnen toevoegen");
+        }
+    }
+});
