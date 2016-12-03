@@ -112,8 +112,8 @@ var infoGame = function (e) {
 
 
     // create html tags with info about the game
-    var h4 = document.createElement("h4");
-    h4.innerHTML = "Over dit spel";
+    var firstH4 = document.createElement("h4");
+    firstH4.innerHTML = "Over dit spel";
 
     var firstP = document.createElement("p");
     firstP.innerHTML = addedGame[0];
@@ -122,10 +122,18 @@ var infoGame = function (e) {
     var secondP = document.createElement("p");
     secondP.innerHTML = allGames[2];
 
+    var secondH4 = document.createElement("h4");
+    secondH4.innerHTML = "Vrienden";
+
+    var thirdP = document.createElement("p");
+    thirdP.innerHTML = "Deze vrienden spelen dit spel ook:";
+
     var element = document.getElementById('detailsGames');
-    element.appendChild(h4);
+    element.appendChild(firstH4);
     element.appendChild(firstP);
     element.appendChild(secondP);
+    element.appendChild(secondH4);
+    element.appendChild(thirdP);
 }
 
 
