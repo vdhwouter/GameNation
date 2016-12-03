@@ -518,12 +518,28 @@ p.levelGames {
 /* ===========================================
    Model details game (games.html)
    =========================================== */
+#detailsGames {
+    overflow: hidden;
+}
+
 #detailsGames p {
     text-align: left;
     margin-top: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
 }
 
+.friendImg {
+    float: left;
+    width: 50px;
+    margin-right: 7px;
+    margin-bottom: 14px;
+}
+
+.formAddGame {
+    clear: both;
+    overflow: hidden;
+    margin-top: 1rem;
+}
 
 /* ===========================================
     liveSearchbox

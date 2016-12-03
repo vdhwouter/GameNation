@@ -128,12 +128,23 @@ var infoGame = function (e) {
     var thirdP = document.createElement("p");
     thirdP.innerHTML = "Deze vrienden spelen dit spel ook:";
 
+
     var element = document.getElementById('detailsGames');
     element.appendChild(firstH4);
     element.appendChild(firstP);
     element.appendChild(secondP);
     element.appendChild(secondH4);
     element.appendChild(thirdP);
+
+    for (i = 0; i < 20; i++) {
+        var firstImg = document.createElement("img");
+        firstImg.setAttribute("src", "img/avatar-member.jpg");
+        firstImg.setAttribute("alt", "avatar-member" + i);
+        firstImg.setAttribute("title", 'avatar-member\nlevel 5' + i);
+        firstImg.className += "friendImg";
+
+        element.appendChild(firstImg);
+    }
 }
 
 
