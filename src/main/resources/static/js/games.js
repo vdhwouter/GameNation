@@ -1,6 +1,9 @@
 /**
  * Created by tijs on 24/11/2016.
  */
+
+var alreadyAddedGames = new Array();
+
 $(document).ready(function () {
 
     // show the add button if user is logged in
@@ -69,6 +72,20 @@ $(document).ready(function () {
     });
 
 
+    /* ===========================================
+     get id's that user already added
+     =========================================== */
+     axios.get("/users/" + session.id + "/games").then(function (result) {
+        var data = result.data
+
+        for (key in data) {
+            if (data.hasOwnProperty(key)) {
+                var value = data[key]
+                alreadyAddedGames.push(value['game'].id);
+            }
+        }
+    })
+
 });
 
 /* ===========================================
@@ -109,9 +126,6 @@ var infoGame = function (e) {
     element.appendChild(h4);
     element.appendChild(firstP);
     element.appendChild(secondP);
-
-    console.log(addedGame);
-    console.log(allGames);
 }
 
 
@@ -124,14 +138,34 @@ $('#addConfirm').click(function () {
         console.log("no items selected");
     }
     else {
+        // check if user is logged in
         if (session.authenticated) {
-            //toevoegen game aan user
-            axios.post("/users/" + session.id + "/games", addedGame).then(function (data) {
-                location.reload();
-            });
+            // check if user already have the game
+            if (!eleContainsInArray(alreadyAddedGames, addedGame[0])) {
+                //add game to user
+                axios.post("/users/" + session.id + "/games", addedGame).then(function (data) {
+                    location.reload();
+                });
+            }
+            else {
+                console.log("game is reeds toegevoegd aan uw profiel");
+            }
         }
         else {
             console.log("user moet inloggen om game te kunnen toevoegen");
         }
     }
 });
+
+
+// check if game is already in array
+function eleContainsInArray(arr, element) {
+    if (arr != null && arr.length > 0) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
