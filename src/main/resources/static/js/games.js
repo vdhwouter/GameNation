@@ -151,6 +151,8 @@ var infoGame = function (e) {
 /* ===========================================
  add a game to user profile
  =========================================== */
+ var errorArray = new Array();
+
 // by click on the add button
 $('#addConfirm').click(function () {
     if (addedGame.length == 0) {
@@ -168,11 +170,16 @@ $('#addConfirm').click(function () {
             }
             else {
                 console.log("game is reeds toegevoegd aan uw profiel");
+                errorArray.push("Game is already added to your profile")
             }
         }
         else {
             console.log("user moet inloggen om game te kunnen toevoegen");
+            errorArray.push("User must login before adding games");
         }
+        $('#register-errors').empty();
+        $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
+        $('#register-errors').slideDown();
     }
 });
 
