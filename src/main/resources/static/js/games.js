@@ -136,15 +136,24 @@ var infoGame = function (e) {
     element.appendChild(secondH4);
     element.appendChild(thirdP);
 
-    for (i = 0; i < 20; i++) {
-        var firstImg = document.createElement("img");
-        firstImg.setAttribute("src", "img/avatar-member.jpg");
-        firstImg.setAttribute("alt", "avatar-member" + i);
-        firstImg.setAttribute("title", 'avatar-member\nlevel 5' + i);
-        firstImg.className += "friendImg";
+    //get friends who are playing the game
+    axios.get("/games/" + addedGame[0] + "/users").then(function (response) {
+        var data = response.data;
 
-        element.appendChild(firstImg);
-    }
+        for (key in data) {
+            if (data.hasOwnProperty(key)) {
+                var value = data[key];
+
+                var firstImg = document.createElement("img");
+                firstImg.setAttribute("src", "img/avatar-member.jpg");
+                firstImg.setAttribute("alt", "avatar-member");
+                firstImg.setAttribute("title", value["user"].username + '\nLevel: ' + value["user"].level);
+                firstImg.className += "friendImg";
+
+                element.appendChild(firstImg);
+            }
+        }
+    });
 }
 
 
