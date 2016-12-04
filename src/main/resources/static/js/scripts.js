@@ -95,6 +95,10 @@ $(document).ready(function () {
                 $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
                 $('.sidebar').load('sidebar/logged_in.html');
                 $('.content').load('content/settings.html', function () {
+                    if (!session.authenticated) {
+                        console.info('How dare you access this page without authenticating, i will have to redirect you!');
+                        return  navigateTo('login', 'Login');
+                    }
                     $('#username')[0].value = user.username;
                     $('#email')[0].value = user.email;
                     $('#firstname')[0].value = user.firstname;
