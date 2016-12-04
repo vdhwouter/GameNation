@@ -1,10 +1,10 @@
 logInWithFacebook = function(link) {
-    var message = "Hi there! Come and join me on gamenamtion!" + link;
+    var message = "Hi there! Come and join me on gamenamtion!";
 
     // Facebook login api call (with permission for publish action
     FB.login(function(response) {
-        if (response.authResponse) console.info('Logged in')
-        else console.error('Login failed')
+        if (response.authResponse) console.info('Facebook login: successfull')
+        else console.error('Facebook login: failed')
     }, {scope: 'publish_actions'});
 
     // Get access token and post message to facebook
@@ -15,8 +15,8 @@ logInWithFacebook = function(link) {
             FB.api(
                 '/me/feed',
                 'POST',
-                {"message": message},
-                function(response) { console.log(response) }
+                {"message": message, 'link': link},
+                function(response) { console.log('Facebook post: ' + response) }
             );
         }
     });

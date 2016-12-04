@@ -1,6 +1,13 @@
 /* ===========================================
    show all games that user added
    =========================================== */
+
+$('#shareProfile').on('click', function(e){
+    e.preventDefault();
+    console.info('Facebook share initiated...');
+    logInWithFacebook('http://www.localhost:8080/' + window.profileUser.username);
+});
+
 $(document).ready(function() {
     // HACK , CHANGE THI
     var currentUser = window.profileUser;
