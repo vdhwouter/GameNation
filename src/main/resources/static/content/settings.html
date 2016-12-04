@@ -1,99 +1,100 @@
-<div class="wrapper">
-<!-- content -->
-    <h2>Profile</h2>
-    <div id="side">
-    	<img id="profileImage" src="../img/avatar-member.jpg"/>
-    	<input type="submit" name="update-submit" id="submit-photo" class="btn" value="Edit photo" />
-    </div>
+<div class="settings">
+	<h2 class="page-title page-title--large">Profile</h2>
+	<div class="left">
+		<img class="avatar__image" src="img/avatar-member.jpg">
+		<input class="avatar__button" type="submit" name="submit" value="Edit Photo">
+	</div>
+	<div class="right">
+		<ul class="error-list"></ul>
 
-    <div id="profileData">
+		<form class="form--settings">
+			<div class="form__group">
+				<label class="form__label" for="first_name">First Name</label>
+				<input class="form__input form__input--dark" type="text" id="first_name">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="last_name">Last Name</label>
+				<input class="form__input form__input--dark" type="text" id="last_name">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="username">Username</label>
+				<input class="form__input form__input--dark" type="text" id="username">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="email">E-mail</label>
+				<input class="form__input form__input--dark" type="email" id="email">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="level">Level</label>
+				<input class="form__input form__input--dark" type="number" id="level">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="password">Password</label>
+				<input class="form__input form__input--dark" type="password" id="password">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="confirmation">Confirmation</label>
+				<input class="form__input form__input--dark" type="password" id="confirmation">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="teamspeak">Teamspeak Address</label>
+				<input class="form__input form__input--dark" type="text" id="teamspeak">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="discord">Discord Address</label>
+				<input class="form__input form__input--dark" type="text" id="discord">
+			</div>
+			<div class="form__group">
+				<label class="form__label" for="description">Description</label>
+				<textarea class="form__textarea" rows="5" id="description"></textarea>
+			</div>
+			<input type="hidden" id="user_id">
+			<input class="form__submit form__submit--settings" type="submit" name="" value="Save">
+		</form>
+	</div>
+</div>
 
-		<!--<p id="register-errors" style="background: pink; color: blue;"></p>-->
-		<ul id="register-errors"></ul>
-		
-		<!-- http://localhost:8080/api/users/ -->
-		<form action="#" method="post" role="form" id="settings-form" name="settings-form">
-		    <dl>
-		    	<dt><label>First Name</label></dt>
-		        <dd><input type="text" name="firstname" id="firstname" autocomplete="off"/></dd>
+<h3 class="page-title page-title--medium">Games</h3>
+<ul class="games-list"></ul>
 
-				<dt><label>Last name</label></dt>
-		        <dd><input type="text" name="lastname" id="lastname"  autocomplete="off" /></dd>
-
-		        <dt><label>Username</label></dt>
-		        <dd><input type="text" name="username" id="username"  autocomplete="off" value="" /></dd>
-
-		        <dt><label>E-mail</label></dt>
-		        <dd><input type="text" name="email" id="email" autocomplete="off" value=""/></dd>
-
-				<dt><label>Level</label></dt>
-				<dd><input type="number" name="level" id="level" autocomplete="off" value=""/></dd>
-
-				<dt><label>Password</label></dt>
-		        <dd><input type="password" name="password" id="password" autocomplete="off" /></dd>
-
-		        <dt><label>Confirmation</label></dt>
-		        <dd><input type="password" name="confirmpass" id="confirmpass" autocomplete="off" /></dd>
-
-		    	<dt><label>Teamspeak-Address</label></dt>
-		        <dd><input type="text" name="teamspeak" id="teamspeakAddr" autocomplete="off"/></dd>
-
-				<dt><label>Discord-Address</label></dt>
-		        <dd><input type="text" name="discord" id="DiscordAddr"  autocomplete="off" /></dd>
-
-		    	<dt><label>Description</label></dt>
-				<dd><textarea name="description" id="descriptionText" rows="10" value=""></textarea></dd>
-
-				<dd><input type="hidden" name="userID" id="userID" value="" /></dd>
-				<dd><input type="submit" name="update-submit" class="btn" id="updateSubmit" value="Save" /></dd>
-		    </dl>
+<!-- model dialog add games -->
+<div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">
+	<button data-remodal-action="close" class="remodal-close"></button>
+	<h3>Add new Game</h3>
+	<div id="searchAddGames">
+		<form action="" method="post" role="form">
+			<dl>
+				<dt style="display: none"><label>Zoeken</label></dt>
+				<dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
+			</dl>
 		</form>
 	</div>
 
-    <div id="games">
-    	<h3>Games</h3>
-    </div>
+	<ul class="games-list"></ul>
 
-	<!-- model dialog add games -->
-	<div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">
-		<button data-remodal-action="close" class="remodal-close"></button>
-		<h3>Add new Game</h3>
-		<div id="searchAddGames">
-			<form action="" method="post" role="form">
-				<dl>
-					<dt style="display: none"><label>Zoeken</label></dt>
-					<dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
-				</dl>
-			</form>
-		</div>
+	<form action="">
+		<button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
+	</form>
+</div>
 
-		<div class="grid" id="addGames"></div>
+<!-- model dialog edit games -->
+<div class="remodal" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: true">
+	<button data-remodal-action="close" class="remodal-close"></button>
+	<h3 id="editGameTitle"></h3>
+	<div id="editGame">
+		<form>
+			<dl>
+				<dt style="display: none"><label>Id</label></dt>
+				<dd style="display: none"><input type="text" name="id" id="id" value="5830533b9e783a58e84d6a80" autocomplete="off"/></dd>
 
-		<form action="">
-			<button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
+				<dt><label>Skill level</label></dt>
+				<dd><input id="skillset" type="number" value="0"/></dd>
+
+				<dd id="modelSkilEditDelete"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-delete" value="Delete" /></dd>
+				<dd id="modelSkilEditEdit"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-confirm" value="Edit" /></dd>
+			</dl>
 		</form>
 	</div>
-
-	<!-- model dialog edit games -->
-	<div class="remodal" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: true">
-		<button data-remodal-action="close" class="remodal-close"></button>
-		<h3 id="editGameTitle"></h3>
-		<div id="editGame">
-			<form>
-				<dl>
-					<dt style="display: none"><label>Id</label></dt>
-					<dd style="display: none"><input type="text" name="id" id="id" value="5830533b9e783a58e84d6a80" autocomplete="off"/></dd>
-
-					<dt><label>Skill level</label></dt>
-					<dd><input id="skillset" type="number" value="0"/></dd>
-
-					<dd id="modelSkilEditEdit"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-confirm" value="Edit" /></dd>
-					<dd id="modelSkilEditDelete"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-delete" value="Delete" /></dd>
-				</dl>
-			</form>
-		</div>
-	</div>
-
 </div>
 
 <script type="text/javascript">

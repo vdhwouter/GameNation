@@ -1,112 +1,47 @@
-<div class="wrapper">
-<!-- content -->
-    <h2>Profile</h2>
-    <div id="side">
-    	<img id="profileImage" src="img/avatar-member.jpg"/>
-        <img class="level" src="img/cirkel.png"/>
-        <p class="level" id="levelVal"></p>
+<div class="profile">
+    <h2 class="page-title page-title--large">Profile</h2>
+    <div class="left">
+        <img class="avatar__image" src="img/avatar-member.jpg" alt="">
+        <p class="avatar__level" id="level"></p>
     </div>
-
-    <div id="profileData">
-		<ul>
-            <li>
-                <p class=title>Username</p>
-                <p id="usernameVal"></p>
+    <div class="right">
+        <ul class="profile-list">
+            <li class="profile-list__item">
+                <p class="profile-list__item__title">Username</p>
+                <p class="profile-list__item__content" id="username"></p>
             </li>
-            <li>
-                <p class=title>Name</p>
-                <p id="namelVal"></p>
+            <li class="profile-list__item">
+                <p class="profile-list__item__title">Name</p>
+                <p class="profile-list__item__content" id="fullname"></p>
             </li>
-            <li>
-                <p class=title>E-mail</p>
-                <p id="emailVal"></p>
+            <li class="profile-list__item">
+                <p class="profile-list__item__title">E-Mail</p>
+                <p class="profile-list__item__content" id="email"></p>
             </li>
-            <li>
-                <p class=title>Teamspeak-Address</p>
-                <p id="teamspeakVal"></p>
+            <li class="profile-list__item">
+                <p class="profile-list__item__title">Teamspeak Address</p>
+                <p class="profile-list__item__content" id="teamspeak"></p>
             </li>
-
-            <li>
-                <p class=title>Discord-Address</p>
-                <p id="discordVal"></p>
+            <li class="profile-list__item">
+                <p class="profile-list__item__title">Discord Address</p>
+                <p class="profile-list__item__content" id="discord"></p>
             </li>
-
-             <li>
-                <p class=title>Description</p>
-                <p id="descriptionVal"></p>
-            </li>
-        </ul>
-	</div>
-
-    <div id="games-overview">
-    	<h3>My games</h3>
-    </div>
-
-     <div id="lobby-overview">
-        <h3>My lobbies</h3>
-        <ul>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="game" src="img/bench.png"/>
-                    <p>lobby</p>
-                </a>
+            <li class="profile-list__item">
+                <p class="profile-list__item__title">Description</p>
+                <p class="profile-list__item__content" id="description"></p>
             </li>
         </ul>
     </div>
+</div>
+
+<div class="games">
+    <h3 class="page-title page-title--medium">My Games</h3>
+    <ul class="games-list"></ul>
+</div>
+
+<div class="lobbies">
+    <h3 class="page-title page-title--medium">My Lobbies</h3>
+    <ul class="lobbies-list"></ul>
 </div>
 
 <script src="js/profile.js"></script>

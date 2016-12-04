@@ -1,28 +1,18 @@
-<div class="wrapper">
-    <h2>Games</h2>
-
-    <ul id="register-errors"></ul>
-
-    <div >
-        <form action="" method="post" role="form">
-            <dl>
-                <dt style="display: none"><label>Zoeken</label></dt>
-                <dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
-            </dl>
-        </form>
+<h3 class="page-title page-title--large">Games</h3>
+<form class="form form--games">
+    <div class="form__group">
+        <input class="form__input form__input--dark" placeholder="Search games" id="search_box">
     </div>
+</form>
+<u class="games-list"></u>
 
-    <div id="games"></div>
-
-    <!-- model dialog add games -->
-    <div class="remodal" data-remodal-id="ShowGameDetailsModal" data-remodal-options="closeOnOutsideClick: true">
-        <button data-remodal-action="close" class="remodal-close"></button>
-        <h3>Game properties</h3>
-        <div id="detailsGames"></div>
-
-        <form action="" class="formAddGame">
-            <button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
-        </form>
+<!-- model dialog add games -->
+<div class="remodal" data-remodal-id="ShowGameDetailsModal" data-remodal-options="closeOnOutsideClick: true">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h3>Game properties</h3>
+    <div id="detailsGames">
+        <h4>Over dit spel</h4>
+        <p></p>
     </div>
 </div>
 <script src="../js/remodal.min.js"></script>

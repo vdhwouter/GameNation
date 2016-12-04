@@ -14,10 +14,7 @@ $(document).ready(function () {
         window.location = '/login';
     }, 100);
 
-    crossroads.addRoute('/login', function (query) {
-        console.log(query);
-        $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
-        $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
+    crossroads.addRoute('/login', function () {
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/login.html', function () {
             if (session.authenticated) {
@@ -26,14 +23,14 @@ $(document).ready(function () {
             }
 
             if (window.loginMessage) {
-                $('#login-message').text(window.loginMessage);
+                $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-info-circle"></i><p class="error-list__item__text">' + window.loginMessage + '</p></li>');
                 window.loginMessage = null
             }
 
-            $('#login-form').on('submit', function (e) {
+            $('.form--login').on('submit', function (e) {
                 e.preventDefault()
-                var username = $('#login-form input[type=text]').val()
-                var password = $('#login-form input[type=password]').val()
+                var username = $('.form__input[type=text]').val()
+                var password = $('.form__input[type=password]').val()
                 session.login(username, password)
                     .then(function (user) {
                         console.info('successfully authenticated, redirecting to profile...')
@@ -41,15 +38,13 @@ $(document).ready(function () {
                     })
                     .catch(function (error) {
                         console.warn('bad credentials!')
-                        $('p#login-errors').text("BAD CREDENTIALS!")
+                        $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle"></i><p class="error-list__item__text">Bad Credentials!</p></li>');
                     })
             })
         });
     }, 100);
 
     crossroads.addRoute('/register', function () {
-        $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
-        $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/register.html', function () {
             if (session.authenticated) {
@@ -57,19 +52,18 @@ $(document).ready(function () {
                 return navigateTo(session.user.username, session.user.username)
             }
 
-            $('#register-form').on('submit', function (e) {
+            $('.form--register').on('submit', function (e) {
                 e.preventDefault()
-                console.log("ERAHAKDKASHD")
-                var username = $('#register-form input[name=username]').val()
-                var email = $('#register-form input[name=email]').val()
-                var password = $('#register-form input[name=password]').val()
-                var confirmation = $('#register-form input[name=confirmation]').val()
+                var username = $('.form__input[name=username]').val()
+                var email = $('.form__input[name=email]').val()
+                var password = $('.form__input[name=password]').val()
+                var confirmation = $('.form__input[name=confirmation]').val()
 
                 // Return error array as list items
                 var errorArray = CheckFormInput(email, password, confirmation, username);
-                $('#register-errors').empty();
-                $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
-                $('#register-errors').slideDown();
+                $('.error-list').empty();
+                $(errorArray).each(function(index, value){ $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text">' + value + '</p></li>') });
+                $('.error-list').slideDown();
 
                 if (errorArray.length == 0) {
                     axios.post('/users', { username: username, password: password, email: email })
@@ -79,7 +73,7 @@ $(document).ready(function () {
                             navigateTo('login', 'Login')
                         }).catch((err) => {
                             console.log(err)
-                            $('#register-errors')[0].innerHTML = '<li><img src="img/error.png" /><p>' + err.response.data.message + '</p></li>';
+                            $('.error-list')[0].innerHTML = '<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle"></i><p class="error-list__item__text">' + err.response.data.message + '</p></li>';
                         })
                 }
 
@@ -91,30 +85,26 @@ $(document).ready(function () {
         axios.get('/users/' + session.id)
             .then(function (data) {
                 var user = data.data
-                $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
-                $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
                 $('.sidebar').load('sidebar/logged_in.html');
                 $('.content').load('content/settings.html', function () {
                     if (!session.authenticated) {
                         console.info('How dare you access this page without authenticating, i will have to redirect you!');
                         return  navigateTo('login', 'Login');
                     }
+                    $('#first_name')[0].value = user.firstname;
+                    $('#last_name')[0].value = user.lastname;
                     $('#username')[0].value = user.username;
                     $('#email')[0].value = user.email;
-                    $('#firstname')[0].value = user.firstname;
-                    $('#lastname')[0].value = user.lastname;
-                    $('#teamspeakAddr')[0].value = user.teamspeak;
-                    $('#DiscordAddr')[0].value = user.discord;
-                    $('#descriptionText')[0].value = user.description;
-                    $('#userID')[0].value = user.id;
                     $('#level')[0].value = user.level;
+                    $('#teamspeak')[0].value = user.teamspeak;
+                    $('#discord')[0].value = user.discord;
+                    $('#description')[0].value = user.description;
+                    $('#user_id')[0].value = user.id;
                 });
             })
     }, 100);
 
     crossroads.addRoute('/games', function () {
-        $('head').append($('<link rel="stylesheet" href="css/remodal.css">'));
-        $('head').append($('<link rel="stylesheet" href="css/remodal-default-theme.css">'));
         $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
         $('.content').load('content/games.html');
     }, 100);
@@ -126,16 +116,15 @@ $(document).ready(function () {
             // HACK : THIS SHOULD CHANGE...
             window.profileUser = user
 
-            $('head').append($('<link rel="stylesheet" href="css/styles.css">'))
             $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
             $('.content').load('content/profile.html', function () {
-                $('#usernameVal')[0].innerHTML = user.username;
-                $('#emailVal')[0].innerHTML = user.email;
-                $('#namelVal')[0].innerHTML = user.firstname + ' ' + user.lastname;
-                $('#teamspeakVal')[0].innerHTML = user.teamspeak;
-                $('#descriptionVal')[0].innerHTML = user.description;
-                $('#discordVal')[0].innerHTML = user.discord;
-                $('#levelVal')[0].innerHTML = user.level;
+                $('#username')[0].innerHTML = user.username;
+                $('#fullname')[0].innerHTML = user.firstname + ' ' + user.lastname;
+                $('#email')[0].innerHTML = user.email;
+                $('#teamspeak')[0].innerHTML = user.teamspeak;
+                $('#discord')[0].innerHTML = user.discord;
+                $('#description')[0].innerHTML = user.description;
+                $('#level')[0].innerHTML = user.level;
             });
         })
     }, 1);

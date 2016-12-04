@@ -1,566 +1,362 @@
+/****************************************************************************
+ *                                   Fonts                                  *
+ ****************************************************************************/
+
 @font-face {
     font-family: WhitneyMedium;
     src: url(../fonts/WhitneyMedium.ttf);
 }
 
-html{
-    background-color:#36393e;
+/****************************************************************************
+ *                                General CSS                               *
+ ****************************************************************************/
+
+html {
+    background-color: #2e3136;
     font-family: WhitneyMedium, Helvetica, sans-serif;
     color: white;
 }
 
-/* change scroller */
+/********************************* Scrollbar ********************************/
+
 ::-webkit-scrollbar {
     width:  5px;
     height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #db5f24;
+    background: #f36523;
 }
 
 ::-webkit-scrollbar-track {
     background: #4a4c51;
 }
 
-#main {
-  display: flex;
-  flex-direction: row;
+/****************************************************************************
+ *                                  Sidebar                                 *
+ ****************************************************************************/
+
+.sidebar {
+    background: #36393e;
+    height: 100vh;
+    float: left;
 }
 
-#main .sidebar {
-  flex: 0 0 0;
-	background-color: rgb(54,57,62);
-}
-
-#main .sidebar li {
-    font-size: 2rem;
-    padding: 0.2rem;
-  text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  background-color: rgb(243,101,35);
-}
-
-#main .sidebar li a {
-    color: white;
-}
-
-
-#main .content {
-  background-color: rgb(46,49,54);
-  /*background: green;*/
-  display: flex;
-  flex-direction: column;
-
-  flex: 1 1 auto;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.content h1 {
-  margin: 1rem;
-  font-size: 4rem;
-}
-
-.content #login-form {
- display: flex;
- margin: 1rem;
- margin-bottom: 0rem;
- align-items: center;
-}
-
-
-.content #login-form > div, #register-form > div {
-  display: flex;
-  flex-direction: column;
-}
-
-.content #login-form input, #register-form input  {
-  font-size: 1.5rem;
-  padding: 3px 6px;
-  border-style: none;
-}
-
-.content #login-form button, #register-form button  {
-    border-radius: 100%;
+.menu-list__item {
     background: #f36523;
-    border-style: none;
-    width: 3.8rem;
-    height: 3.8rem;
-    font-size: 3rem;
-    color: white;
-    padding-left: 0.7rem;
-    margin-left: -2rem;
-}
-
-#register-form{
-    flex-direction: column;
-}
-
-.content #login-form input, #register-form input  {
-  margin-bottom: 0.1rem;
-}
-
-.content #login-form input:first-child, #register-form input:first-child {
-  border-radius: 10px 10px 0 0;
-}
-
-.content #login-form input:last-child, #register-form input:last-child {
-  border-radius: 0 0 10px 10px;
-}
-
-.content > p {
-  font-size: 1rem;
-}
-
-.content > p a {
-    color: #f36523;
-}
-
-.content .explanation-text {
-    font-size: 1rem;
-    padding-bottom: 0.75rem;
-}
-
-
-.content #register-button {
-    color: #f36523;
-    background: none;
-    border-style: none;
+    font-size: 2rem;
+    text-align: center;
+    padding: 0.2rem;
+    margin-top: 1rem;
     margin-bottom: 1rem;
-    width: 100%;
 }
 
-span.nation {
-  color:  rgb(243,101,35);
+.menu-list__item__link {
+    text-decoration: none;
+    color: inherit;
 }
 
-#main #explanation {
-  width: 23rem;
-  max-width: 100%;
-  margin: 1rem;
-  margin-top: 2 rem;
+/****************************************************************************
+ *                                  Content                                 *
+ ****************************************************************************/
+
+.content {
+    background-color: #2e3136;
+    max-width: 54rem;
+    margin: 0 auto;
 }
 
-#register-errors {
-    display: none;
+.page-title {
+    color: #f36523;
+    padding-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.page-title--small {
+    font-size: 1.5rem;
+}
+
+.page-title--medium {
+    font-size: 2rem;
+}
+
+.page-title--large {
+    font-size: 3rem;
+}
+
+/********************************** Errors **********************************/
+
+.error-list {
+    width: 23rem;
+    display: block;
     text-align: center;
 }
 
-#register-errors li {
-    font-size: 1rem;
-    background-color: #36393E;
+.error-list__item {
+    background-color: #36393e;
+    border-radius: 10px;
     text-align: center;
     padding: 0.5rem;
-    border-radius: 10px;
-    margin: 0.5rem;
-    margin-left: 0rem;
+    margin: 0.5rem 0.5rem 0.5rem 0rem;
 }
 
-#register-errors li img {
+.error-list__item__icon {
+    color: #f36523;
     float: left;
     width: 1rem;
-    margin-right: 1rem
+    margin-right: 1rem;
 }
 
-#register-errors li p {
+.error-list__item__text {
     line-height: 1rem;
     text-align: left;
 }
 
-/********************** profile***********************************/
+/*********************************** Info ***********************************/
 
-.wrapper{
-    min-width: 320px;
-    max-width: 60rem;
-    margin: 0 auto;
-    position: relative;
-    background-color: #2e3136;
-    height: 100rem;
-    padding: 2rem;
+.info-text {
+    padding-bottom: .75rem;
 }
 
-.structural {
-    position: absolute;
-    left: -9999px;
+.info-text__link {
+    color: #f36523;
 }
 
-h2{
-    color:  #db5f24;
-    margin-top: 0rem;
+/*********************************** Forms **********************************/
+
+.form--login {
+    display: flex;
+    margin: 1rem 1rem 0;
+    align-items: center;
+}
+
+.form--register {
+    display: flex;
+    flex-direction: column;
+}
+
+.form--settings {
+
+}
+
+.form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__label {
+    color: #f36523;
+    margin-bottom: 0;
+}
+
+.form__input {
+    border-style: none;
+    padding: 3px 6px;
+}
+
+.form__input--dark {
+    border-bottom: 1px solid #f36523;
+    background-color: #36393e;
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.form__input--light {
+    margin-bottom: 1px;
+    font-size: 1.5rem;
+}
+
+.form__input--first {
+    border-radius: 10px 10px 0 0;
+}
+
+.form__input--last {
+    border-radius: 0 0 10px 10px;
+}
+
+.form__textarea {
+    border: 0;
+    border-bottom: 1px solid #f36523;
+    background-color: #36393e;
+    padding-left: 1rem;
+    color: white;
+}
+
+.form__submit {
+    border-style: none;
+}
+
+.form__submit--login {
+    background: #f36523;
+    color: white;
+    width: 3.8rem;
     font-size: 3rem;
+    height: 3.8rem;
+    margin-left: -2rem;
+    padding-left: 0.7rem;
+    border-radius: 100%;
+}
+
+.form__submit--register {
+    background: none;
+    color: #f36523;
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 3px 6px;
     margin-bottom: 1rem;
 }
 
-h3{
-    font-size: 2rem;
-    color: #db5f24;
-    margin: 3rem 0rem 0rem 0rem;
-}
-
-h4 {
-    font-size: 1.5rem;
-    color: #db5f24;
-    text-align: left;
-    margin-top: 1.5rem;
-}
-
-li{
-    list-style: none;
-}
-
-p{
+.form__submit--settings {
+    background: #f36523;
     color: white;
-    margin: 0rem 0rem 0rem 0rem;
-}
-
-.btn{
-    background-color:  #db5f24;
-    color: white;
-    float: right;
-    border: 0px;
-    padding: 0.5rem;
-}
-/* ===========================================
-   set button
-   =========================================== */
-#set{
-    padding: 0.75rem;
-    margin-top: -5rem;
-    text-decoration: none;
-}
-
-/* ===========================================
-   profile
-   =========================================== */
-#profileImage{
-    width: 18rem;
-}
-
-#side{
-    float: left;
-    width: 18rem;
-    margin-top:1.20rem;
-    margin-right: 2rem;
-}
-
-#profileData{
-    width: 56%;
-    float: left;
-}
-
-.level{
-    position: absolute;
     width: 5rem;
-    top: 21.5rem;
-    left: 16rem;
-}
-
-#side p{
-    text-align: center;
-    margin-top: 0.75rem;
-    font-size: 3rem;
-}
-
-#updateSubmit{
-    width: 5rem !important;
-    text-align: center;
+    float: right;
+    padding: 0.5rem;
     margin-top: 10px;
 }
 
-#submit-photo {
-    width: 100%;
+/********************************** Images **********************************/
+
+.image--explanation {
+    max-width: 23rem;
+    margin: 1.25rem 1rem 1rem;
 }
 
-/* ===========================================
-   Data
-   =========================================== */
-.title{
-    color: #db5f24;
-    margin-top: 1rem;
+/****************************************************************************
+ *                              Login/Register                              *
+ ****************************************************************************/
+
+.login, .register {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-/* ===========================================
-   Games
-   =========================================== */
+.logo {
+    margin: 1rem;
+    font-size: 4rem;
+}
 
-#games, #games-overview, #lobby-overview{
+.nation {
+    color: #f36523;
+}
+
+/****************************************************************************
+ *                             Profile/Settings                             *
+ ****************************************************************************/
+
+.left {
+    width: 18rem;
     float: left;
-    width: 100%;
 }
 
-#games li, #games-overview li, #lobby-overview li{
-    float: left;
-    width: 5.5rem;
-    list-style: none;
-    padding: 0.5rem 1.5rem 0.5rem 0rem;
+.right {
+    margin-left: 20rem;
 }
 
-#games li img, #games-overview li img, #lobby-overview li img{
-    width: 100%;
+.settings:after, .profile:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
-#games p, #games-overview p, #lobby-overview p{
-    border-bottom: 1px solid #db5f24;
-    margin-top: 0.4rem;
+.avatar__image {
+    width: 18rem;
+}
+
+.avatar__button {
+    background-color: #f36523;
     color: white;
+    width: 100%;
+    border: 0;
+    padding: 0.5rem;
+}
+
+.avatar__level {
+    position: absolute;
+    margin-left: 14rem;
+    margin-top: -4rem;
+    background: #f36523;
+    padding: 1rem;
+    width: 3.5rem;
+    font-size: 3rem;
     text-align: center;
-    padding-bottom: 0.2rem;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 }
 
-#games a, #games-overview a, #lobby-overview a{
-    text-decoration: none;
-}
-
-#games img:nth-of-type(1):hover {
-    outline: #999999 solid 3px;
-}
-
-/*for circle and skill level*/
-img.levelGames {
-    position: absolute;
-    width: 37px!important;
-    background-color: transparent!important;
-    margin-left: -29px;
-    margin-top: 59px;
-}
-
-p.levelGames {
-    position: absolute;
-    width: 20px;
-    margin-top: -23px!important;
-    margin-left: 68px;
-    border-bottom: none!important;
-}
-
-/* ===========================================
-   Discord steam
-   =========================================== */
-#discordSteam{
-    float: left;
-    width: 48%;
-    margin-right: 2rem;
-}
-
-#submitDiscord{
-    width: 5rem;
-    margin-right: -0.3rem;
-}
-
-
-
-
-/* ===========================================
-   Description
-   =========================================== */
-#description{
-    float: left;
-    width: 48%;
-}
-
-#submitDescription{
-    width: 5rem;
-    margin-top: 0.5rem;
-}
-
-
-/* ===========================================
-   Form
-   =========================================== */
-#settings-form{
-    width: 100%;
+.profile-list__item {
     margin-top: 1rem;
 }
 
-#settings-form dt{
-    width: 15rem;
-    margin-bottom: 5px
+.profile-list__item__title {
+    color: #f36523;
 }
 
-#settings-form input[type=text], #settings-form input[type=password], #settings-form input[type=number], #settings-form textarea {
-    border: 0px;
-    border-bottom: 1px solid #db5f24;
-    background-color: #36393e;
-    font-size: 1rem;
-    font-weight: normal;
-    height: 1.5rem;
-    padding-left: 1rem;
+.profile-list__item__content {
     color: white;
 }
 
-#profileData > dd input {
-    width: 97.7%;
-    margin-top: 0.5rem;
+.games:after {
+    display: table;
+    content: "";
+    clear: both;
 }
 
-#settings-form label {
-    color: #db5f24;
-}
-
-#settings-form input {
-    width: 95.5%;
+.games-list__item {
+    float: left;
+    display: inline-block;
+    text-align: center;
+    margin-right: 1.5rem;
     margin-bottom: 1rem;
 }
 
-#settings-form textarea {
-    width: 95.5%;
-    height: 5.05rem;
+.games-list__item__link {
+    text-decoration: none;
+    color: inherit;
 }
 
-#settings-form input:focus{
-    border: 0px;
+.games-list__item--icon {
+    color: #f36523;
+    height: 5.5rem;
+    margin-bottom: 0.1rem;
 }
 
-
-/* ===========================================
-   Model add games
-   =========================================== */
-.remodal h1 {
+.games-list__item--image-small {
+    width: 5.5rem;
+    height: 5.5rem;
 }
 
-.remodal h3 {
-    margin: 0;
+.games-list__item--image-large {
+    width: 8.875rem;
+    height: 8.875rem;
 }
 
-#addGames {
-    overflow: hidden;
-    margin-bottom: 30px;
-    overflow-y: auto;
-    height: 380px;
+.games-list__item--level {
+    position: absolute;
+    margin-left: 3.8rem;
+    margin-top: -1.8rem;
+    background: #f36523;
+    padding: .6rem;
+    width: 1.125rem;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 }
 
-#addGames li p {
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-#addGames li {
-    width: 142px;
-    display: block;
-    float: left;
-    margin: 5px;
-}
-
-#addGames li img {
-    max-width: 100%;
-    height: auto;
-    vertical-align: middle;
-    border: 0;
-    margin-top: 3px;
-}
-
-#addGames li img:hover {
-    outline: #999999 solid 3px;
-}
-
-#addGames li img:active{
-    outline: #999999 solid 3px;
-}
-
-#addGames > ul > li > img.active {
-    outline: #999999 solid 3px;
-}
-
-#searchAddGames {
-    overflow: hidden;
-}
-
-#searchAddGames dt {
-    width: 10%;
-    float: left;
-}
-
-#searchAddGames input {
-    background-color: #4a4c51;
-}
-
-#searchAddGames dd {
-    margin-left:4px;
-    width: 100%;
-    float: left;
-}
-
-/* ===========================================
-   Model edit game
-   =========================================== */
-
-#modelSkilEditEdit {
-    float: right;
-    min-width: 110px;
-    padding: 12px 0;
-}
-
-#modelSkilEditDelete {
-    float: left;
-    min-width: 110px;
-    padding: 12px 0;
-}
-
-#editGame label {
-    float: left;
-}
-
-#editGame dt {
-    margin-bottom: 5px;
-}
-
-#skillset {
-    background-color: #4a4c51;
-    width: 97.5%;
-}
-
-
-
-
-/* ===========================================
-   Model details game (games.html)
-   =========================================== */
-#detailsGames {
-    overflow: hidden;
-}
-
-#detailsGames p {
-    text-align: left;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.friendImg {
-    float: left;
-    width: 50px;
-    margin-right: 7px;
-    margin-bottom: 14px;
-}
-
-.formAddGame {
-    clear: both;
-    overflow: hidden;
-    margin-top: 1rem;
-}
-
-/* ===========================================
-    liveSearchbox
-   =========================================== */
-
-.live-search-box, #skillset{
-    border: 0px;
-    border-bottom: 1px solid #db5f24;
-    background-color: #36393e;
+.games-list__item--text {
+    border-bottom: 1px solid #f36523;
+    padding-bottom: 0.2rem;
+    margin-top: 0.4rem;
+    text-align: center;
     font-size: 1rem;
-    font-weight: normal;
-    height: 1.5rem;
-    padding-left: 1rem;
-    color: white;
-    width: 100%;
-    margin-bottom: 0.5rem;
 }
-
-
-
-
-
-
 

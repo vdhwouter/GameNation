@@ -18,12 +18,10 @@ $(document).ready(function () {
      show all games
      =========================================== */
     axios.get("/games").then(function (response) {
-        var data = response.data
+        var data = response.data;
 
         // create html tage with games
-        var ul = document.createElement("ul");
-        ul.className = "live-search-list";
-        document.getElementById('games').appendChild(ul);
+        var ul = $('.games-list');
 
         for (key in data) {
             if (data.hasOwnProperty(key)) {
@@ -59,7 +57,7 @@ $(document).ready(function () {
     /* ===========================================
      live search filter games
      =========================================== */
-    $('.live-search-box').on('keyup', function () {
+    $('#search_box').on('keyup', function () {
         var searchTerm = $(this).val().toLowerCase();
 
         $('.live-search-list li').each(function () {

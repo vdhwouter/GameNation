@@ -7,91 +7,81 @@ $(document).ready(function () {
         var data = result.data
 
         // create html tage with added games
-        var ul = document.createElement("ul");
-        ul.setAttribute("id", "listAddedGames");
-        document.getElementById('games').appendChild(ul);
+        var ul = document.getElementsByClassName('games-list')[0];
 
         for (key in data) {
             if (data.hasOwnProperty(key)) {
                 var value = data[key];
 
                 var li = document.createElement("li");
+                li.className = 'games-list__item';
                 li.setAttribute("data-remodal-target", "EditGameModal");
                 li.setAttribute("onclick", "editGame(this)");
 
-                var firstP = document.createElement("p");
-                firstP.innerHTML = value['game'].id;
-                firstP.setAttribute("style", "display: none");
-
                 var img = document.createElement("img");
+                img.className = 'games-list__item--image-small';
                 img.setAttribute("src", "img/games/" + value['game'].imageName);
                 img.setAttribute("alt", value['game'].id);
                 img.setAttribute("title", value['game'].name);
-                img.className += "game";
 
-                var secondImg = document.createElement("img");
-                secondImg.setAttribute("class", "levelGames");
-                secondImg.setAttribute("src", "img/cirkel.png");
+                // var firstP = document.createElement("p");
+                // firstP.innerHTML = value['game'].id;
+                // firstP.setAttribute("style", "display: none");
 
-                var thirdP = document.createElement("p");
-                thirdP.innerHTML = value.skill_level;
-                thirdP.setAttribute("class", "levelGames");
+                var firstP = document.createElement("p");
+                firstP.className = 'games-list__item--level';
+                firstP.innerHTML = value['skill_level'];
 
                 var secondP = document.createElement("p");
+                secondP.className = 'games-list__item--text';
                 secondP.innerHTML = value['game'].name;
 
-                li.appendChild(firstP);
                 li.appendChild(img);
-                li.appendChild(secondImg);
-                li.appendChild(thirdP);
+                li.appendChild(firstP);
                 li.appendChild(secondP);
                 ul.appendChild(li);
             }
         }
 
         // add li tag for add a new game
-        var ul = document.getElementById("listAddedGames");
         var li = document.createElement("li");
+        li.className = 'games-list__item';
 
         var a = document.createElement("a");
+        a.className = 'games-list__item--link';
         a.setAttribute("data-remodal-target", "AddNewGameModal");
 
-        var img = document.createElement("img");
-        img.setAttribute("src", "img/addGame.png");
-        img.setAttribute("alt", "addGame");
-        img.setAttribute("title", "Add new Game");
-        img.setAttribute("id", "addGame");
-        img.className += "game";
+        var i = document.createElement("i");
+        i.className = 'games-list__item--icon fa fa-5x fa-plus-circle';
+        i.setAttribute('aria-hidden', 'true');
+        i.setAttribute("id", "addGame");
 
         var p = document.createElement("p");
+        p.className = 'games-list__item--text';
         p.innerHTML = "New game";
 
-        a.appendChild(img);
+        a.appendChild(i);
         a.appendChild(p);
         li.appendChild(a);
         ul.appendChild(li);
 
         getIdAddedUserGames();
         showAllGamesModal();
-    })
+    });
 
     // get id's from all games that user added
     var getIdAddedUserGames = function() {
         var td_list = [];
-        var ul = document.getElementById("listAddedGames");
+        var ul = document.getElementsByClassName('games-list')[0];
 
         $(ul).children().each(function (i, v) {
-            var str = $(this)[0].innerHTML;
-            var tmp = document.createElement('div');
-            tmp.innerHTML = str;
-            var alt = tmp.getElementsByTagName('img')[0].alt;
-            td_list[i] = alt;
+            td_list[i] = this.getElementsByTagName('img').alt;
         });
         // remove last item in array
-        td_list.splice(-1,1)
+        td_list.splice(-1,1);
 
         return td_list;
-    }
+    };
 
 
     /* ===========================================
@@ -125,9 +115,7 @@ $(document).ready(function () {
             var data = response.data
 
             // create html tage with games
-            var ul = document.createElement("ul");
-            ul.className = "live-search-list";
-            document.getElementById('addGames').appendChild(ul);
+            var ul = document.getElementsByClassName('games-list')[1];
 
             for (key in data) {
                 if (data.hasOwnProperty(key)) {
@@ -135,16 +123,18 @@ $(document).ready(function () {
 
                     if (!eleContainsInArray(gamesAlreadyExists, value.id)) {
                         var li = document.createElement("li");
-                        li.className = "file";
+                        li.className = "games-list__item";
                         li.setAttribute("data-search-term", value.name.toLowerCase());
 
                         var img = document.createElement("img");
+                        img.className = 'games-list__item--image-large';
                         img.setAttribute("src", "img/games/" + value.imageName);
                         img.setAttribute("alt", value.id);
                         img.setAttribute("title", value.name);
-                        img.className += "addGamesImg";
+                        img.setAttribute("id", "addGame");
 
                         var p = document.createElement("p");
+                        p.className = 'games-list__item--text';
                         p.innerHTML = value.name;
 
                         li.appendChild(img);
@@ -155,7 +145,7 @@ $(document).ready(function () {
             }
 
             // what if a user click on a game?
-            $('.addGamesImg').click(function () {
+            $('#addGame').click(function () {
                 $(this).toggleClass('active');
 
                 if (!eleContainsInArray(addedGames, $(this).attr("alt"))) {
@@ -240,31 +230,31 @@ $('#modelSkilEditDelete').click(function () {
  =========================================== */
 
 
-$('#settings-form').on('submit', function (e) {
+$('.form--settings').on('submit', function (e) {
     e.preventDefault();
 
     // Getting all vars from profile editing form
-    var firstname= $('#settings-form input[name=firstname]').val();
-    var lastname= $('#settings-form input[name=lastname]').val();
-    var username= $('#settings-form input[name=username]').val();
-    var email= $('#settings-form input[name=email]').val();
-    var password= $('#settings-form input[name=password]').val();
-    var confirmation= $('#settings-form input[name=confirmpass]').val();
-    var teamspeak= $('#settings-form input[name=teamspeak]').val();
-    var discord= $('#settings-form input[name=discord]').val();
-    var description= $('#descriptionText').val();
-    var level= $('#settings-form input[name=level]').val();
-    var userID= $('#settings-form input[name=userID]').val();
+    var firstname= $('#first_name').val();
+    var lastname= $('#last_name').val();
+    var username= $('#username').val();
+    var email= $('#email').val();
+    var level= $('#level').val();
+    var password= $('#password').val();
+    var confirmation= $('#confirmation').val();
+    var teamspeak= $('#teamspeak').val();
+    var discord= $('#discord').val();
+    var description= $('#description').val();
+    var userID= $('#user_id').val();
 
     // Validate user input
     // Return error array as list items
     var errorArray = HierKanHetTochNietAanLiggen(email, password, confirmation, username, userID);
-    $('#register-errors').empty();
-    $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
-    $('#register-errors').slideDown();
+    $('.error-list').empty();
+    $(errorArray).each(function(index, value){ $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text">' + value + '</p></li>') });
+    $('.error-list').slideDown();
 
     // Post user data to db
-    if (!$('#register-errors')[0].innerHTML) {
+    if (!$('.error-list')[0].innerHTML) {
         axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level })
             .then((res) => {
                 console.info("User edited succesfully, redirecting to profile page")
@@ -280,16 +270,16 @@ $('#settings-form').on('submit', function (e) {
 
 var HierKanHetTochNietAanLiggen = function(email, password, confirmation, username, id){
     var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
-    var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var errors = []
 
-    if (!email.match(validEmail)) errors.push('Email should be a valid email')
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
-    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
-    if (!password.match(securePassword)) errors.push('Password should contain one digit')
-    if (password !== confirmation) errors.push('Password and confirmation should match')
+    if (!email.match(validEmail)) errors.push('Email should be a valid email');
+    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6');
+    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter');
+    if (!password.match(securePassword)) errors.push('Password should contain one digit');
+    if (password !== confirmation) errors.push('Password and confirmation should match');
 
-    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '<li><img src="img/error.png" /><p> A user with username \'' + username +'\' already exists'})
+    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text"> A user with username \'' + username +'\' already exists</p></li>')});
 
     var parsedErrors = errors.reduce(function (prev, current) {
         if (prev) prev += "</p></li>"

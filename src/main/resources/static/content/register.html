@@ -1,23 +1,19 @@
-<h1>Game<span class="nation">nation</span></h1>
+<div class="register">
+    <h1 class="logo">Game<span class="nation">nation</span></h1>
 
-<p class="explanation-text">Fill in this form to complete your registration</p>
+    <ul class="error-list"></ul>
 
-<!--<p id="register-errors" style="background: pink; color: blue;"></p>-->
-<ul id="register-errors"></ul>
+    <p class="info-text">Fill in this form to complete your registration</p>
 
-<form action="http://localhost:8080/api/users" method="POST" id="register-form" name="reg-form">
-    <div>
-        <input type="text" placeholder="username" name="username" value="">
-        <input type="text" placeholder="email" name="email" value="">
-        <input type="password" placeholder="password" name="password" value="">
-        <input type="password" placeholder="confirm password" name="confirmation" value="">
-    </div>
-    <input type="submit" name="submit" id="register-button">
-    <!-- <input type="submit" name="submit" id="register-button" onclick="CheckPassword(password.innerHTML,confirmation.innerHTML)"> -->
-</form>
+    <form class="form form--register">
+        <div class="form__group">
+            <input class="form__input form__input--light form__input--first" type="text" placeholder="username" name="username">
+            <input class="form__input form__input--light" type="text" placeholder="email" name="email">
+            <input class="form__input form__input--light" type="password" placeholder="password" name="password">
+            <input class="form__input form__input--light form__input--last" type="password" placeholder="confirm password" name="confirmation">
+        </div>
+        <input class="form__submit form__submit--register" type="submit" name="submit">
+    </form>
 
-<!-- <button id="register-button">register</button> -->
-
-<p>Already have an account? <a href="login">Login</a></p>
-
-<!--<script src=" js/PasswChecking.js"></script>-->
+    <p class="info-text">Already have an account? <a class="info-text__link" href="login">Login</a></p>
+</div>

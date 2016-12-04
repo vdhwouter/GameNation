@@ -1,14 +1,17 @@
-<h1>Game<span class="nation">nation</span></h1>
-<p id="login-message" style="color: white; font-style: bold;"></p>
-<p id="login-errors" style="color: red; font-style: bold; font-size: 2rem;"></p>
-<form id="login-form">
-    <div>
-        <input type="text" placeholder="username">
-        <input type="password" placeholder="password">
-    </div>
-    <button id="login-button">&#9658;</button>
-</form>
+<div class="login">
+    <h1 class="logo">Game<span class="nation">nation</span></h1>
 
-<p>No account yet? <a href="register">Register now</a></p>
+    <ul class="error-list"></ul>
 
-<img src="../img/explanation.png" alt="explanation" id="explanation">
+    <form class="form form--login">
+        <div class=form__group>
+            <input class="form__input form__input--light form__input--first" type="text" placeholder="username">
+            <input class="form__input form__input--light form__input--last" type="password" placeholder="password">
+        </div>
+        <input class="form__submit form__submit--login" type="submit" name="submit" value="&#9658;">
+    </form>
+
+    <p class="info-text">No account yet? <a class="info-text__link" href="register">Register now</a></p>
+
+    <img class="image--explanation" src="img/explanation.png" alt="explanation">
+</div>
