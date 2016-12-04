@@ -12,11 +12,11 @@ import java.util.List;
 public interface UserGameRepository extends MongoRepository<UserGame, String> {
     List<UserGame> findByUser(User user);
     List<UserGame> findAll();
+    List<UserGame> findByGame(Game game);
 
     // da dingske werkt hier precies nie echt kweenie, steeds NullPointerExceptions
     // misschiend door die dbrefs? kweenie
     List<Game> findGameByUser(User user);
-
 
     UserGame findByUserAndGame(User user, Game game);
 }

@@ -1,7 +1,10 @@
 package GameNationBackEnd.Controllers;
 
 import GameNationBackEnd.Documents.Game;
+import GameNationBackEnd.Documents.User;
+import GameNationBackEnd.Documents.UserGame;
 import GameNationBackEnd.Repositories.GameRepository;
+import GameNationBackEnd.Repositories.UserGameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +23,14 @@ public class GamesController {
     @Autowired
     private GameRepository gameDB;
 
+    @Autowired
+    private UserGameRepository userGameDB;
+
     // get all games
     @RequestMapping(method = RequestMethod.GET)
     public List<Game> GetAllGames() {
         return gameDB.findAll();
     }
-
-// add a game
-//    @RequestMapping(method = RequestMethod.POST)
-//    public Game InsertGame(@RequestParam String name, @RequestParam String description, @RequestParam String imageName) {
-//        return gameDB.save(new Game(name, description, imageName));
-//    }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -44,8 +44,16 @@ public class GamesController {
         return game;
     }
 
+
+    // get users for game
+    @RequestMapping(value = "/{game}/users", method = RequestMethod.GET)
+    public List<UserGame> GetGamesFromUser(@PathVariable Game game) {
+        return userGameDB.findByGame(game);
+    }
+
     @RequestMapping(value = "/{game}", method = RequestMethod.DELETE)
     public void DeleteGame(@PathVariable Game game) {
         gameDB.delete(game);
     }
+
 }
