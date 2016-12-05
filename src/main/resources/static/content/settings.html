@@ -1,8 +1,8 @@
 <div class="settings">
 	<h2 class="page-title page-title--large">Profile</h2>
 	<div class="left">
-		<img class="avatar__image" src="img/avatar-member.jpg">
-		<input class="avatar__button" type="submit" name="submit" value="Edit Photo">
+		<img class="avatar__image" id="previewAvatar" src="img/avatar-member.jpg">
+		<input class="avatar__button" id="profileImage" ype="submit" name="submit" value="Edit Photo">
 	</div>
 	<div class="right">
 		<ul class="error-list"></ul>
@@ -44,9 +44,27 @@
 				<label class="form__label" for="description">Description</label>
 				<textarea class="form__textarea" rows="5" id="description"></textarea>
 			</div>
+
+
+            <!--TMP FOR AVATAR-->
+            <div class="form__group">
+                <label class="form__label" for="avatar">avatar</label>
+                <textarea class="form__input form__input--dark" id="avatar"></textarea>
+            </div>
+
 			<input type="hidden" id="user_id">
 			<input class="form__submit form__submit--settings" type="submit" name="" value="Save">
 		</form>
+	</div>
+
+
+
+
+
+	<div class="avatarSelection">
+		<ul id="avatarList">
+
+		</ul>
 	</div>
 </div>
 

@@ -79,6 +79,9 @@ public class UsersController {
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
     public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
 
+
+        System.out.println(updatedUser.getAvatar());
+
         if(!(userDB.findByEmail(updatedUser.getEmail()) == null) && !(userDB.findByEmail(updatedUser.getEmail()).getId().equals(userDB.findByEmail(user.getEmail()).getId()))) {
             throw new UserEmailAlreadyExistsException(updatedUser.getEmail());
         }
@@ -92,6 +95,8 @@ public class UsersController {
             if (updatedUser.getTeamspeak() != null) user.setTeamspeak(updatedUser.getTeamspeak());
             if (updatedUser.getDiscord() != null) user.setDiscord(updatedUser.getDiscord());
             if (updatedUser.getDescription() != null) user.setDescription(updatedUser.getDescription());
+
+            //if (updatedUser.getAvatar() != null) user.setAvatar(updatedUser.getAvatar());
 
             userDB.delete(user);
             userDB.save(user);

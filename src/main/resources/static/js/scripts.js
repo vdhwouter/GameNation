@@ -95,11 +95,12 @@ $(document).ready(function () {
                     $('#last_name')[0].value = user.lastname;
                     $('#username')[0].value = user.username;
                     $('#email')[0].value = user.email;
-                    $('#level')[0].value = user.level;
                     $('#teamspeak')[0].value = user.teamspeak;
                     $('#discord')[0].value = user.discord;
                     $('#description')[0].value = user.description;
                     $('#user_id')[0].value = user.id;
+
+                    $('#previewAvatar').src = user.avatar;
                 });
             })
     }, 100);
@@ -125,6 +126,8 @@ $(document).ready(function () {
                 $('#discord')[0].innerHTML = user.discord;
                 $('#description')[0].innerHTML = user.description;
                 $('#level')[0].innerHTML = user.level;
+
+                $('#previewAvatar').src = user.avatar;
             });
         })
     }, 1);

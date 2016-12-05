@@ -37,6 +37,8 @@ public class User{
 	private String discord;
 	private String teamspeak;
 
+    private String avatar;
+
 
 	// only set if authenticated user has sent or received a friend request to this user
 	// it shows the current relationship state
@@ -74,6 +76,7 @@ public class User{
 	public String getDescription() { return description; }
 	public int getLevel() { return level; }
 	public Friend getRelation() { return relation; }
+    public String getAvatar() {return avatar; }
 
 	public void setId(String id) {
 		this._id = id;
@@ -98,4 +101,5 @@ public class User{
 	public void setDescription(String description) { this.description = description; }
 	public void setLevel(int level) { this.level = level; }
 	public void setRelation(Friend relation) { this.relation = relation; }
+    public void setAvatar (String avatar) {this.avatar = avatar;}
 }

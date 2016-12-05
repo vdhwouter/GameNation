@@ -186,6 +186,28 @@ $(document).ready(function () {
             });
         }
     });
+
+
+
+
+    /* ===========================================
+     Display all avatars available for selection
+     =========================================== */
+    for (i = 1; i <= 60; i++) $('#avatarList').append('<li class="grow avatarListItem"><img id="avatar(' + i + ')" src="img/avatars/avatar(' + i + ').png" alt="Select avatar ' + i + '"/></li>');
+
+
+
+
+    $('.avatarListItem').on('click', function(e){
+        $("#previewAvatar").attr("src","img/avatars/" + e.target.id + ".png");
+        $("#avatar").val("img/avatars/" + e.target.id + ".png");
+    });
+
+
+
+
+
+
 });
 
 

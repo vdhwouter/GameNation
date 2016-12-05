@@ -369,3 +369,20 @@ html {
     width: 8.875rem;
 }
 
+
+/********************************** Avatars **********************************/
+
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.1); }
+
+.avatarListItem {
+    display: inline-block;
+    margin: 1rem;
+    background-color: #f36523;
+}
+
+.avatarListItem img {
+    width: 7.5rem;
+    padding: 1rem;
+}
+
