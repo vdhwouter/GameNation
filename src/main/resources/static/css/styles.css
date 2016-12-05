@@ -337,6 +337,10 @@ html {
     height: 5.5rem;
 }
 
+.games-list__item--image-small:hover {
+    outline: #999999 solid 3px;
+}
+
 .games-list__item--image-large {
     width: 8.875rem;
     height: 8.875rem;
@@ -360,6 +364,7 @@ html {
     margin-top: 0.4rem;
     text-align: center;
     font-size: 1rem;
+    width: 5.5rem;
 }
 
 .games-list__item--text-small {
@@ -411,6 +416,29 @@ html {
     /* default: don't show */
     display: none;
 }
+
+
+/**************************** Modal overview games ***************************/
+#detailsGames h4 {
+    font-size: 1.5rem;
+    text-align: left;
+    margin-top: 1.5rem;
+}
+
+#detailsGames p {
+    text-align: left;
+    color: white;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.friendImg {
+    float: left;
+    width: 50px;
+    margin-right: 7px;
+    margin-bottom: 14px;
+}
+
 
 /********************************** Avatars **********************************/
 
