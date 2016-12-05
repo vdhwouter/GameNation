@@ -54,7 +54,7 @@ $(document).ready(function () {
         var i = document.createElement("i");
         i.className = 'games-list__item--icon fa fa-5x fa-plus-circle';
         i.setAttribute('aria-hidden', 'true');
-        i.setAttribute("id", "addGame");
+        // i.setAttribute("id", "addGame");
 
         var p = document.createElement("p");
         p.className = 'games-list__item--text games-list__item--text-small';
@@ -146,6 +146,7 @@ $(document).ready(function () {
 
             // what if a user click on a game?
             $('#addGame').click(function () {
+                console.log(this);
                 $(this).toggleClass('active');
 
                 if (!eleContainsInArray(addedGames, $(this).attr("alt"))) {
@@ -208,8 +209,10 @@ var editGame = function (e) {
         }
     });
 
-    $('#editGameTitle').text("Edit " + td_list[4]);
-    $('#editGame input[type="number"]').val(td_list[3].replace(/[^0-9]/g, ''));
+    console.log(td_list);
+
+    $('#editGameTitle').text("Edit " + td_list[2]);
+    $('#editGame input[type="number"]').val(td_list[1].replace(/[^0-9]/g, ''));
 }
 
 // by click on the add button
@@ -229,9 +232,6 @@ $('#modelSkilEditDelete').click(function () {
         location.reload()
     });
 });
-
-
-
 
 /* ===========================================
  Update user info via axios post
@@ -266,11 +266,11 @@ $('.form--settings').on('submit', function (e) {
     if (!$('.error-list')[0].innerHTML) {
         axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level, avatar: avatar })
             .then((res) => {
-                console.info("User edited succesfully, redirecting to profile page")
-                navigateTo(username, username);
-            }).catch((err) => {
-                console.log("Error when updating user:" + err)
-            });
+            console.info("User edited succesfully, redirecting to profile page")
+        navigateTo(username, username);
+    }).catch((err) => {
+            console.log("Error when updating user:" + err)
+    });
     } else {
         console.log("From validation not passed!")
         console.log(CheckFormInput(email, password, confirmation, username));
@@ -297,21 +297,21 @@ var HierKanHetTochNietAanLiggen = function(email, password, confirmation, userna
 
     return errors;
     /*
-    console.info(id);
-    var regexDigit = /^(?=.*\d)$/;
-    var regexLowercase = /^(?=.*[a-z])$/;
-    var regexUppercase = /^(?=.*[A-Z])$/;
-    var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
-    var errors = []
+     console.info(id);
+     var regexDigit = /^(?=.*\d)$/;
+     var regexLowercase = /^(?=.*[a-z])$/;
+     var regexUppercase = /^(?=.*[A-Z])$/;
+     var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
+     var errors = []
 
-    if (!email.match(validEmail)) errors.push('Email should be a valid email')
-    if (password.length < 6) errors.push('Password should have a minimum length of 6')
-    if (!password.match(regexLowercase)) errors.push('Password should contain one lowercase letter')
-    if (!password.match(regexUppercase)) errors.push('Password should contain one uppercase letter')
-    if (!password.match(regexDigit)) errors.push('Password should contain one digit')
-    if (password !== confirmation) errors.push('Password and confirmation should match')
+     if (!email.match(validEmail)) errors.push('Email should be a valid email')
+     if (password.length < 6) errors.push('Password should have a minimum length of 6')
+     if (!password.match(regexLowercase)) errors.push('Password should contain one lowercase letter')
+     if (!password.match(regexUppercase)) errors.push('Password should contain one uppercase letter')
+     if (!password.match(regexDigit)) errors.push('Password should contain one digit')
+     if (password !== confirmation) errors.push('Password and confirmation should match')
 
-    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0 && res.data[0].id != id) errors.push('This username is already taken')})
+     axios.get('/users?username=' + username).then(res => { if (res.data.length > 0 && res.data[0].id != id) errors.push('This username is already taken')})
 
-    return errors;*/
+     return errors;*/
 }

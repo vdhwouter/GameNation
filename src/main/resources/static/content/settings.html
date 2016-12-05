@@ -3,9 +3,9 @@
 	<div class="left">
 		<img class="avatar__image" id="previewAvatar" src="img/avatar-member.jpg">
 
-        <a class="games-list__item--link" data-remodal-target="ChangeAvatar">
-		    <input class="avatar__button" id="profileImage" type="submit" name="submit" value="Edit Photo">
-        </a>
+		<a class="games-list__item--link" data-remodal-target="ChangeAvatar">
+			<input class="avatar__button" id="profileImage" type="submit" name="submit" value="Edit Photo">
+		</a>
 
 	</div>
 	<div class="right">
@@ -49,7 +49,7 @@
 				<textarea class="form__textarea" rows="5" id="description"></textarea>
 			</div>
 
-            <input type="hidden" id="avatar" value ="">
+			<input type="hidden" id="avatar" value ="">
 			<input type="hidden" id="user_id">
 			<input class="form__submit form__submit--settings" type="submit" name="" value="Save">
 		</form>
@@ -65,9 +65,9 @@
 
 <!-- Avatar Modal -->
 <div class="remodal" data-remodal-id="ChangeAvatar" data-remodal-options="closeOnOutsideClick: true">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <h3 class="page-title page-title--medium">Choose avatar</h3>
-    <div class="avatarSelection"><ul id="avatarList"></ul></div>
+	<button data-remodal-action="close" class="remodal-close"></button>
+	<h3 class="page-title page-title--medium">Choose avatar</h3>
+	<div class="avatarSelection"><ul id="avatarList"></ul></div>
 </div>
 
 
@@ -78,7 +78,7 @@
 	<div id="searchAddGames">
 		<form class="form">
 			<div class="form__group">
-				<input class="form__input form__input--dark" placeholder="Search games">
+				<input class="form__input form__input--dark" type="text" placeholder="Search games">
 			</div>
 		</form>
 	</div>
@@ -93,19 +93,18 @@
 <!-- model dialog edit games -->
 <div class="remodal" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: true">
 	<button data-remodal-action="close" class="remodal-close"></button>
-	<h3 id="editGameTitle"></h3>
+	<h3 class="page-title page-title--medium" id="editGameTitle"></h3>
 	<div id="editGame">
-		<form>
-			<dl>
-				<dt style="display: none"><label>Id</label></dt>
-				<dd style="display: none"><input type="text" name="id" id="id" value="5830533b9e783a58e84d6a80" autocomplete="off"/></dd>
+		<form class="form">
+			<div class="form__group">
+				<label class="form__label" for="level"></label>
+				<input class="form__input form__input--dark" type="number" id="level">
+			</div>
+			<dt style="display: none"><label>Id</label></dt>
+			<dd style="display: none"><input type="text" name="id" id="id" value="5830533b9e783a58e84d6a80" autocomplete="off"/></dd>
 
-				<dt><label>Skill level</label></dt>
-				<dd><input id="skillset" type="number" value="0"/></dd>
-
-				<dd id="modelSkilEditDelete"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-delete" value="Delete" /></dd>
-				<dd id="modelSkilEditEdit"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-confirm" value="Edit" /></dd>
-			</dl>
+			<dd id="modelSkilEditDelete"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-delete" value="Delete" /></dd>
+			<dd id="modelSkilEditEdit"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-confirm" value="Edit" /></dd>
 		</form>
 	</div>
 </div>
