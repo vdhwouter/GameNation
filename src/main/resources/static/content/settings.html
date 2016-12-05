@@ -2,7 +2,11 @@
 	<h2 class="page-title page-title--large">Profile</h2>
 	<div class="left">
 		<img class="avatar__image" id="previewAvatar" src="img/avatar-member.jpg">
-		<input class="avatar__button" id="profileImage" ype="submit" name="submit" value="Edit Photo">
+
+        <a class="games-list__item--link" data-remodal-target="AddNewGameModal">
+		    <input class="avatar__button" id="profileImage" type="submit" name="submit" value="Edit Photo">
+        </a>
+
 	</div>
 	<div class="right">
 		<ul class="error-list"></ul>
@@ -52,20 +56,20 @@
 	</div>
 </div>
 
-<div class="avatarSelection"><ul id="avatarList"></ul></div>
+
 
 <h3 class="page-title page-title--medium">Games</h3>
 <ul class="games-list"></ul>
 
 
 
-
-
-
 <!-- Avatar Modal -->
 <div class="remodal" data-remodal-id="ChangeAvatar" data-remodal-options="closeOnOutsideClick: true">
-
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h3 class="page-title page-title--medium">Choose avatar</h3>
+    <div class="avatarSelection"><ul id="avatarList"></ul></div>
 </div>
+
 
 <!-- model dialog add games -->
 <div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">
@@ -105,13 +109,6 @@
 		</form>
 	</div>
 </div>
-
-<script type="text/javascript">
-	document.getElementById('profileImage').addEventListener('click', function() {
-		console.log('anchor');
-		document.getElementById("image").click();
-	});
-</script>
 
 <script src="../js/remodal.min.js"></script>
 <script src="../js/settings.js"></script>
