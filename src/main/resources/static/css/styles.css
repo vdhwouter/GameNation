@@ -40,7 +40,13 @@ html {
     position: fixed;
     background: #36393e;
     height: 100%;
-    width: 2.5rem;
+    width: 2.8rem;
+}
+
+.menu-list--bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .menu-list__item {
@@ -50,6 +56,38 @@ html {
     padding: 0.2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    -webkit-transform: skewY(20deg);
+    -moz-transform: skewY(20deg);
+    -ms-transform: skewY(20deg);
+    -o-transform: skewY(20deg);
+    transform: skewY(20deg);
+}
+
+.menu-list__item__text {
+    background: #f36523;
+    position: absolute;
+    left: -11rem;
+    top: 3.05rem;
+    width: 10rem;
+    padding: 0.2rem 0.5rem;
+    text-align: right;
+    font-size: 1.4rem;
+    line-height: 2.25rem;
+    -webkit-transform: skewY(-20deg);
+    -moz-transform: skewY(-20deg);
+    -ms-transform: skewY(-20deg);
+    -o-transform: skewY(-20deg);
+    transform: skewY(-20deg);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.menu-list__item:hover > .menu-list__item__text {
+    top: -2rem;
+    left: 2.8rem;
 }
 
 .menu-list__item__link {
@@ -57,6 +95,13 @@ html {
     color: inherit;
 }
 
+.menu-list__item__icon {
+    -webkit-transform: skewY(-20deg);
+    -moz-transform: skewY(-20deg);
+    -ms-transform: skewY(-20deg);
+    -o-transform: skewY(-20deg);
+    transform: skewY(-20deg);
+}
 /****************************************************************************
  *                                  Content                                 *
  ****************************************************************************/

@@ -35,7 +35,7 @@ $(document).ready(function () {
     var addedGames = new Array();
 
     // what if a user click on a game?
-    $('#addGame').click(function () {
+    $('.addGame').click(function () {
         console.log(this);
         $(this).toggleClass('active');
 
@@ -295,11 +295,10 @@ var showAllGamesModal = function() {
                     li.setAttribute("data-search-term", value.name.toLowerCase());
 
                     var img = document.createElement("img");
-                    img.className = 'add-games-list__item--image-large';
+                    img.className = 'add-games-list__item--image-large addGame';
                     img.setAttribute("src", "img/games/" + value.imageName);
                     img.setAttribute("alt", value.id);
                     img.setAttribute("title", value.name);
-                    img.setAttribute("id", "addGame");
 
                     var p = document.createElement("p");
                     p.className = 'add-games-list__item--text add-games-list__item--text-large';
