@@ -142,9 +142,10 @@ var infoGame = function (e) {
         for (key in data) {
             if (data.hasOwnProperty(key)) {
                 var value = data[key];
+                console.log(value);
 
                 var firstImg = document.createElement("img");
-                firstImg.setAttribute("src", "img/avatar-member.jpg");
+                firstImg.setAttribute("src", value["user"].avatar);
                 firstImg.setAttribute("alt", "avatar-member");
                 firstImg.setAttribute("title", value["user"].username + '\nLevel: ' + value["user"].level);
                 firstImg.className += "friendImg";

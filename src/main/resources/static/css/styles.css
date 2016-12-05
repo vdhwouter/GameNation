@@ -439,6 +439,12 @@ html {
     margin-bottom: 14px;
 }
 
+.formAddGame {
+    clear: both;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
 
 
 /********************************** Avatars **********************************/
