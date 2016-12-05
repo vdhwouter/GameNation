@@ -277,7 +277,8 @@ html {
     color: white;
     width: 100%;
     border: 0;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
+    text-align: center;
 }
 
 .avatar__level {
@@ -369,6 +370,38 @@ html {
     width: 8.875rem;
 }
 
+.add-games-list {
+    height: 23.75rem;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
+
+.add-games-list__item {
+    float: left;
+    display: inline-block;
+    text-align: center;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.add-games-list__item--image-large {
+    width: 8.875rem;
+    height: 8.875rem;
+}
+
+.add-games-list__item--text {
+    border-bottom: 1px solid #f36523;
+    padding-bottom: 0.2rem;
+    margin-top: 0.4rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.add-games-list__item--text-large {
+    width: 8.875rem;
+}
+
 #friend-button {
     background: #f36523;
     color: white;
@@ -394,4 +427,3 @@ html {
     width: 7.5rem;
     padding: 1rem;
 }
-

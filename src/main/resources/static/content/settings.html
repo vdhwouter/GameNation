@@ -70,19 +70,18 @@
 <!-- model dialog add games -->
 <div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">
 	<button data-remodal-action="close" class="remodal-close"></button>
-	<h3>Add new Game</h3>
+	<h3 class="page-title page-title--medium">Add new Game</h3>
 	<div id="searchAddGames">
-		<form action="" method="post" role="form">
-			<dl>
-				<dt style="display: none"><label>Zoeken</label></dt>
-				<dd><input type="text" class="live-search-box" name="zoeken" id="zoeken" autocomplete="off" placeholder="Search games"/></dd>
-			</dl>
+		<form class="form">
+			<div class="form__group">
+				<input class="form__input form__input--dark" placeholder="Search games">
+			</div>
 		</form>
 	</div>
 
-	<ul class="games-list"></ul>
+	<ul class="add-games-list"></ul>
 
-	<form action="">
+	<form class="form">
 		<button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
 	</form>
 </div>
