@@ -369,6 +369,14 @@ html {
     width: 8.875rem;
 }
 
+#friend-button {
+    background: #f36523;
+    color: white;
+    float: right;
+    padding: 0.5rem;
+    /* default: don't show */
+    display: none;
+}
 
 /********************************** Avatars **********************************/
 
