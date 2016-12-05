@@ -374,6 +374,7 @@ html {
     color: white;
     float: right;
     padding: 0.5rem;
+    cursor: pointer;
     /* default: don't show */
     display: none;
 }
