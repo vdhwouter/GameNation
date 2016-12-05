@@ -366,6 +366,7 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
         mockMvc.perform(post("/api/users/" + user2.getId())
+                .principal(new UserPrincipal(user2))
                 .contentType(contentType)
                 .content(json(updatedUser)))
                 .andExpect(status().isConflict());
@@ -426,6 +427,7 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
         mockMvc.perform(post("/api/users/" + user2.getId())
+                .principal(new UserPrincipal(user2))
                 .contentType(contentType)
                 .content(json(updatedUser)))
                 .andExpect(status().isConflict());
