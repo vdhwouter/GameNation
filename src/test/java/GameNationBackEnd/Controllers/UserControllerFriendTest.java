@@ -236,6 +236,7 @@ public class UserControllerFriendTest extends BaseControllerTest {
         // friend request from user 1 to user 2
         FriendRequest request = new FriendRequest(user2);
         mockMvc.perform(post("/api/users/" + user1.getId() + "/friends")
+                .principal(new UserPrincipal(user1))
                 .contentType(contentType)
                 .content(json(request)))
                 .andExpect(status().isOk())
@@ -258,6 +259,7 @@ public class UserControllerFriendTest extends BaseControllerTest {
 
         // user 1 accepts friend request
         mockMvc.perform(post("/api/users/" + user1.getId() + "/friends")
+                .principal(new UserPrincipal(user1))
                 .contentType(contentType)
                 .content(json(new FriendRequest(user2))))
                 .andExpect(status().isOk())
@@ -278,7 +280,8 @@ public class UserControllerFriendTest extends BaseControllerTest {
         friendRepository.save(new Friend(user2, user1));
 
         // user 1 declines friend request
-        mockMvc.perform(delete("/api/users/" + user1.getId() + "/friends/" + user2.getId()))
+        mockMvc.perform(delete("/api/users/" + user1.getId() + "/friends/" + user2.getId())
+                .principal(new UserPrincipal(user1)))
                 .andExpect(status().isOk());
 
         assertNull(friendRepository.findBySenderAndReceiver(user2, user1));
@@ -295,7 +298,8 @@ public class UserControllerFriendTest extends BaseControllerTest {
         friendRepository.save(new Friend(user1, user2, true));
 
         // user 1 ends the friendship
-        mockMvc.perform(delete("/api/users/" + user1.getId() + "/friends/" + user2.getId()))
+        mockMvc.perform(delete("/api/users/" + user1.getId() + "/friends/" + user2.getId())
+                .principal(new UserPrincipal(user1)))
                 .andExpect(status().isOk());
 
         assertNull(friendRepository.findBySenderAndReceiver(user2, user1));

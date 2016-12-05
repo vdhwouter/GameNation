@@ -77,8 +77,10 @@ public class UsersController {
 
     // update user
     @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser) {
-
+    public User UpdateUser(@PathVariable User user, @RequestBody User updatedUser, Principal principal) throws Exception {
+        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) {
+            throw new NotAuthorizedException();
+        }
 
         System.out.println(updatedUser.getAvatar());
 
@@ -134,7 +136,11 @@ public class UsersController {
 
     // add games to user
     @RequestMapping(value = "/{user}/games", method = RequestMethod.POST)
-    public List<UserGame> AddGamesToUser(@PathVariable User user, @RequestBody List<String> games) {
+    public List<UserGame> AddGamesToUser(@PathVariable User user, @RequestBody List<String> games, Principal principal) {
+        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) {
+            throw new NotAuthorizedException();
+        }
+        
         List<Game> gameList = gameRepository.findByIdIn(games);
 
         // check if any of the games already exist in the user's collection
@@ -155,7 +161,11 @@ public class UsersController {
 
     // set skill on game for user
     @RequestMapping(value = "/{user}/games/{game}", method = RequestMethod.POST)
-    public UserGame setSkillLevelForUserGame(@PathVariable User user, @PathVariable Game game, @RequestBody SkillLevelRequest skillLevel) {
+    public UserGame setSkillLevelForUserGame(@PathVariable User user, @PathVariable Game game, @RequestBody SkillLevelRequest skillLevel, Principal principal) {
+        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) {
+            throw new NotAuthorizedException();
+        }
+        
         UserGame ug = userGameDB.findByUserAndGame(user, game);
         ug.setSkill_level(skillLevel.level);
         return userGameDB.save(ug);
@@ -163,7 +173,11 @@ public class UsersController {
 
     // delete game from user
     @RequestMapping(value = "/{user}/games/{game}", method = RequestMethod.DELETE)
-    public void deleteGameFromUser(@PathVariable User user, @PathVariable Game game) {
+    public void deleteGameFromUser(@PathVariable User user, @PathVariable Game game, Principal principal) {
+        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) {
+            throw new NotAuthorizedException();
+        }
+        
         UserGame ug = userGameDB.findByUserAndGame(user, game);
         userGameDB.delete(ug);
     }
@@ -225,7 +239,11 @@ public class UsersController {
 
 
     @RequestMapping(value = "/{sender}/friends", method = RequestMethod.POST)
-    public Friend CreateOrAcceptFriendRequest(@PathVariable User sender, @RequestBody FriendRequest friendRequest) {
+    public Friend CreateOrAcceptFriendRequest(@PathVariable User sender, @RequestBody FriendRequest friendRequest, Principal principal) {
+        if (principal == null || !sender.getUsername().equalsIgnoreCase(principal.getName())) {
+            throw new NotAuthorizedException();
+        }
+        
         User receiver = userDB.findOne(friendRequest.user);
 
         // is there a relation in place already?
@@ -250,7 +268,11 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/{user}/friends/{friend}", method = RequestMethod.DELETE)
-    public void DeclineOrRemoveFriendship(@PathVariable User user, @PathVariable User friend) {
+    public void DeclineOrRemoveFriendship(@PathVariable User user, @PathVariable User friend, Principal principal) {
+        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) {
+            throw new NotAuthorizedException();
+        }
+        
         // is there a relation?
         Friend relation = getRelation(user, friend);
 

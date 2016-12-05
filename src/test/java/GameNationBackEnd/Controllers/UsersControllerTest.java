@@ -143,6 +143,7 @@ public class UsersControllerTest extends BaseControllerTest {
         updatingValueUser.setUsername(newUsername);
 
         mockMvc.perform(post("/api/users/" + userId)
+                .principal(new UserPrincipal(oldUser))
                 .contentType(contentType)
                 .content(json(updatingValueUser)))
                 .andExpect(status().isOk())
@@ -168,6 +169,7 @@ public class UsersControllerTest extends BaseControllerTest {
         updatingValueUser.setDescription("I'm a poet, you don't rime");
 
         mockMvc.perform(post("/api/users/" + userId)
+                .principal(new UserPrincipal(oldUser))
                 .contentType(contentType)
                 .content(json(updatingValueUser)))
                 .andExpect(status().isOk())
@@ -192,6 +194,7 @@ public class UsersControllerTest extends BaseControllerTest {
         List<String> gameIds = Arrays.asList(game1.getId(), game2.getId());
 
         mockMvc.perform(post("/api/users/" + user.getId() + "/games")
+                .principal(new UserPrincipal(user))
                 .contentType(contentType)
                 .content(json(gameIds)))
                 .andExpect(status().isOk())
@@ -263,6 +266,7 @@ public class UsersControllerTest extends BaseControllerTest {
         skillLevel.level = 15;
 
         mockMvc.perform(post("/api/users/" + user.getId() + "/games/" + game.getId())
+                .principal(new UserPrincipal(user))
                 .contentType(contentType)
                 .content(json(skillLevel)))
                 .andExpect(status().isOk())
@@ -310,7 +314,8 @@ public class UsersControllerTest extends BaseControllerTest {
 
         int startLength = userGameRepository.findByUser(user).size();
 
-        mockMvc.perform(delete("/api/users/" + user.getId() + "/games/" + game2.getId()))
+        mockMvc.perform(delete("/api/users/" + user.getId() + "/games/" + game2.getId())
+                .principal(new UserPrincipal(user)))
                 .andExpect(status().isOk());
 
         assertEquals(startLength - 1, userGameRepository.findByUser(user).size());
@@ -394,6 +399,7 @@ public class UsersControllerTest extends BaseControllerTest {
         updatingValueUser.setDescription("I'm a poet, you don't rime");
 
         mockMvc.perform(post("/api/users/" + userId)
+                .principal(new UserPrincipal(oldUser))
                 .contentType(contentType)
                 .content(json(updatingValueUser)))
                 .andExpect(status().isOk())
