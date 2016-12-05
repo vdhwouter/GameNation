@@ -116,6 +116,7 @@ public class UsersController {
         } else if(userDB.findByEmail(user.getEmail()) != null){
             throw new UserEmailAlreadyExistsException(user.getEmail());
         }else {
+            user.setAvatar("img/avatar-member.jpg");
             return userDB.save(user);
         }
     }

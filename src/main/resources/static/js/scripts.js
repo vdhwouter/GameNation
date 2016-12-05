@@ -125,7 +125,6 @@ $(document).ready(function () {
                 $('#discord')[0].innerHTML = user.discord;
                 $('#description')[0].innerHTML = user.description;
                 $('#level')[0].innerHTML = user.level;
-
                 $("#previewAvatar").attr("src", user.avatar);
             });
         })

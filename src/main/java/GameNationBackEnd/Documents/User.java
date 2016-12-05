@@ -51,6 +51,7 @@ public class User{
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.avatar = "img/avatar-member.jpg";
 	}
 
 	public String getId() {
