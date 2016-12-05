@@ -109,6 +109,11 @@ $(document).ready(function () {
         $('.content').load('content/games.html');
     }, 100);
 
+    crossroads.addRoute('/users', function () {
+        $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
+        $('.content').load('content/users.html');
+    }, 100);
+
     crossroads.addRoute('/{username}', function (username) {
         axios.get('/users?username=' + username).then(function (data) {
             var user = data.data[0]
