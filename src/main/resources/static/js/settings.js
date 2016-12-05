@@ -115,7 +115,7 @@ $(document).ready(function () {
             var data = response.data
 
             // create html tage with games
-            var ul = document.getElementsByClassName('games-list')[1];
+            var ul = document.getElementsByClassName('add-games-list')[0];
 
             for (key in data) {
                 if (data.hasOwnProperty(key)) {
@@ -123,18 +123,18 @@ $(document).ready(function () {
 
                     if (!eleContainsInArray(gamesAlreadyExists, value.id)) {
                         var li = document.createElement("li");
-                        li.className = "games-list__item";
+                        li.className = "add-games-list__item";
                         li.setAttribute("data-search-term", value.name.toLowerCase());
 
                         var img = document.createElement("img");
-                        img.className = 'games-list__item--image-large';
+                        img.className = 'add-games-list__item--image-large';
                         img.setAttribute("src", "img/games/" + value.imageName);
                         img.setAttribute("alt", value.id);
                         img.setAttribute("title", value.name);
                         img.setAttribute("id", "addGame");
 
                         var p = document.createElement("p");
-                        p.className = 'games-list__item--text games-list__item--text-large';
+                        p.className = 'add-games-list__item--text add-games-list__item--text-large';
                         p.innerHTML = value.name;
 
                         li.appendChild(img);
