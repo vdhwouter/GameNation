@@ -21,25 +21,26 @@ $(document).ready(function () {
         var data = response.data;
 
         // create html tage with games
-        var ul = $('.games-list');
+        var ul = document.getElementsByClassName('games-list')[0];
 
-        for (key in data) {
+        for (var key in data) {
             if (data.hasOwnProperty(key)) {
                 var value = data[key];
 
                 var li = document.createElement("li");
-                li.className = "file";
+                li.className = "games-list__item";
                 li.setAttribute("data-search-term", value.name.toLowerCase());
                 li.setAttribute("data-remodal-target", "ShowGameDetailsModal");
                 li.setAttribute("onclick", "infoGame(this)");
 
                 var img = document.createElement("img");
+                img.className = 'games-list__item--image-small';
                 img.setAttribute("src", "img/games/" + value.imageName);
                 img.setAttribute("alt", value.id);
                 img.setAttribute("title", value.name);
-                img.className += "addGamesImg";
 
                 var p = document.createElement("p");
+                p.className = 'games-list__item--text';
                 p.innerHTML = value.name;
 
                 var secondP = document.createElement("p");

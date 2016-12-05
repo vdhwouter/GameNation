@@ -37,9 +37,10 @@ html {
  ****************************************************************************/
 
 .sidebar {
+    position: fixed;
     background: #36393e;
-    height: 100vh;
-    float: left;
+    height: 100%;
+    width: 2.5rem;
 }
 
 .menu-list__item {
@@ -358,5 +359,13 @@ html {
     margin-top: 0.4rem;
     text-align: center;
     font-size: 1rem;
+}
+
+.games-list__item--text-small {
+    width: 5.5rem;
+}
+
+.games-list__item--text-large {
+    width: 8.875rem;
 }
 

@@ -57,7 +57,7 @@ $(document).ready(function () {
         i.setAttribute("id", "addGame");
 
         var p = document.createElement("p");
-        p.className = 'games-list__item--text';
+        p.className = 'games-list__item--text games-list__item--text-small';
         p.innerHTML = "New game";
 
         a.appendChild(i);
@@ -134,7 +134,7 @@ $(document).ready(function () {
                         img.setAttribute("id", "addGame");
 
                         var p = document.createElement("p");
-                        p.className = 'games-list__item--text';
+                        p.className = 'games-list__item--text games-list__item--text-large';
                         p.innerHTML = value.name;
 
                         li.appendChild(img);
