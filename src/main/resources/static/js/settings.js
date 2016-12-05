@@ -3,85 +3,11 @@ $(document).ready(function () {
     /* ===========================================
      show all games that user added
      =========================================== */
-    axios.get("/users/" + session.id + "/games").then(function (result) {
-        var data = result.data
 
-        // create html tage with added games
-        var ul = document.getElementsByClassName('games-list')[0];
 
-        for (key in data) {
-            if (data.hasOwnProperty(key)) {
-                var value = data[key];
-
-                var li = document.createElement("li");
-                li.className = 'games-list__item';
-                li.setAttribute("data-remodal-target", "EditGameModal");
-                li.setAttribute("onclick", "editGame(this)");
-
-                var img = document.createElement("img");
-                img.className = 'games-list__item--image-small';
-                img.setAttribute("src", "img/games/" + value['game'].imageName);
-                img.setAttribute("alt", value['game'].id);
-                img.setAttribute("title", value['game'].name);
-
-                // var firstP = document.createElement("p");
-                // firstP.innerHTML = value['game'].id;
-                // firstP.setAttribute("style", "display: none");
-
-                var firstP = document.createElement("p");
-                firstP.className = 'games-list__item--level';
-                firstP.innerHTML = value['skill_level'];
-
-                var secondP = document.createElement("p");
-                secondP.className = 'games-list__item--text';
-                secondP.innerHTML = value['game'].name;
-
-                li.appendChild(img);
-                li.appendChild(firstP);
-                li.appendChild(secondP);
-                ul.appendChild(li);
-            }
-        }
-
-        // add li tag for add a new game
-        var li = document.createElement("li");
-        li.className = 'games-list__item';
-
-        var a = document.createElement("a");
-        a.className = 'games-list__item--link';
-        a.setAttribute("data-remodal-target", "AddNewGameModal");
-
-        var i = document.createElement("i");
-        i.className = 'games-list__item--icon fa fa-5x fa-plus-circle';
-        i.setAttribute('aria-hidden', 'true');
-        // i.setAttribute("id", "addGame");
-
-        var p = document.createElement("p");
-        p.className = 'games-list__item--text games-list__item--text-small';
-        p.innerHTML = "New game";
-
-        a.appendChild(i);
-        a.appendChild(p);
-        li.appendChild(a);
-        ul.appendChild(li);
-
-        getIdAddedUserGames();
-        showAllGamesModal();
-    });
+    loadGames();
 
     // get id's from all games that user added
-    var getIdAddedUserGames = function() {
-        var td_list = [];
-        var ul = document.getElementsByClassName('games-list')[0];
-
-        $(ul).children().each(function (i, v) {
-            td_list[i] = this.getElementsByTagName('img').alt;
-        });
-        // remove last item in array
-        td_list.splice(-1,1);
-
-        return td_list;
-    };
 
 
     /* ===========================================
@@ -108,71 +34,20 @@ $(document).ready(function () {
     // array with selected games
     var addedGames = new Array();
 
-    var showAllGamesModal = function() {
+    // what if a user click on a game?
+    $('#addGame').click(function () {
+        console.log(this);
+        $(this).toggleClass('active');
 
-        var gamesAlreadyExists = getIdAddedUserGames();
-
-        axios.get("/games").then(function (response) {
-            var data = response.data
-
-            // create html tage with games
-            var ul = document.getElementsByClassName('add-games-list')[0];
-
-            for (key in data) {
-                if (data.hasOwnProperty(key)) {
-                    var value = data[key];
-
-                    if (!eleContainsInArray(gamesAlreadyExists, value.id)) {
-                        var li = document.createElement("li");
-                        li.className = "add-games-list__item";
-                        li.setAttribute("data-search-term", value.name.toLowerCase());
-
-                        var img = document.createElement("img");
-                        img.className = 'add-games-list__item--image-large';
-                        img.setAttribute("src", "img/games/" + value.imageName);
-                        img.setAttribute("alt", value.id);
-                        img.setAttribute("title", value.name);
-                        img.setAttribute("id", "addGame");
-
-                        var p = document.createElement("p");
-                        p.className = 'add-games-list__item--text add-games-list__item--text-large';
-                        p.innerHTML = value.name;
-
-                        li.appendChild(img);
-                        li.appendChild(p);
-                        ul.appendChild(li);
-                    }
-                }
-            }
-
-            // what if a user click on a game?
-            $('#addGame').click(function () {
-                console.log(this);
-                $(this).toggleClass('active');
-
-                if (!eleContainsInArray(addedGames, $(this).attr("alt"))) {
-                    addedGames.push($(this).attr("alt"));
-                }
-                else {
-                    var index = addedGames.indexOf($(this).attr("alt"));
-                    addedGames.splice(index, 1);
-                }
-            });
-
-        });
-    }
-
-    // check if game is already in array
-    function eleContainsInArray(arr, element) {
-        if (arr != null && arr.length > 0) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i] == element) {
-                    return true;
-                }
-            }
+        if (!eleContainsInArray(addedGames, $(this).attr("alt"))) {
+            addedGames.push($(this).attr("alt"));
         }
-        return false;
-    }
+        else {
+            var index = addedGames.indexOf($(this).attr("alt"));
+            addedGames.splice(index, 1);
+        }
+    });
+
 
     // by click on the add button
     $('#addConfirm').click(function () {
@@ -219,18 +94,18 @@ var editGame = function (e) {
 // by click on the add button
 $('#modelSkilEditEdit').click(function () {
     //toevoegen game aan user
-    axios.post('/users/' + session.id + '/games/' + td_list[0], {
-        level: document.getElementById("skillset").value
+    axios.post('/users/' + session.id + '/games/' + td_list[3], {
+        level: document.getElementById('level').value
     }).then(function (result) {
-        location.reload()
+        loadGames();
     });
 });
 
 // by click on the delete button
 $('#modelSkilEditDelete').click(function () {
     //delete game van user
-    axios.delete('/users/' + session.id + '/games/' + td_list[0]).then(function (result) {
-        location.reload()
+    axios.delete('/users/' + session.id + '/games/' + td_list[3]).then(function (result) {
+        loadGames();
     });
 });
 
@@ -316,3 +191,139 @@ var HierKanHetTochNietAanLiggen = function(email, password, confirmation, userna
 
      return errors;*/
 }
+
+var loadGames = function () {
+    axios.get("/users/" + session.id + "/games").then(function (result) {
+        var data = result.data
+
+        // create html tage with added games
+        var ul = document.getElementsByClassName('games-list')[0];
+        $(ul).empty();
+
+        for (key in data) {
+            if (data.hasOwnProperty(key)) {
+                var value = data[key];
+
+                var li = document.createElement("li");
+                li.className = 'games-list__item';
+                li.setAttribute("data-remodal-target", "EditGameModal");
+                li.setAttribute("onclick", "editGame(this)");
+
+                var img = document.createElement("img");
+                img.className = 'games-list__item--image-small';
+                img.setAttribute("src", "img/games/" + value['game'].imageName);
+                img.setAttribute("alt", value['game'].id);
+                img.setAttribute("title", value['game'].name);
+
+                var thirdP = document.createElement("p");
+                thirdP.innerHTML = value['game'].id;
+                thirdP.setAttribute("style", "display: none");
+
+                var firstP = document.createElement("p");
+                firstP.className = 'games-list__item--level';
+                firstP.innerHTML = value['skill_level'];
+
+                var secondP = document.createElement("p");
+                secondP.className = 'games-list__item--text';
+                secondP.innerHTML = value['game'].name;
+
+                li.appendChild(img);
+                li.appendChild(firstP);
+                li.appendChild(secondP);
+                li.appendChild(thirdP);
+                ul.appendChild(li);
+            }
+        }
+
+        // add li tag for add a new game
+        var li = document.createElement("li");
+        li.className = 'games-list__item';
+
+        var a = document.createElement("a");
+        a.className = 'games-list__item--link';
+        a.setAttribute("data-remodal-target", "AddNewGameModal");
+
+        var i = document.createElement("i");
+        i.className = 'games-list__item--icon fa fa-5x fa-plus-circle';
+        i.setAttribute('aria-hidden', 'true');
+        // i.setAttribute("id", "addGame");
+
+        var p = document.createElement("p");
+        p.className = 'games-list__item--text games-list__item--text-small';
+        p.innerHTML = "New game";
+
+        a.appendChild(i);
+        a.appendChild(p);
+        li.appendChild(a);
+        ul.appendChild(li);
+
+        getIdAddedUserGames();
+        showAllGamesModal();
+    });
+}
+
+var getIdAddedUserGames = function() {
+    var td_list = [];
+    var ul = document.getElementsByClassName('games-list')[0];
+
+    $(ul).children().each(function (i, v) {
+        td_list[i] = this.getElementsByTagName('img').alt;
+    });
+    // remove last item in array
+    td_list.splice(-1,1);
+
+    return td_list;
+};
+
+var showAllGamesModal = function() {
+
+    var gamesAlreadyExists = getIdAddedUserGames();
+
+    axios.get("/games").then(function (response) {
+        var data = response.data
+
+        // create html tage with games
+        var ul = document.getElementsByClassName('add-games-list')[0];
+
+        for (key in data) {
+            if (data.hasOwnProperty(key)) {
+                var value = data[key];
+
+                if (!eleContainsInArray(gamesAlreadyExists, value.id)) {
+                    var li = document.createElement("li");
+                    li.className = "add-games-list__item";
+                    li.setAttribute("data-search-term", value.name.toLowerCase());
+
+                    var img = document.createElement("img");
+                    img.className = 'add-games-list__item--image-large';
+                    img.setAttribute("src", "img/games/" + value.imageName);
+                    img.setAttribute("alt", value.id);
+                    img.setAttribute("title", value.name);
+                    img.setAttribute("id", "addGame");
+
+                    var p = document.createElement("p");
+                    p.className = 'add-games-list__item--text add-games-list__item--text-large';
+                    p.innerHTML = value.name;
+
+                    li.appendChild(img);
+                    li.appendChild(p);
+                    ul.appendChild(li);
+                }
+            }
+        }
+
+
+    });
+};
+
+// check if game is already in array
+function eleContainsInArray(arr, element) {
+    if (arr != null && arr.length > 0) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
