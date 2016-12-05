@@ -456,3 +456,32 @@ html {
     width: 7.5rem;
     padding: 1rem;
 }
+
+
+/**************************** Users page ***************************/
+
+.users-list__item--image-small {
+    width: 5.5rem;
+    height: 5.5rem;
+}
+
+.users-list__item--image-small:hover {
+    outline: #999999 solid 3px;
+}
+
+.users-list__item {
+    float: left;
+    display: inline-block;
+    text-align: center;
+    margin-right: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.users-list__item--text {
+    border-bottom: 1px solid #f36523;
+    padding-bottom: 0.2rem;
+    margin-top: 0.4rem;
+    text-align: center;
+    font-size: 1rem;
+    width: 5.5rem;
+}
