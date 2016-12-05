@@ -6,7 +6,8 @@ $(document).ready(function () {
     }, 100);
 
     crossroads.addRoute('/me', function() {
-        window.location = session.user.username;
+        crossroads.parse(session.user.username);
+        // window.location = session.user.username;
     }, 100);
 
     crossroads.addRoute('/logout', function() {
