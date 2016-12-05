@@ -99,8 +99,7 @@ $(document).ready(function () {
                     $('#discord')[0].value = user.discord;
                     $('#description')[0].value = user.description;
                     $('#user_id')[0].value = user.id;
-
-                    $('#previewAvatar').src = user.avatar;
+                    $("#previewAvatar").attr("src", user.avatar);
                 });
             })
     }, 100);
@@ -127,7 +126,7 @@ $(document).ready(function () {
                 $('#description')[0].innerHTML = user.description;
                 $('#level')[0].innerHTML = user.level;
 
-                $('#previewAvatar').src = user.avatar;
+                $("#previewAvatar").attr("src", user.avatar);
             });
         })
     }, 1);

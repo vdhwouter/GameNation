@@ -45,31 +45,27 @@
 				<textarea class="form__textarea" rows="5" id="description"></textarea>
 			</div>
 
-
-            <!--TMP FOR AVATAR-->
-            <div class="form__group">
-                <label class="form__label" for="avatar">avatar</label>
-                <textarea class="form__input form__input--dark" id="avatar"></textarea>
-            </div>
-
+            <input type="hidden" id="avatar" value ="">
 			<input type="hidden" id="user_id">
 			<input class="form__submit form__submit--settings" type="submit" name="" value="Save">
 		</form>
 	</div>
-
-
-
-
-
-	<div class="avatarSelection">
-		<ul id="avatarList">
-
-		</ul>
-	</div>
 </div>
+
+<div class="avatarSelection"><ul id="avatarList"></ul></div>
 
 <h3 class="page-title page-title--medium">Games</h3>
 <ul class="games-list"></ul>
+
+
+
+
+
+
+<!-- Avatar Modal -->
+<div class="remodal" data-remodal-id="ChangeAvatar" data-remodal-options="closeOnOutsideClick: true">
+
+</div>
 
 <!-- model dialog add games -->
 <div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">

@@ -267,6 +267,7 @@ $('.form--settings').on('submit', function (e) {
     var discord= $('#discord').val();
     var description= $('#description').val();
     var userID= $('#user_id').val();
+    var avatar= $('#avatar').val();
 
     // Validate user input
     // Return error array as list items
@@ -277,7 +278,7 @@ $('.form--settings').on('submit', function (e) {
 
     // Post user data to db
     if (!$('.error-list')[0].innerHTML) {
-        axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level })
+        axios.post('/users/' + userID, { firstname: firstname, lastname: lastname, username: username, email: email, password: password, teamspeak: teamspeak, discord: discord, description: description, level: level, avatar: avatar })
             .then((res) => {
                 console.info("User edited succesfully, redirecting to profile page")
                 navigateTo(username, username);
