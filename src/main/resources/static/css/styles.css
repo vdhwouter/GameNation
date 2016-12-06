@@ -401,7 +401,7 @@ html {
     height: 5.5rem;
 }
 
-.games-list__item--image-small:hover {
+.list-games > ul > li > .games-list__item--image-small:hover {
     outline: #999999 solid 3px;
     cursor: pointer;
 }
