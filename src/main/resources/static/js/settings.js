@@ -227,6 +227,22 @@ $('#modelSkilEditDelete').click(function () {
 
 
 /* ================================================================================================================
+ Avatar modal
+ =============================================================================================================== */
+$(document).on('opened', '.remodal-avatars', function () {
+    $('.avatar-list').empty();
+    for (i = 1; i <= 60; i++) $('.avatar-list').append('<li class="grow avatar-list__item"><img id="avatar(' + i + ')" src="img/avatars/avatar(' + i + ').png" alt="Select avatar ' + i + '"/></li>');
+
+	$('.avatar-list__item').on('click', function(e){
+		$("#previewAvatar").attr("src","img/avatars/" + e.target.id + ".png");
+		$("#avatar").val("img/avatars/" + e.target.id + ".png");
+		$('[data-remodal-id=ChangeAvatar]').remodal().close();
+	});
+});
+
+
+
+/* ================================================================================================================
  Help classes
  =============================================================================================================== */
 // check if a element already exists in array
