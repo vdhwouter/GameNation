@@ -18,7 +18,7 @@ axios.get("/users").then(function (response) {
             li.className = "users-list__item";
             li.setAttribute("data-search-term", value.username.toLowerCase());
             li.setAttribute("data-remodal-target", "ShowUserDetailsModal");
-            li.setAttribute("onclick", "infoGame(this)");
+            li.setAttribute("onclick", "redirectUser('" + value.username + "')");
 
             var img = document.createElement("img");
             img.className = 'users-list__item--image-small';
@@ -56,3 +56,11 @@ $('#search_box').on('keyup', function () {
         }
     });
 });
+
+/* ===========================================
+  refer to profile page
+ =========================================== */
+var redirectUser = function (username) {
+    var urlPath = username
+    return History.pushState({ urlPath: urlPath }, urlPath, urlPath);
+}
