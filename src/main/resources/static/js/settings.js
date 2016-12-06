@@ -70,6 +70,7 @@ $(document).ready(function () {
     $('.avatarListItem').on('click', function(e){
         $("#previewAvatar").attr("src","img/avatars/" + e.target.id + ".png");
         $("#avatar").val("img/avatars/" + e.target.id + ".png");
+		$('[data-remodal-id=ChangeAvatar]').remodal().close();
     });
 });
 
