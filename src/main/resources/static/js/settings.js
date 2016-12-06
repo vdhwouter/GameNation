@@ -124,7 +124,7 @@ $('.form--settings').on('submit', function (e) {
 	var username= $('#username').val();
 	var email= $('#email').val();
 	var level= $('#level').val();
-	var password= $('#password').val();
+	var password= ($('#password').val() === '') ? null : $('#password').val();
 	var teamspeak= $('#teamspeak').val();
 	var discord= $('#discord').val();
 	var description= $('#description').val();
@@ -158,16 +158,6 @@ var HierKanHetTochNietAanLiggen = function(email, password, username, id){
 	var errors = []
 
 	if (!email.match(validEmail)) errors.push('Email should be a valid email');
-	// if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6');
-	// if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter');
-	// if (!password.match(securePassword)) errors.push('Password should contain one digit');
-
-
-
-
-	axios.get('/users?username=Maes').then(res => { if(res.data[0].password != password) errors.push('Password is incorrect'); })
-
-
 
 	axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text"> A user with username \'' + username +'\' already exists</p></li>')});
 
@@ -177,7 +167,6 @@ var HierKanHetTochNietAanLiggen = function(email, password, username, id){
 	}, "")
 
 	return errors;
-	/*	 var regexDigit = /^(?=.*\d)$/;	var regexLowercase = /^(?=.*[a-z])$/;	var regexUppercase = /^(?=.*[A-Z])$/;	*/
 }
 
 

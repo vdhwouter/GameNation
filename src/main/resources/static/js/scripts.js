@@ -92,6 +92,7 @@ $(document).ready(function () {
                         console.info('How dare you access this page without authenticating, i will have to redirect you!');
                         return  navigateTo('login', 'Login');
                     }
+
                     $('#first_name')[0].value = user.firstname;
                     $('#last_name')[0].value = user.lastname;
                     $('#username')[0].value = user.username;
@@ -101,6 +102,7 @@ $(document).ready(function () {
                     $('#description')[0].value = user.description;
                     $('#user_id')[0].value = user.id;
                     $("#previewAvatar").attr("src", user.avatar);
+                    $("#avatar")[0].value = user.avatar;
                 });
             })
     }, 100);
