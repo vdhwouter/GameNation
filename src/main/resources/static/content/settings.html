@@ -53,9 +53,11 @@
 </div>
 
 
+<div>
+	<h3 class="page-title page-title--medium">Games</h3>
+	<ul class="games-list"></ul>
+</div>
 
-<h3 class="page-title page-title--medium">Games</h3>
-<ul class="games-list"></ul>
 
 
 
@@ -68,13 +70,13 @@
 
 
 <!-- model dialog add games -->
-<div class="remodal" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">
+<div class="remodal remodal-addGames" data-remodal-id="AddNewGameModal" data-remodal-options="closeOnOutsideClick: true">
 	<button data-remodal-action="close" class="remodal-close"></button>
 	<h3 class="page-title page-title--medium">Add new Game</h3>
 	<div id="searchAddGames">
 		<form class="form">
 			<div class="form__group">
-				<input class="form__input form__input--dark" type="text" placeholder="Search games" id="live-search-box">
+				<input class="form__input form__input--medium" type="text" placeholder="Search games" id="live-search-box">
 			</div>
 		</form>
 	</div>
@@ -82,12 +84,12 @@
 	<ul class="add-games-list"></ul>
 
 	<form class="form">
-		<button data-remodal-action="confirm" class="remodal-confirm" id="addConfirm">Add</button>
+		<button data-remodal-action="confirm" class="remodal-confirm" id="addGameConfirm">Add</button>
 	</form>
 </div>
 
 <!-- model dialog edit games -->
-<div class="remodal" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: true">
+<div class="remodal remodal-editGames" data-remodal-id="EditGameModal" data-remodal-options="closeOnOutsideClick: true">
 	<button data-remodal-action="close" class="remodal-close"></button>
 	<h3 class="page-title page-title--medium" id="editGameTitle"></h3>
 	<div id="editGame">
@@ -99,8 +101,8 @@
 			<dt style="display: none"><label>Id</label></dt>
 			<dd style="display: none"><input type="text" name="id" id="id" value="5830533b9e783a58e84d6a80" autocomplete="off"/></dd>
 
-			<dd id="modelSkilEditDelete"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-delete" value="Delete" /></dd>
 			<dd id="modelSkilEditEdit"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-confirm" value="Edit" /></dd>
+			<dd id="modelSkilEditDelete"><input data-remodal-action="confirm" type="submit" name="update-submit" class="remodal-delete" value="Delete" /></dd>
 		</form>
 	</div>
 </div>

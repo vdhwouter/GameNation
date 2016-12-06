@@ -219,6 +219,16 @@ body {
     color: white;
 }
 
+.form__input--medium {
+    border-bottom: 1px solid #f36523;
+    background-color: #4a4c51;
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    height: 1.5rem;
+    color: white;
+}
+
 .form__input--light {
     margin-bottom: 1px;
     font-size: 1.5rem;
@@ -386,6 +396,11 @@ body {
     margin-bottom: 0.1rem;
 }
 
+.games-list__item--icon:hover {
+    outline: #999999 solid 3px;
+    cursor: pointer;
+}
+
 .games-list__item--image-small {
     width: 5.5rem;
     height: 5.5rem;
@@ -393,6 +408,7 @@ body {
 
 .games-list__item--image-small:hover {
     outline: #999999 solid 3px;
+    cursor: pointer;
 }
 
 .games-list__item--image-large {
@@ -434,6 +450,7 @@ body {
     overflow: hidden;
     overflow-y: auto;
     margin-bottom: 1.5rem;
+    margin-left: -0.1rem;
 }
 
 .add-games-list__item {
@@ -444,17 +461,24 @@ body {
     margin-bottom: 1rem;
 }
 
+.add-games-list__item img:hover, .add-games-list__item img.active {
+    outline: #999999 solid 3px;
+    cursor: pointer;
+}
+
 .add-games-list__item--image-large {
     width: 8.875rem;
     height: 8.875rem;
+    margin-top: 0.2rem;
+    margin-left: 0.2rem;
 }
 
 .add-games-list__item--text {
-    border-bottom: 1px solid #f36523;
     padding-bottom: 0.2rem;
     margin-top: 0.4rem;
     text-align: center;
     font-size: 1rem;
+    color: white;
 }
 
 .add-games-list__item--text-large {
@@ -527,6 +551,7 @@ body {
 
 .users-list__item--image-small:hover {
     outline: #999999 solid 3px;
+    cursor: pointer;
 }
 
 .users-list__item {

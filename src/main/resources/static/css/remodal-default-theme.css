@@ -187,6 +187,7 @@
 .remodal-delete {
     color: #fff;
     background: #db5f24;
+    float: left;
 }
 
 .remodal-delete:hover,
