@@ -4,6 +4,9 @@ class Authentication2 {
         // just to set axios headers
         this.token = this.token
 
+        // trigger initial events
+        this.triggerEvents()
+
         // check if token is still valid on page refresh and similar events
         this.checkAuthentication()
     }
@@ -45,6 +48,9 @@ class Authentication2 {
     set token(value) {
         axios.defaults.headers.common['Authorization'] = value ? "Bearer " + value : null;
         localStorage.setItem("__token", value)
+
+        // trigger login/logout events
+        this.triggerEvents()
     }
 
     set refreshToken(value) {
@@ -63,6 +69,16 @@ class Authentication2 {
         }
     }
 
+
+    triggerEvents() {
+        console.log('triggering events...')
+        if (this.authenticated) {
+            window.dispatchEvent(new Event('login'))
+        } else {
+            window.dispatchEvent(new Event('logout'))
+        }
+    }
+
     /* FUNCTIONS */
 
     setAuthenticationData(data) {
@@ -78,7 +94,7 @@ class Authentication2 {
         params.append('grant_type', 'password');
 
         return axios.post('/oauth/token', params, {
-            baseURL: '',
+            baseURL: axios.defaults.baseURL.split('/api')[0],
             auth: {
                 username: 'web-gamenation',
                 password: '123456'

@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     crossroads.addRoute('/logout', function() {
         session.logout();
-        window.location = '/login';
+        navigateTo('login', 'Login');
     }, 100);
 
     crossroads.addRoute('/login', function () {
