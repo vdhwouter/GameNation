@@ -47,6 +47,11 @@ body {
     width: 2.8rem;
 }
 
+.sidebar.placeholder {
+    position: relative;
+    visibility: hidden;
+}
+
 .menu-list--bottom {
     position: absolute;
     bottom: 0rem;
