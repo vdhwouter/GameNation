@@ -439,6 +439,10 @@ html {
     margin-bottom: 1rem;
 }
 
+.add-games-list__item img.active {
+    outline: #999999 solid 3px;
+}
+
 .add-games-list__item--image-large {
     width: 8.875rem;
     height: 8.875rem;
