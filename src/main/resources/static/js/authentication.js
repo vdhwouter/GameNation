@@ -4,9 +4,6 @@ class Authentication2 {
         // just to set axios headers
         this.token = this.token
 
-        // trigger initial events
-        this.triggerEvents()
-
         // check if token is still valid on page refresh and similar events
         this.checkAuthentication()
     }
@@ -71,7 +68,6 @@ class Authentication2 {
 
 
     triggerEvents() {
-        console.log('triggering events...')
         if (this.authenticated) {
             window.dispatchEvent(new Event('login'))
         } else {
