@@ -473,7 +473,6 @@ body {
 
 .add-games-list__item--image-large {
     width: 8.875rem;
-    height: 8.875rem;
     margin-top: 0.2rem;
     margin-left: 0.2rem;
 }
@@ -531,19 +530,30 @@ body {
 
 
 /********************************** Avatars **********************************/
-
-.grow { transition: all .2s ease-in-out; }
-.grow:hover { transform: scale(1.1); }
-
-.avatarListItem {
-    display: inline-block;
-    margin: 1rem;
-    background-color: #f36523;
+.avatar-list {
+    height: 23.75rem;
+    overflow-y: auto;
+    margin-left: -0.1rem;
 }
 
-.avatarListItem img {
-    width: 7.5rem;
+.avatar-list__item {
+    display: inline-block;
+    background-color: #f36523;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+    float: left;
+}
+
+.avatar-list__item img {
+    width: 7rem;
     padding: 1rem;
+    margin-top: 0.2rem;
+    margin-left: 0.2rem;
+}
+
+.avatar-list__item img:hover {
+    outline: #999999 solid 3px;
+    cursor: pointer;
 }
 
 
