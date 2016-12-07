@@ -632,6 +632,12 @@ body {
     height: 5.5rem;
 }
 
+.users-list__item--image-medium {
+    width: 19rem;
+    height: 19rem;
+    float: left;
+}
+
 .users-list__item--image-small:hover {
     outline: #999999 solid 3px;
     cursor: pointer;
@@ -652,4 +658,38 @@ body {
     text-align: center;
     font-size: 1rem;
     width: 5.5rem;
+}
+#detailsUser h3:nth-of-type(1){
+    padding-bottom: 3rem;
+}
+
+#detailsUser h3:nth-of-type(2){
+     text-align: left;
+     padding-top: 0rem;
+ }
+
+#detailsUser h4 {
+    font-size: 1.5rem;
+    text-align: left;
+    margin-top: 1rem;
+}
+
+#detailsUser p {
+    text-align: left;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+#buttons{
+    width: 39.35rem;
+    padding-top: 1rem ;
+    float: left;
+}
+
+#addfriend{
+    float: right;
+}
+
+#viewProfileBtn{
+    float: left;
 }
