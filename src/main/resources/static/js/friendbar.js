@@ -17,12 +17,10 @@ $(document).ready(function() {
   }
 
   $(window).on('login', function() {
-    console.log('login')
     show()
   })
 
   $(window).on('logout', function() {
-    console.log('logout')
     hide()
   })
 
@@ -62,19 +60,25 @@ $(document).ready(function() {
     intervals.push(requestsInterval);
   }
 
+  var friendsUlCache = null
   function updateFriends() {
     axios.get('/users/' + session.id + '/friends').then(response => {
       var friends = response.data
-      // console.log('friends:', friends)
       
-      // clear list
       var ul = $('.friendbar').children('#friends').children('ul')
-      ul.empty()
 
       if (friends.length > 0) {
+        // render new list
+        var newUl = $('<ul></ul>')
          friends.forEach(friend => {
-           parseFriend(friend).appendTo(ul)
+           parseFriend(friend).appendTo(newUl)
          })
+
+        //compare old list vs new list, only render if they differ
+         if (newUl.html() != friendsUlCache) {
+           friendsUlCache = newUl.html()
+           ul.html(friendsUlCache)
+         }
       } else {
         friendBar.children('#friends').children('ul').text('you have no friends.')
       }
@@ -82,20 +86,26 @@ $(document).ready(function() {
     })
   }
   
+  var requestUlCache = null
   function updateRequests() {
     axios.get('/users/' + session.id + '/friendrequests?direction=to').then(response => {
       var requests = response.data
-      // console.log('requests:', requests)
-      
-      // clear list
+
       var ul = $('.friendbar').children('#requests').children('ul')
-      ul.empty()
 
       if (requests.length > 0) {
+        // render new list
         friendBar.children('#requests').show()
+        var newUl = $('<ul></ul>')
         requests.forEach(request => {
-          parseFriend(request).appendTo(ul)
+          parseFriend(request).appendTo(newUl)
         })
+
+        //compare old list vs new list, only render if they differ
+        if (newUl.html() != requestUlCache) {
+          requestUlCache = newUl.html()
+          ul.html(requestUlCache)
+        }
       } else {
         friendBar.children('#requests').hide()
       }
@@ -118,7 +128,5 @@ $(document).ready(function() {
   }
 
   // if initial event was missed:
-  console.log(session.authenticated)
-  console.log(friendBar)
   session.authenticated ? show() : hide();
 });
