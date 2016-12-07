@@ -196,6 +196,22 @@ body {
     padding-left: 0.25rem;
 }
 
+.friendbar .person .actions {
+    float: right;
+}
+
+.friendbar .person .actions > i {
+    padding: 0 0.2rem;
+}
+
+.friendbar .person .actions .decline {
+    color: #e80c60;
+}
+
+.friendbar .person .actions .accept {
+    color: #02ed01;
+}
+
 /********************************** Errors **********************************/
 
 .error-list {
