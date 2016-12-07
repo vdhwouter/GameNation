@@ -50,6 +50,7 @@ body {
 .sidebar.placeholder {
     position: relative;
     visibility: hidden;
+    overflow: hidden;
 }
 
 .menu-list--bottom {
@@ -142,6 +143,57 @@ body {
 
 .page-title--large {
     font-size: 3rem;
+}
+
+/****************************************************************************
+ *                                Friendbar                                 *
+ ****************************************************************************/
+
+.friendbar {
+    width: 12rem;
+    background: #36393e;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    overflow-x: hidden;
+}
+
+.friendbar p {
+    background: #f36523;
+    padding-left: 0.2rem;
+    line-height: 1.6rem;
+}
+
+.friendbar .person {
+    padding: 0.1rem 0;
+}
+
+.friendbar .person a {
+    padding: 0.1rem 0.25rem;
+    height: 2rem;
+    line-height: 2rem;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.friendbar .person a:hover {
+    background: rgba(0,0,0,0.6);
+}
+
+.friendbar .person .image {
+    float: left;
+    width: 2rem;
+    height: 2rem;
+}
+
+.friendbar .person img {
+    max-width: 2rem;
+    max-height: 2rem;
+}
+
+.friendbar .person span {
+    padding-left: 0.25rem;
 }
 
 /********************************** Errors **********************************/
