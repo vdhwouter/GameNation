@@ -60,8 +60,12 @@ $(document).ready(function() {
     intervals.push(requestsInterval);
   }
 
-  var friendsUlCache = null
   function updateFriends() {
+    var ul = $('.friendbar').children('#friends').children('ul')
+    if (!session.authenticated || !session.id) {
+      return ul.empty()
+    }
+    
     axios.get('/users/' + session.id + '/friends').then(response => {
       var friends = response.data
       
@@ -75,10 +79,9 @@ $(document).ready(function() {
          })
 
         //compare old list vs new list, only render if they differ
-         if (newUl.html() != friendsUlCache) {
-           friendsUlCache = newUl.html()
-           ul.html(friendsUlCache)
-         }
+        if (newUl.html() != ul.html()) {
+          ul.html(newUl.html())
+        }
       } else {
         friendBar.children('#friends').children('ul').text('you have no friends.')
       }
@@ -86,25 +89,26 @@ $(document).ready(function() {
     })
   }
   
-  var requestUlCache = null
   function updateRequests() {
+    var ul = $('.friendbar').children('#requests').children('ul')
+    if (!session.authenticated || !session.id) {
+      return ul.empty()
+    }
+
     axios.get('/users/' + session.id + '/friendrequests?direction=to').then(response => {
       var requests = response.data
-
-      var ul = $('.friendbar').children('#requests').children('ul')
 
       if (requests.length > 0) {
         // render new list
         friendBar.children('#requests').show()
         var newUl = $('<ul></ul>')
         requests.forEach(request => {
-          parseFriend(request).appendTo(newUl)
+          parseFriendrequest(request).appendTo(newUl)
         })
 
         //compare old list vs new list, only render if they differ
-        if (newUl.html() != requestUlCache) {
-          requestUlCache = newUl.html()
-          ul.html(requestUlCache)
+        if (newUl.html() != ul.html()) {
+          ul.html(newUl.html())
         }
       } else {
         friendBar.children('#requests').hide()
@@ -126,6 +130,54 @@ $(document).ready(function() {
 					'</li>'
     )
   }
+
+  function parseFriendrequest(friend) {
+    return $(
+      '<li class="person">' +
+            '<a href="/' + friend.username + '">' +
+              '<div class="actions">' +
+                '<i class="fa fa-times decline" aria-hidden="true" data-user-id="' + friend.id + '" id="decline"></i>' +
+                '<i class="fa fa-check accept" aria-hidden="true" data-user-id="' + friend.id + '" id="accept"></i>' +
+              '</div>' +
+              '<div class="image">' +
+                '<img src="' + friend.avatar +'" alt="">' +
+              '</div>' +
+              '<div class="name">' +
+                '<span>' + friend.username + '</span>' +
+              '</div>' +
+            '</a>' +
+          '</li>'
+    )
+  }
+
+  // bind events to request accept
+  $('.friendbar').on('click', '#requests #accept', function(e) {
+    e.stopPropagation();
+    var id = $(this).attr('data-user-id')
+    console.log('accept', id)
+
+    axios.post('/users/' + session.id + '/friends', {user: id})
+      .then(function (res) {
+          // try to update friend button if on profile page..
+          updateFriendButton(res.data);
+          updateRequests();
+          updateFriends();
+      })
+  })
+
+  // bind events to request decline
+  $('.friendbar').on('click', '#requests #decline', function(e) {
+    e.stopPropagation();
+    var id = $(this).attr('data-user-id')
+    console.log('decline', id)
+
+    axios.delete('/users/' + session.id + '/friends/' + id)
+      .then(function (res) {
+          // reload friendship button with new data
+          updateFriendButton(res.data);
+          updateRequests();
+      })
+  })
 
   // if initial event was missed:
   session.authenticated ? show() : hide();

@@ -56,7 +56,8 @@ $(document).ready(function () {
 
     var friendButton = $('#friend-button');
 
-    function updateFriendButton() {
+    function updateFriendButton(relation) {
+        if (relation) currentUser.relation = relation;
         if (session.authenticated) {
             // check if not the profile page of logged in user
             if (currentUser.id != session.id) {
@@ -118,4 +119,6 @@ $(document).ready(function () {
         }
 
     })
+
+    window.updateFriendButton = updateFriendButton;
 });
