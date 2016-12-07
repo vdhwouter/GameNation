@@ -4,7 +4,7 @@
 /* ===========================================
  show all users
  =========================================== */
-var count = 0;
+var userProperties = [];
 
 axios.get("/users").then(function (response) {
     var data = response.data;
@@ -35,7 +35,7 @@ axios.get("/users").then(function (response) {
             li.appendChild(p);
 
             for(var prop in value){
-                if(prop != 'username' && prop != 'password' && prop != "id"){
+                if(prop != 'username' && prop != 'password'){
                     var p = document.createElement("p");
                     p.setAttribute("style", "display: none");
                     p.innerHTML = value[prop];
@@ -60,18 +60,18 @@ $('#search_box').on('keyup', function () {
     });
 });
 
-/******************************************** redirect *************************************************/
-var redirectUser = function (username) {
-    var urlPath = username
+/******************************************** redirect on view profile *******************************************/
+$('#viewProfileBtn').click(function () {
+    var urlPath = userProperties[1];
     return History.pushState({ urlPath: urlPath }, urlPath, urlPath);
-}
+});
 
 /* ================================================================================================================
    User Modal
  =============================================================================================================== */
 
 var infoUser = function(e) {
-    var userProperties = [];
+    userProperties =[] ;
 
     //clear user modal
     $("#detailsUser").html("");
@@ -84,10 +84,15 @@ var infoUser = function(e) {
         userProperties[i] = $(this)[0].innerHTML;
     });
 
-    var H3 = document.createElement("h3");
-    H3.className = "page-title page-title--medium";
-    H3.innerHTML = userProperties[1];
-    element.appendChild(H3);
+     var H3 = document.createElement("h3");
+     H3.className = "page-title page-title--medium";
+     H3.innerHTML = "User properties";
+     element.appendChild(H3);
+
+    var img = document.createElement("img");
+    img.className = "users-list__item--image-medium";
+    img.src = userProperties[9];
+    element.appendChild(img);
 
     if(userProperties[3] != "" || userProperties[4] != "") {
         var fullName = document.createElement("h4");
