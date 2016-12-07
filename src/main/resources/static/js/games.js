@@ -1,12 +1,9 @@
-/**
- * Created by tijs on 24/11/2016.
- */
-
-var alreadyAddedGames = new Array();
-
+/* ================================================================================================================
+ Start loading added games on page
+ =============================================================================================================== */
 $(document).ready(function () {
 
-    // show the add button if user is logged in
+// show the add button if user is logged in
     if (session.authenticated) {
         $("#addConfirm").css('display',null);
     }
@@ -14,14 +11,38 @@ $(document).ready(function () {
         $("#addConfirm").css('display',"none");
     }
 
-    /* ===========================================
-     show all games
-     =========================================== */
+    loadGames();
+});
+
+
+
+/* ================================================================================================================
+ Local variables
+ =============================================================================================================== */
+// all the games that user already have (array with game id's)
+var alreadyAddedGames = new Array();
+
+// get the id from 1 selected game
+var gameId = new Array();
+
+// all the properties from 1 selected game (name, description)
+var gameProperties = new Array();
+
+// all errors during add game
+var errorArray = new Array();
+
+
+
+/* ================================================================================================================
+ load all games
+ =============================================================================================================== */
+var loadGames = function () {
     axios.get("/games").then(function (response) {
         var data = response.data;
 
         // create html tage with games
         var ul = document.getElementsByClassName('games-list')[0];
+        $(ul).empty();
 
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
@@ -54,60 +75,59 @@ $(document).ready(function () {
             }
         }
     });
-
-    /* ===========================================
-     live search filter games
-     =========================================== */
-    $('#search_box').on('keyup', function () {
-        var searchTerm = $(this).val().toLowerCase();
-
-        $('.games-list li').each(function () {
-            if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    });
+}
 
 
-    /* ===========================================
-     get id's that user already added
-     =========================================== */
-     axios.get("/users/" + session.id + "/games").then(function (result) {
-        var data = result.data
+/******************************************** live search filter *************************************************/
+$('#search_box').on('keyup', function () {
+    var searchTerm = $(this).val().toLowerCase();
 
-        for (key in data) {
-            if (data.hasOwnProperty(key)) {
-                var value = data[key]
-                alreadyAddedGames.push(value['game'].id);
-            }
+    $('.games-list li').each(function () {
+        if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
+            $(this).show();
+        } else {
+            $(this).hide();
         }
-    })
-
+    });
 });
 
-/* ===========================================
- create info in game modal
- =========================================== */
-// array with selected game
-var addedGame = new Array();
 
+
+/* ================================================================================================================
+ get already added games from user
+ =============================================================================================================== */
+axios.get("/users/" + session.id + "/games").then(function (result) {
+    var data = result.data;
+
+    for (key in data) {
+        if (data.hasOwnProperty(key)) {
+            var value = data[key];
+            alreadyAddedGames.push(value['game'].id);
+        }
+    }
+})
+
+
+
+/* ================================================================================================================
+ show info in modal
+ =============================================================================================================== */
 // give info about the game in the modal
 var infoGame = function (e) {
-    var allGames = [];
+    gameProperties = [];
+    gameId = [];
     $("#detailsGames").html("");
 
+    // take game properties out of html
     $(e).children().each(function (i, v) {
-        allGames[i] = $(this)[0].innerHTML;
+        gameProperties[i] = $(this)[0].innerHTML;
     });
 
     // get id from img alt attribute
     var str = $(e)[0].innerHTML;
     var tmp = document.createElement('div');
     tmp.innerHTML = str;
-    var alt = tmp.getElementsByTagName('img')[0].alt;
-    addedGame[0]= alt;
+    gameId[0] = tmp.getElementsByTagName('img')[0].alt;
 
 
     // create html tags with info about the game
@@ -115,11 +135,11 @@ var infoGame = function (e) {
     firstH4.innerHTML = "Over dit spel";
 
     var firstP = document.createElement("p");
-    firstP.innerHTML = addedGame[0];
+    firstP.innerHTML = gameId[0];
     firstP.setAttribute('style', 'display: none');
 
     var secondP = document.createElement("p");
-    secondP.innerHTML = allGames[2];
+    secondP.innerHTML = gameProperties[2];
 
     var secondH4 = document.createElement("h4");
     secondH4.innerHTML = "Vrienden";
@@ -136,13 +156,13 @@ var infoGame = function (e) {
     element.appendChild(thirdP);
 
     //get friends who are playing the game
-    axios.get("/games/" + addedGame[0] + "/users").then(function (response) {
+    axios.get("/games/" + gameId[0] + "/users").then(function (response) {
         var data = response.data;
 
         for (key in data) {
             if (data.hasOwnProperty(key)) {
                 var value = data[key];
-                console.log(value);
+                //console.log(value);
 
                 var firstImg = document.createElement("img");
                 firstImg.setAttribute("src", value["user"].avatar);
@@ -157,24 +177,21 @@ var infoGame = function (e) {
 }
 
 
-/* ===========================================
- add a game to user profile
- =========================================== */
- var errorArray = new Array();
-
+/************************************************ add button ****************************************************/
 // by click on the add button
 $('#addConfirm').click(function () {
-    if (addedGame.length == 0) {
-        errorArray.push("There are no games selected, try again")
+    if (gameId.length == 0) {
+        errorArray.push("There are no games selected, try again");
     }
     else {
         // check if user is logged in
         if (session.authenticated) {
             // check if user already have the game
-            if (!eleContainsInArray(alreadyAddedGames, addedGame[0])) {
+            if (!eleContainsInArray(alreadyAddedGames, gameId[0])) {
                 //add game to user
-                axios.post("/users/" + session.id + "/games", addedGame).then(function (data) {
-                    location.reload();
+                axios.post("/users/" + session.id + "/games", gameId, {
+                }).then(function (data) {
+                    loadGames();
                 });
             }
             else {
@@ -184,21 +201,27 @@ $('#addConfirm').click(function () {
         else {
             errorArray.push("User must login before adding games");
         }
+
         // show errors on top page
-        $('#register-errors').empty();
-        $(errorArray).each(function(index, value){ $('#register-errors').append('<li><img src="img/error.png" /><p>' + value + '</p></li>') });
-        $('#register-errors').slideDown();
+        $('.error-list').empty();
+        $(errorArray).each(function(index, value){ $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text">' + value + '</p></li>') });
+        $('.error-list').slideDown();
 
         errorArray = [];
     }
 });
 
 
-// check if game is already in array
-function eleContainsInArray(arr, element) {
-    if (arr != null && arr.length > 0) {
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] == element) {
+
+
+/* ================================================================================================================
+ Help classes
+ =============================================================================================================== */
+// check if a element already exists in array
+var eleContainsInArray = function(array, element) {
+    if (array != null && array.length > 0) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == element) {
                 return true;
             }
         }
