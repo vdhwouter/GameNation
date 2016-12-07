@@ -1,18 +1,18 @@
-/* ===========================================
- show all games that user added
- =========================================== */
-
+/* ================================================================================================================
+ facebook sharing
+ =============================================================================================================== */
 $('#shareProfile').on('click', function (e) {
     e.preventDefault();
     console.info('Facebook share initiated...');
     logInWithFacebook('http://www.localhost:8080/' + window.profileUser.username);
 });
 
-$(document).ready(function () {
-    // HACK , CHANGE THI
-    var currentUser = window.profileUser;
 
-    axios.get("/users/" + currentUser.id + "/games")
+/* ================================================================================================================
+ show all games that user added
+ =============================================================================================================== */
+$(document).ready(function () {
+    axios.get("/users/" + session.id + "/games")
         .then(function (response) {
             var data = response.data;
 
@@ -32,10 +32,6 @@ $(document).ready(function () {
                     img.setAttribute("alt", value['game'].id);
                     img.setAttribute("title", value['game'].name);
 
-                    // var firstP = document.createElement("p");
-                    // firstP.innerHTML = value['game'].id;
-                    // firstP.setAttribute("style", "display: none");
-
                     var firstP = document.createElement("p");
                     firstP.className = 'games-list__item--level';
                     firstP.innerHTML = value['skill_level'];
@@ -52,7 +48,11 @@ $(document).ready(function () {
             }
         })
 
-    /* FRIEND BUTTON */
+
+
+    /* ===========================================================================================================
+     friend button
+     ========================================================================================================== */
 
     var friendButton = $('#friend-button');
 
