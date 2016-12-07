@@ -2,8 +2,7 @@
  Start loading added games on page
  =============================================================================================================== */
 $(document).ready(function () {
-
-// show the add button if user is logged in
+    // show the add button if user is logged in
     if (session.authenticated) {
         $("#addConfirm").css('display',null);
     }
@@ -162,7 +161,6 @@ var infoGame = function (e) {
         for (key in data) {
             if (data.hasOwnProperty(key)) {
                 var value = data[key];
-                //console.log(value);
 
                 var firstImg = document.createElement("img");
                 firstImg.setAttribute("src", value["user"].avatar);
