@@ -90,6 +90,8 @@ $(document).ready(function() {
   }
   
   function updateRequests() {
+    updateSentrequests()
+
     var ul = $('.friendbar').children('#requests').children('ul')
     if (!session.authenticated || !session.id) {
       return ul.empty()
@@ -112,6 +114,33 @@ $(document).ready(function() {
         }
       } else {
         friendBar.children('#requests').hide()
+      }
+    })
+  }
+  
+  function updateSentrequests() {
+    var ul = $('.friendbar').children('#sent-requests').children('ul')
+    if (!session.authenticated || !session.id) {
+      return ul.empty()
+    }
+
+    axios.get('/users/' + session.id + '/friendrequests?direction=from').then(response => {
+      var requests = response.data
+
+      if (requests.length > 0) {
+        // render new list
+        friendBar.children('#sent-requests').show()
+        var newUl = $('<ul></ul>')
+        requests.forEach(request => {
+          parseOutgoingRequest(request).appendTo(newUl)
+        })
+
+        //compare old list vs new list, only render if they differ
+        if (newUl.html() != ul.html()) {
+          ul.html(newUl.html())
+        }
+      } else {
+        friendBar.children('#sent-requests').hide()
       }
     })
   }
@@ -150,6 +179,24 @@ $(document).ready(function() {
     )
   }
 
+    function parseOutgoingRequest(friend) {
+    return $(
+      '<li class="person">' +
+            '<a href="/' + friend.username + '">' +
+              '<div class="actions">' +
+                '<i class="fa fa-times decline" aria-hidden="true" data-user-id="' + friend.id + '" id="cancel"></i>' +
+              '</div>' +
+              '<div class="image">' +
+                '<img src="' + friend.avatar +'" alt="">' +
+              '</div>' +
+              '<div class="name">' +
+                '<span>' + friend.username + '</span>' +
+              '</div>' +
+            '</a>' +
+          '</li>'
+    )
+  }
+
   // bind events to request accept
   $('.friendbar').on('click', '#requests #accept', function(e) {
     e.stopPropagation();
@@ -173,8 +220,20 @@ $(document).ready(function() {
 
     axios.delete('/users/' + session.id + '/friends/' + id)
       .then(function (res) {
-          // reload friendship button with new data
+          // try to update friend button if on profile page..
           updateFriendButton(res.data);
+          updateRequests();
+      })
+  })
+
+  // bind events to request cancel
+  $('.friendbar').on('click', '#sent-requests #cancel', function(e) {
+    e.stopPropagation();
+    var id = $(this).attr('data-user-id')
+    console.log('cancel', id)
+
+    axios.delete('/users/' + session.id + '/friends/' + id)
+      .then(function (res) {
           updateRequests();
       })
   })
