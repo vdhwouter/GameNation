@@ -35,7 +35,7 @@ axios.get("/users").then(function (response) {
             li.appendChild(p);
 
             for(var prop in value){
-                if(prop != 'username' && prop != 'password' && prop != "id"){
+                if(prop != 'username' && prop != 'password'){
                     var p = document.createElement("p");
                     p.setAttribute("style", "display: none");
                     p.innerHTML = value[prop];
