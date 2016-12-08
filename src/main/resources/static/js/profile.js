@@ -11,8 +11,11 @@ $('#shareProfile').on('click', function (e) {
 /* ================================================================================================================
  show all games that user added
  =============================================================================================================== */
-$(document).ready(function () {
-    axios.get("/users/" + session.id + "/games")
+
+ $(document).ready(function () { 
+    // this is kind of a hack.. :p 
+    var currentUser = window.profileUser; 
+    axios.get("/users/" + currentUser.id + "/games") 
         .then(function (response) {
             var data = response.data;
 
