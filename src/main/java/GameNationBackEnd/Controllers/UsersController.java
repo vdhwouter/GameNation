@@ -161,13 +161,29 @@ public class UsersController {
     // set skill on game for user
     @RequestMapping(value = "/{user}/games/{game}", method = RequestMethod.POST)
     public UserGame setSkillLevelForUserGame(@PathVariable User user, @PathVariable Game game, @RequestBody SkillLevelRequest skillLevel, Principal principal) {
-        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) {
-            throw new NotAuthorizedException();
-        }
-        
+        if (principal == null || !user.getUsername().equalsIgnoreCase(principal.getName())) throw new NotAuthorizedException();
+
         UserGame ug = userGameDB.findByUserAndGame(user, game);
         ug.setSkill_level(skillLevel.level);
-        return userGameDB.save(ug);
+        userGameDB.save(ug);
+
+        setGeneralSkill(user);
+
+        return userGameDB.findByUserAndGame(user, game);
+    }
+
+    private void setGeneralSkill(User user){
+
+        int totalLevel = 0, countLevel = 0;
+
+        for (UserGame singleGame : userGameDB.findByUser(user)) {
+            totalLevel += singleGame.getSkill_level();
+            countLevel++;
+        }
+
+        user.setLevel(totalLevel / countLevel);
+
+        userDB.save(user);
     }
 
     // delete game from user
