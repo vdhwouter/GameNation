@@ -280,7 +280,7 @@ $('.form--settings').on('submit', function (e) {
 
 	// Validate user input
 	// Return error array as list items
-	var errorArray = CheckFormInputSettings(email, password, username, userID);
+	var errorArray = CheckFormInputSettings(email, password, username);
 	$('.error-list').empty();
 	$(errorArray).each(function(index, value){ $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text">' + value + '</p></li>') });
 	$('.error-list').slideDown();

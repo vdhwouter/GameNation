@@ -1,8 +1,6 @@
 $(document).ready(function () {
     'use strict';
 
-
-
     /***************************************/
     /***             ROUTES              ***/
     /***************************************/
@@ -210,11 +208,11 @@ $(document).ready(function () {
         return History.pushState({ urlPath: urlPath }, title, urlPath);
     });
 
+
+
     /***************************************/
     /***             History             ***/
     /***************************************/
-
-
 
     var History, State;
     History = window.History;
