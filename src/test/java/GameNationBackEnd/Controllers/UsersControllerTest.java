@@ -277,6 +277,46 @@ public class UsersControllerTest extends BaseControllerTest {
         assertEquals(15, ug.getSkill_level());
     }
 
+
+
+
+
+    @Test
+    public void calculateGeneralScore() throws Exception {
+        User user = userRepository.save(new User("skilledGamer", "skilledGamer@user.be", "Azerty123"));
+
+        Game game1 = gameList.get(1);
+        userGameRepository.save(new UserGame(user, game1, 0));
+
+        Game game2 = gameList.get(2);
+        userGameRepository.save(new UserGame(user, game2, 0));
+
+        SkillLevelRequest skillLevel1 = new SkillLevelRequest();
+        skillLevel1.level = 10;
+
+        SkillLevelRequest skillLevel2 = new SkillLevelRequest();
+        skillLevel2.level = 20;
+
+        mockMvc.perform(post("/api/users/" + user.getId() + "/games/" + game1.getId())
+                .principal(new UserPrincipal(user))
+                .contentType(contentType)
+                .content(json(skillLevel1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.game.id", is(game1.getId())))
+                .andExpect(jsonPath("$.skill_level", is(10)));
+
+        mockMvc.perform(post("/api/users/" + user.getId() + "/games/" + game2.getId())
+                .principal(new UserPrincipal(user))
+                .contentType(contentType)
+                .content(json(skillLevel2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.game.id", is(game2.getId())))
+                .andExpect(jsonPath("$.skill_level", is(20)));
+
+        User u = userRepository.findByUsername(user.getUsername());
+        assertEquals(15, u.getLevel());
+    }
+
     @Test
     public void addUserWithUsernameThatAlreadyExists() throws Exception {
         User user = getRandomUser();
