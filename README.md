@@ -5,4 +5,4 @@
 
 #GameNation
 
-[check out the wiki](https://github.com/vdhwouter/GameNation/wiki) for more info 
+[Check out the wiki](https://github.com/vdhwouter/GameNation/wiki) for more info 
