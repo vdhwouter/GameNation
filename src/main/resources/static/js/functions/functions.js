@@ -33,7 +33,7 @@ var CommonChecks = function(email, password, username, errors){
     if (!email.match(validEmail)) errors.push('Email should be a valid email');
 
     // Check on password
-    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text"> A user with username \'' + username +'\' already exists</p></li>')});
+    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) errors.push('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text"> A userrrrrrrrrdqfsfsdf with username \'' + username +'\' already exists</p></li>')});
 
     // Return all errors
     return errors;
