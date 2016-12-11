@@ -1,19 +1,48 @@
 $(document).ready(function () {
     'use strict';
 
+
+
+    /***************************************/
+    /***             ROUTES              ***/
+    /***************************************/
+
+
+
+        /*********************/
+        /**     Root        **/
+        /*********************/
+
     crossroads.addRoute('/', function () {
         navigateTo('/login', 'Login')
     }, 100);
 
+
+
+        /*********************/
+        /**     Me          **/
+        /*********************/
+
     crossroads.addRoute('/me', function() {
         crossroads.parse(session.user.username);
-        // window.location = session.user.username;
     }, 100);
+
+
+
+        /*********************/
+        /**     Logout      **/
+        /*********************/
 
     crossroads.addRoute('/logout', function() {
         session.logout();
         navigateTo('login', 'Login');
     }, 100);
+
+
+
+        /*********************/
+        /**     Login       **/
+        /*********************/
 
     crossroads.addRoute('/login', function () {
         $('.sidebar').load('sidebar/not_logged_in.html');
@@ -45,6 +74,12 @@ $(document).ready(function () {
         });
     }, 100);
 
+
+
+        /*********************/
+        /**     Register    **/
+        /*********************/
+
     crossroads.addRoute('/register', function () {
         $('.sidebar').load('sidebar/not_logged_in.html');
         $('.content').load('content/register.html', function () {
@@ -61,7 +96,7 @@ $(document).ready(function () {
                 var confirmation = $('.form__input[name=confirmation]').val()
 
                 // Return error array as list items
-                var errorArray = CheckFormInput(email, password, confirmation, username);
+                var errorArray = CheckFormInputRegister(email, password, confirmation, username);
                 $('.error-list').empty();
                 $(errorArray).each(function(index, value){ $('.error-list').append('<li class="error-list__item"><i class="error-list__item__icon fa fa-times-circle" aria-hidden="true"></i><p class="error-list__item__text">' + value + '</p></li>') });
                 $('.error-list').slideDown();
@@ -81,6 +116,12 @@ $(document).ready(function () {
             })
         });
     }, 100);
+
+
+
+        /*********************/
+        /**     Settings    **/
+        /*********************/
 
     crossroads.addRoute('/settings', function () {
         axios.get('/users/' + session.id)
@@ -107,15 +148,33 @@ $(document).ready(function () {
             })
     }, 100);
 
+
+
+        /*********************/
+        /**     Games       **/
+        /*********************/
+
     crossroads.addRoute('/games', function () {
         $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
         $('.content').load('content/games.html');
     }, 100);
 
+
+
+        /*********************/
+        /**     Users       **/
+        /*********************/
+
     crossroads.addRoute('/users', function () {
         $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
         $('.content').load('content/users.html');
     }, 100);
+
+
+
+        /*********************/
+        /**     Username    **/
+        /*********************/
 
     crossroads.addRoute('/{username}', function (username) {
         axios.get('/users?username=' + username).then(function (data) {
@@ -138,6 +197,25 @@ $(document).ready(function () {
         })
     }, 1);
 
+
+
+    /***************************************/
+    /***             Events              ***/
+    /***************************************/
+
+    $('body').on('click', 'a', function (e) {
+        var urlPath = $(this).attr('href');
+        e.preventDefault();
+        var title = $(this).text();
+        return History.pushState({ urlPath: urlPath }, title, urlPath);
+    });
+
+    /***************************************/
+    /***             History             ***/
+    /***************************************/
+
+
+
     var History, State;
     History = window.History;
 
@@ -150,47 +228,13 @@ $(document).ready(function () {
         return crossroads.parse(document.location.pathname);
     })
 
-    $('body').on('click', 'a', function (e) {
-        var urlPath = $(this).attr('href');
-        e.preventDefault();
-        var title = $(this).text();
-        return History.pushState({ urlPath: urlPath }, title, urlPath);
-    });
-
     window.navigateTo = function navigateTo(urlPath, title = 'GameNation') {
-        if (title) {
-            title = title + ' | GameNation'
-        }
-
-        History.pushState({ urlPath: urlPath }, title, urlPath)
+        if (title) title = title + ' | GameNation'
+         History.pushState({ urlPath: urlPath }, title, urlPath)
     }
 
     crossroads.parse(document.location.pathname);
 });
-
-var CheckFormInput = function(email, password, confirmation, username){
-    var securePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,99}$/;
-    var validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
-    var errors = []
-
-    if (!email.match(validEmail)) errors.push('Email should be a valid email')
-    if (!password.match(securePassword)) errors.push('Password should have a minimum length of 6')
-    if (!password.match(securePassword)) errors.push('Password should contain one lower and one uppercase letter')
-    if (!password.match(securePassword)) errors.push('Password should contain one digit')
-    if (password !== confirmation) errors.push('Password and confirmation should match')
-
-    axios.get('/users?username=' + username).then(res => { if (res.data.length > 0) $('#register-errors')[0].innerHTML += '<li><img src="img/error.png" /><p> A user with username \'' + username +'\' already exists'})
-
-    var parsedErrors = errors.reduce(function (prev, current) {
-        if (prev) prev += "</p></li>"
-        return prev += current
-    }, "")
-
-    return errors;
-}
-
-
-
 
 
 
