@@ -183,13 +183,13 @@ $(document).ready(function () {
 
             $('.sidebar').load(session.authenticated ? 'sidebar/logged_in.html' : 'sidebar/not_logged_in.html');
             $('.content').load('content/profile.html', function () {
-                $('#username')[0].innerHTML = user.username;
-                $('#fullname')[0].innerHTML = user.firstname + ' ' + user.lastname;
-                $('#email')[0].innerHTML = user.email;
-                $('#teamspeak')[0].innerHTML = user.teamspeak;
-                $('#discord')[0].innerHTML = user.discord;
-                $('#description')[0].innerHTML = user.description;
-                $('#level')[0].innerHTML = user.level;
+                $('#username').text(user.username);
+                $('#fullname').text(user.firstname) + ' ' + user.lastname;
+                $('#email').text(user.email);
+                $('#teamspeak').text(user.teamspeak);
+                $('#discord').text(user.discord);
+                $('#description').text(user.description);
+                $('#level').text(user.level);
                 $("#previewAvatar").attr("src", user.avatar);
             });
         })
