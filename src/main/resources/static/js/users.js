@@ -1,9 +1,10 @@
 /**
  * Created by tijs on 5/12/2016.
  */
-/* ===========================================
- show all users
- =========================================== */
+
+/* =================================================================================================================
+   show all users
+================================================================================================================= */
 var userProperties = [];
 
 axios.get("/users").then(function (response) {
@@ -15,7 +16,6 @@ axios.get("/users").then(function (response) {
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             var value = data[key];
-            console.log(value);
             var li = document.createElement("li");
             li.className = "users-list__item";
             li.setAttribute("data-search-term", value.username.toLowerCase());
@@ -60,17 +60,15 @@ $('#search_box').on('keyup', function () {
     });
 });
 
-/******************************************** redirect on view profile *******************************************/
-$('#viewProfileBtn').click(function () {
-    var urlPath = userProperties[1];
-    return History.pushState({ urlPath: urlPath }, urlPath, urlPath);
-});
+
 
 /* ================================================================================================================
    User Modal
  =============================================================================================================== */
 
 var infoUser = function(e) {
+
+
     userProperties =[] ;
 
     //clear user modal
@@ -83,6 +81,8 @@ var infoUser = function(e) {
     $(e).children().each(function (i, v) {
         userProperties[i] = $(this)[0].innerHTML;
     });
+
+    //console.log(friendcheck(session.id, userProperties[11]));
 
      var H3 = document.createElement("h3");
      H3.className = "page-title page-title--medium";
@@ -143,5 +143,68 @@ var infoUser = function(e) {
         element.appendChild(p4);
     }
 
+    var id = document.createElement("p");
+    id.setAttribute("style", "display: none");
+    id.id = 'userID';
+    id.innerHTML = userProperties[11];
+    element.appendChild(id);
 
 }
+
+/******************************************** redirect on view profile ******************************************/
+$('#viewProfileBtn').click(function () {
+    var urlPath = userProperties[1];
+    return History.pushState({ urlPath: urlPath }, urlPath, urlPath);
+});
+
+/***********************************only show button in modal if authenticated **********************************/
+if (session.authenticated) {
+    $("#addFriend").css('display',null);
+}
+else {
+    $("#addFriend").css('display',"none");
+}
+
+/******************************************** add friend ********************************************************/
+
+$('#addFriend').click(function () {
+    var currentUserID = document.getElementById('userID').innerHTML;
+    axios.post('/users/' + session.id + '/friends', {user: currentUserID});
+});
+
+/*
+var friendcheck = function (currUser, modUser) {
+    console.log(modUser);
+    console.log(currUser)
+    if(modUser == currUser){
+        return true
+    }else{
+        var checkFriends = function(){
+            axios.get("users/" + modUser + "/friends")
+                .then(function (response) {
+                    var data = response.data;
+                    console.log(data);
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var value = data[key];
+                            console.log(value.id);
+                            if (value.id == currUser) return true;
+                        }
+                    }
+                });
+        }
+
+        var checkFriendsReq = function() {
+            axios.get("users/" + modUser + "/friendrequests?direction=both")
+                .then(function (response) {
+                    var data = response.data;
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var value = data[key];
+                            if (value.id == currUser) return true;
+                        }
+                    }
+                });
+        }
+    }
+}*/
