@@ -102,6 +102,7 @@ body {
     line-height: 2rem;
     font-size: 1rem;
     height: 2rem;
+    display: block;
     color: white;
 }
 
@@ -370,6 +371,12 @@ body {
 .form__input--light {
     margin-bottom: 1px;
     font-size: 1.5rem;
+}
+
+.form__input--orange {
+    border-bottom: 1px solid white;
+    background: #f36523;
+    color: white;
 }
 
 .form__input--first {
