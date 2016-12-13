@@ -70,6 +70,10 @@ body {
     overflow: hidden;
 }
 
+.form--search {
+    height: 36px;
+}
+
 .menu-list__item:hover > .menu-list__item__search-box {
     top: -2.4rem;
     left: 2.8rem;
@@ -226,8 +230,9 @@ body {
 
 .friendbar p {
     background: #f36523;
-    padding-left: 0.2rem;
+    padding: 0.5rem;
     line-height: 1.6rem;
+    margin-bottom: 1rem;
 }
 
 .friendbar .person {
@@ -259,7 +264,7 @@ body {
 }
 
 .friendbar .person span {
-    padding-left: 0.25rem;
+    padding-left: 0.75rem;
 }
 
 .friendbar .person .actions {
@@ -277,6 +282,20 @@ body {
 .friendbar .person .actions .accept {
     color: #02ed01;
 }
+
+.friendbar #sent-requests {
+    margin-bottom: 2rem;
+}
+
+.friendbar #requests {
+    margin-bottom: 2rem;
+}
+
+
+
+
+
+
 
 /********************************** Errors **********************************/
 
