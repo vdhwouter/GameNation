@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var refreshInterval = 1000
+  var refreshInterval = 2000
   var friendBar = $('.friendbar');
   friendBar.hide()
 

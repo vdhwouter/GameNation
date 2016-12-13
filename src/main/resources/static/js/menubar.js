@@ -12,7 +12,7 @@ $(document).ready(function () {
 
         if (q.length) {
             $.each(users, function() {
-                console.log(this.username);
+
                 var score = LiquidMetal.score(this.username, q);
 
                 if (score > 0) {
