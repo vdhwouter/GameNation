@@ -200,6 +200,9 @@ public class UsersController {
     // get logged in user
     @RequestMapping(value = "/me", method = RequestMethod.GET)
     public User GetAuthenticatedUser(Principal principal) {
+        if (principal == null) {
+            throw new NotAuthorizedException();
+        }
         // principal contains authenticated user name
         User user = userDB.findByUsername(principal.getName());
         return user;
