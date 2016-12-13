@@ -11,6 +11,7 @@ $(document).ready(function () {
     }
 
     loadGames();
+    getFriends();
 });
 
 
@@ -30,7 +31,24 @@ var gameProperties = new Array();
 // all errors during add game
 var errorArray = new Array();
 
+// all friends logged in user
+var friends = new Array();
 
+/* ================================================================================================================
+   get all friends
+ =============================================================================================================== */
+var getFriends = function () {
+//get friends logged in user
+    axios.get("/users/" + session.id + "/friends").then(function (response) {
+        var data = response.data;
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                var value = data[key];
+                friends.push(value)
+            }
+        }
+    });
+}
 
 /* ================================================================================================================
  load all games
@@ -116,7 +134,6 @@ var infoGame = function (e) {
     gameProperties = [];
     gameId = [];
     $("#detailsGames").html("");
-
     // take game properties out of html
     $(e).children().each(function (i, v) {
         gameProperties[i] = $(this)[0].innerHTML;
@@ -140,12 +157,13 @@ var infoGame = function (e) {
     var secondP = document.createElement("p");
     secondP.innerHTML = gameProperties[2];
 
-    var secondH4 = document.createElement("h4");
-    secondH4.innerHTML = "Vrienden";
+    if (session.authenticated) {
+        var secondH4 = document.createElement("h4");
+        secondH4.innerHTML = "Vrienden";
 
-    var thirdP = document.createElement("p");
-    thirdP.innerHTML = "Deze vrienden spelen dit spel ook:";
-
+        var thirdP = document.createElement("p");
+        thirdP.innerHTML = "Deze vrienden spelen dit spel ook:";
+    }
 
     var element = document.getElementById('detailsGames');
     element.appendChild(firstH4);
@@ -154,21 +172,24 @@ var infoGame = function (e) {
     element.appendChild(secondH4);
     element.appendChild(thirdP);
 
-    //get friends who are playing the game
+    //get users who are playing the game
     axios.get("/games/" + gameId[0] + "/users").then(function (response) {
         var data = response.data;
 
-        for (key in data) {
-            if (data.hasOwnProperty(key)) {
-                var value = data[key];
+        for(f in friends){
+            for (key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var value = data[key];
+                    if(value['user'].id == friends[f].id){
+                        var firstImg = document.createElement("img");
+                        firstImg.setAttribute("src", value["user"].avatar);
+                        firstImg.setAttribute("alt", "avatar-member");
+                        firstImg.setAttribute("title", value["user"].username + '\nLevel: ' + value["user"].level);
+                        firstImg.className += "friendImg";
 
-                var firstImg = document.createElement("img");
-                firstImg.setAttribute("src", value["user"].avatar);
-                firstImg.setAttribute("alt", "avatar-member");
-                firstImg.setAttribute("title", value["user"].username + '\nLevel: ' + value["user"].level);
-                firstImg.className += "friendImg";
-
-                element.appendChild(firstImg);
+                        element.appendChild(firstImg);
+                    }
+                }
             }
         }
     });
