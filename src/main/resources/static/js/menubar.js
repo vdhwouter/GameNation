@@ -10,24 +10,28 @@ $(document).ready(function () {
         scores.length = 0;
         var q = $(this).val();
 
-        $.each(users, function() {
-            console.log(this.username);
-            var score = LiquidMetal.score(this.username, q);
+        if (q.length) {
+            $.each(users, function() {
+                console.log(this.username);
+                var score = LiquidMetal.score(this.username, q);
 
-            if (score > 0) {
-                scores.push([score, this]);
-            }
-        });
-
-        if (scores.length) {
-            var ul = $('.search-list')[0];
-            $(ul).empty();
-
-            $.each(scores.sort(function(a, b) {return b[0] - a[0];}), function(i) {
-                if (i < max_users) {
-                    parseUser(this[1]).appendTo(ul);
+                if (score > 0) {
+                    scores.push([score, this]);
                 }
             });
+
+            if (scores.length) {
+                var ul = $('.search-list')[0];
+                $(ul).empty();
+
+                $.each(scores.sort(function(a, b) {return b[0] - a[0];}), function(i) {
+                    if (i < max_users) {
+                        parseUser(this[1]).appendTo(ul);
+                    }
+                });
+            }
+        } else {
+            $('.search-list')[0].empty();
         }
     });
 
