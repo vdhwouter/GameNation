@@ -31,9 +31,12 @@ $(document).ready(function () {
                 });
             }
         } else {
-            $('.search-list')[0].empty();
+            $('.search-list').empty();
         }
     });
+
+    $("#menu_search").focus(function(e) { $('.menu-list__item__search-box').toggleClass('active', true)})
+    $("#menu_search").blur(function(e) { $('.menu-list__item__search-box').toggleClass('active', false)})
 
     function parseUser(user) {
         return $(
