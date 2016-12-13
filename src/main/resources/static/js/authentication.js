@@ -44,14 +44,14 @@ class Authentication2 {
 
     set token(value) {
         axios.defaults.headers.common['Authorization'] = value ? "Bearer " + value : null;
-        localStorage.setItem("__token", value)
+        localStorage.setItem("__token", value ? value : "")
 
         // trigger login/logout events
         this.triggerEvents()
     }
 
     set refreshToken(value) {
-        localStorage.setItem("__refresh_token", value)
+        localStorage.setItem("__refresh_token", value ? value : "")
     }
 
     set expires(value) {
