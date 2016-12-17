@@ -125,6 +125,10 @@ public class UsersController {
     @RequestMapping(value = "/{user}", method = RequestMethod.DELETE)
     public void DeleteUser(@PathVariable User user) {
         userDB.delete(user);
+
+        userGameDB.findByUser(user).stream().forEach(ug -> userGameDB.delete(ug));
+        friendRepository.findByReceiver(user).stream().forEach(fr -> friendRepository.delete(fr));
+        friendRepository.findBySender(user).stream().forEach(fr -> friendRepository.delete(fr));
     }
 
     // get games for user

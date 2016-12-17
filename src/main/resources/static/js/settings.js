@@ -17,6 +17,16 @@ $(document).ready(function () {
  var alreadyAddedGames = new Array();
 
 
+/* ================================================================================================================
+   Delete user
+ =============================================================================================================== */
+
+$('#deleteUser').click(function () {
+	axios.delete('/users/' + session.id).then(function(e) {
+		return History.pushState({urlPath: 'logout'}, 'logout', 'logout');
+	});
+
+});
 
 /* ================================================================================================================
  load all games that user already have
