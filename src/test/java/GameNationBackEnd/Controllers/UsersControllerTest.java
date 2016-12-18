@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,13 +112,18 @@ public class UsersControllerTest extends BaseControllerTest {
 
     @Test
     public void addUser() throws Exception {
-        String userJson = json(new User("boeferke", "boefer@gmail.com", "bloempje123"));
+        User user = new User("boeferke", "boefer@gmail.com", "bloempje123");
         int startLength = this.userRepository.findAll().size();
 
         mockMvc.perform(post("/api/users")
                 .contentType(contentType)
-                .content(userJson))
+                .content(json(user)))
                 .andExpect(status().isCreated());
+
+        // password should be encrypted
+        assertTrue(new BCryptPasswordEncoder().matches(
+                user.getPassword(),
+                userRepository.findByUsername(user.getUsername()).getPassword()));
 
         assertEquals(startLength + 1, this.userRepository.findAll().size());
     }

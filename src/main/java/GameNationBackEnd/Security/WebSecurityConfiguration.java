@@ -26,8 +26,7 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
     public void init(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .userDetailsService(userDetailsService())
-            // TODO: enable password encoding
-//            .passwordEncoder(new BCryptPasswordEncoder())
+            .passwordEncoder(new BCryptPasswordEncoder())
             ;
     }
 

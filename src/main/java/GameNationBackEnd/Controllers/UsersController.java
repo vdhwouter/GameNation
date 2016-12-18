@@ -12,6 +12,7 @@ import GameNationBackEnd.Repositories.UserGameRepository;
 import GameNationBackEnd.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,6 +41,8 @@ public class UsersController {
 
     @Autowired
     private FriendRepository friendRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     // get all users
     @RequestMapping(method = RequestMethod.GET)
@@ -96,7 +99,7 @@ public class UsersController {
         if(userDB.findByUsername(updatedUser.getUsername()) == null || (userDB.findByUsername(updatedUser.getUsername()).getId().equals(userDB.findByUsername(user.getUsername()).getId()))){
             if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
             if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
-            if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
+            if (updatedUser.getPassword() != null) user.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
             if (updatedUser.getFirstname() != null) user.setFirstname(updatedUser.getFirstname());
             if (updatedUser.getLastname() != null) user.setLastname(updatedUser.getLastname());
             if (updatedUser.getTeamspeak() != null) user.setTeamspeak(updatedUser.getTeamspeak());
@@ -124,6 +127,7 @@ public class UsersController {
             throw new UserEmailAlreadyExistsException(user.getEmail());
         }else {
             user.setAvatar("img/avatar-member.jpg");
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userDB.save(user);
         }
     }
