@@ -152,6 +152,7 @@ public class UsersControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
+
     @Test
     public void updateUser() throws Exception {
         User oldUser = getRandomUser();
@@ -173,7 +174,37 @@ public class UsersControllerTest extends BaseControllerTest {
         assertNotNull(this.userRepository.findByUsername(newUsername));
     }
 
+    @Test
+    // try to update a user without being authorized
+    public void updateUserUnauthorized() throws Exception {
+        User user1 = userList.get(0);
+        User user2 = userList.get(1);
 
+        String userId = user1.getId();
+        User updatingValueUser = this.userRepository.findOne(userId);
+
+        String newUsername = "test usernameke super yeey";
+        updatingValueUser.setUsername(newUsername);
+
+        // as a logged in user
+        mockMvc.perform(post("/api/users/" + userId)
+                .principal(new UserPrincipal(user2))
+                .contentType(contentType)
+                .content(json(updatingValueUser)))
+                .andExpect(status().isForbidden());
+
+        User updatedUser = userRepository.findOne(user1.getId());
+        assertEquals(user1.getUsername(), updatedUser.getUsername());
+
+        // without being logged in
+        mockMvc.perform(post("/api/users/" + userId)
+                .contentType(contentType)
+                .content(json(updatingValueUser)))
+                .andExpect(status().isForbidden());
+
+         updatedUser = userRepository.findOne(user1.getId());
+        assertEquals(user1.getUsername(), updatedUser.getUsername());
+    }
 
     @Test
     public void updateUserOtherValues() throws Exception {
