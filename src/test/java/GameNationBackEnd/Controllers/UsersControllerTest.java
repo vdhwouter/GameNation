@@ -170,38 +170,38 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
     // Fix is in progress (Matthias)
-//    @Test
-//    public void updateUserOtherValues() throws Exception {
-//
-//
-//
-//        User oldUser = getRandomUser();
-//        String userId = oldUser.getId();
-//
-//        // check if we can update just other values, not email, pass, username
-//        User updatingValueUser = new User();
-//
-//        updatingValueUser.setFirstname("Jotie");
-//        updatingValueUser.setLastname("T'Hooft");
-//        updatingValueUser.setTeamspeak("jotie.teamspeak.com");
-//        updatingValueUser.setDiscord("https://discord.com/jotie");
-//        updatingValueUser.setDescription("I'm a poet, you don't rime");
-//
-//        mockMvc.perform(post("/api/users/" + userId)
-//                .principal(new UserPrincipal(oldUser))
-//                .contentType(contentType)
-//                .content(json(updatingValueUser)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.firstname", is("Jotie")))
-//                .andExpect(jsonPath("$.lastname", is("T'Hooft")))
-//                .andExpect(jsonPath("$.teamspeak", is("jotie.teamspeak.com")))
-//                .andExpect(jsonPath("$.discord", is("https://discord.com/jotie")))
-//                .andExpect(jsonPath("$.description", is("I'm a poet, you don't rime")));
-//
-//        User updatedUser = userRepository.findOne(oldUser.getId());
-//        assertNotEquals(oldUser.getDescription(), updatedUser.getDescription());
-//        assertEquals(oldUser.getEmail(), userRepository.findByUsername(updatedUser.getUsername()).getEmail());
-//    }
+    @Test
+    public void updateUserOtherValues() throws Exception {
+
+
+
+        User oldUser = getRandomUser();
+        String userId = oldUser.getId();
+
+        // check if we can update just other values, not email, pass, username
+        User updatingValueUser = new User();
+
+        updatingValueUser.setFirstname("Jotie");
+        updatingValueUser.setLastname("T'Hooft");
+        updatingValueUser.setTeamspeak("jotie.teamspeak.com");
+        updatingValueUser.setDiscord("https://discord.com/jotie");
+        updatingValueUser.setDescription("I'm a poet, you don't rime");
+
+        mockMvc.perform(post("/api/users/" + userId)
+                .principal(new UserPrincipal(oldUser))
+                .contentType(contentType)
+                .content(json(updatingValueUser)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstname", is("Jotie")))
+                .andExpect(jsonPath("$.lastname", is("T'Hooft")))
+                .andExpect(jsonPath("$.teamspeak", is("jotie.teamspeak.com")))
+                .andExpect(jsonPath("$.discord", is("https://discord.com/jotie")))
+                .andExpect(jsonPath("$.description", is("I'm a poet, you don't rime")));
+
+        User updatedUser = userRepository.findOne(oldUser.getId());
+        assertNotEquals(oldUser.getDescription(), updatedUser.getDescription());
+        assertEquals(oldUser.getEmail(), userRepository.findByUsername(updatedUser.getUsername()).getEmail());
+    }
 
     @Test
     public void addGamesToUser() throws Exception {
