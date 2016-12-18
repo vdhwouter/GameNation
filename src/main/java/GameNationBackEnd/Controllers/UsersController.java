@@ -93,7 +93,7 @@ public class UsersController {
             throw new UserEmailAlreadyExistsException(updatedUser.getEmail());
         }
 
-        if(userDB.findByUsernameIgnoreCase(updatedUser.getUsername()) == null || (userDB.findByUsernameIgnoreCase(updatedUser.getUsername()).getId().equals(userDB.findByUsernameIgnoreCase(user.getUsername()).getId()))){
+        if(userDB.findByUsername(updatedUser.getUsername()) == null || (userDB.findByUsername(updatedUser.getUsername()).getId().equals(userDB.findByUsername(user.getUsername()).getId()))){
             if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
             if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
             if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
