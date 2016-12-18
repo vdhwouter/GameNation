@@ -156,15 +156,11 @@ public class UsersController {
         // check if any of the games already exist in the user's collection
         userGameDB.findByUser(user).stream().map(ug -> ug.getGame()).forEach(game -> {
             gameList.forEach(g -> {
-                if (g.equals(game)) {
-                    throw new GameAlreadyExistsException(game.getName());
-                }
+                if (g.equals(game)) throw new GameAlreadyExistsException(game.getName());
             });
         });
 
-        for (Game game : gameList) {
-            userGameDB.save(new UserGame(user,game, 0));
-        }
+        for (Game game : gameList) userGameDB.save(new UserGame(user,game, 0));
 
         return userGameDB.findByUser(user);
     }
