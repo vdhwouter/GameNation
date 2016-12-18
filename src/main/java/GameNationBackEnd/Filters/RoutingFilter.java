@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class RoutingFilter implements Filter {
 
-    String[] routeStartWith = { "/api", "/oauth", "/logout" };
+    String[] routeStartWith = { "/api", "/chat", "/oauth", "/logout" };
     String[] routeEndsWith = { ".html", ".css", ".jpg", ".png", ".ttf", ".js", ".map"};
 
     @Override

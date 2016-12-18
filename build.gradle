@@ -32,8 +32,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile("com.google.code.gson:gson");
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.security.oauth:spring-security-oauth2")
     testCompile('org.springframework.boot:spring-boot-starter-test')
