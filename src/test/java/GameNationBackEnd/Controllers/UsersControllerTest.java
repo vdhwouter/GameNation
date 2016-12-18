@@ -407,9 +407,10 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
         mockMvc.perform(post("/api/users/" + user.getId() + "/games")
+                .principal(new UserPrincipal(user))
                 .contentType(contentType)
                 .content(json(gameIds)))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isConflict());
 
         assertEquals(userGameRepository.findByUser(user).size(), startSize);
     }
