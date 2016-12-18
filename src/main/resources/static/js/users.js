@@ -67,8 +67,6 @@ $('#search_box').on('keyup', function () {
  =============================================================================================================== */
 
 var infoUser = function(e) {
-
-
     userProperties =[] ;
 
     //clear user modal
@@ -82,7 +80,16 @@ var infoUser = function(e) {
         userProperties[i] = $(this)[0].innerHTML;
     });
 
-    //console.log(friendcheck(session.id, userProperties[11]));
+    //if users are friends don't show button
+    axios.get('/users/' + userProperties[11] ).then(function(response){
+        var modalUser = response.data;
+        console.log(modalUser.relation);
+        if(modalUser.relation == null){
+            $("#addFriend").css("display", "unset");
+        }else{
+            $("#addFriend").css("display","none");
+        }
+    });
 
      var H3 = document.createElement("h3");
      H3.className = "page-title page-title--medium";
@@ -166,45 +173,7 @@ else {
 }
 
 /******************************************** add friend ********************************************************/
-
 $('#addFriend').click(function () {
     var currentUserID = document.getElementById('userID').innerHTML;
     axios.post('/users/' + session.id + '/friends', {user: currentUserID});
 });
-
-/*
-var friendcheck = function (currUser, modUser) {
-    console.log(modUser);
-    console.log(currUser)
-    if(modUser == currUser){
-        return true
-    }else{
-        var checkFriends = function(){
-            axios.get("users/" + modUser + "/friends")
-                .then(function (response) {
-                    var data = response.data;
-                    console.log(data);
-                    for (var key in data) {
-                        if (data.hasOwnProperty(key)) {
-                            var value = data[key];
-                            console.log(value.id);
-                            if (value.id == currUser) return true;
-                        }
-                    }
-                });
-        }
-
-        var checkFriendsReq = function() {
-            axios.get("users/" + modUser + "/friendrequests?direction=both")
-                .then(function (response) {
-                    var data = response.data;
-                    for (var key in data) {
-                        if (data.hasOwnProperty(key)) {
-                            var value = data[key];
-                            if (value.id == currUser) return true;
-                        }
-                    }
-                });
-        }
-    }
-}*/
