@@ -19,12 +19,8 @@ public class Friend {
     private User receiver;
 
     private Boolean accepted;
-    private Boolean sended;
 
-    public Friend(){
-        sender = new User();
-        receiver = new User();
-    }
+    public Friend(){}
 
     public Friend(User sender, User receiver) {
         this(sender, receiver, false);
@@ -33,7 +29,6 @@ public class Friend {
     public Friend(User sender, User receiver, boolean accepted){
         this.sender = sender;
         this.receiver = receiver;
-        this.sended = true;
 
         this.accepted = accepted;
     }
@@ -48,9 +43,6 @@ public class Friend {
         return id;
     }
     public Boolean isAccepted(){ return accepted; }
-    public Boolean getSended(){ return sended; }
 
     public void setAccepted(Boolean a){ this.accepted = a; }
-    public void setSended(Boolean s){ this.sended = s; }
-
 }
