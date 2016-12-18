@@ -18,7 +18,7 @@ var CheckFormInputSettings = function(email, password, username){
 }
 
 
-// Commen checks betwee two formchecks
+// Common checks between two formchecks
 var CommonChecks = function(email, password, username, errors){
 
     // Checks on password
@@ -38,3 +38,20 @@ var CommonChecks = function(email, password, username, errors){
     // Return all errors
     return errors;
 }
+
+
+
+var GenerateNotification = function(text, img) {
+    if (Notification.permission !== "granted")
+        Notification.requestPermission();
+    else {
+        var notification = new Notification('Gamenation', {
+            icon: img,
+            body: text,
+        });
+    }
+}
+
+
+
+

@@ -95,11 +95,6 @@ $(document).ready(function() {
     updateSentrequests()
 
 
-    if (!test){
-        alert('Update send');
-        test = false;
-    }
-
 
 
 
@@ -112,17 +107,28 @@ $(document).ready(function() {
       var requests = response.data
 
       if (requests.length > 0) {
+
+
         // render new list
         friendBar.children('#requests').show()
         var newUl = $('<ul></ul>')
         requests.forEach(request => {
           parseFriendrequest(request).appendTo(newUl)
+
+
         })
 
         //compare old list vs new list, only render if they differ
         if (newUl.html() != ul.html()) {
           ul.html(newUl.html())
+
+          // Send desktop notifications
+          requests.forEach(request => { GenerateNotification('You have a pending friendrequest from ' + request.username, request.avatar); })
         }
+
+
+
+
       } else {
         friendBar.children('#requests').hide()
       }

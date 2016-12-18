@@ -198,6 +198,15 @@ $(document).ready(function () {
 
 
     /***************************************/
+    /***             Notifications       ***/
+    /***************************************/
+
+
+    // Ask for permisison
+    if (Notification.permission !== "granted") Notification.requestPermission();
+
+
+    /***************************************/
     /***             Events              ***/
     /***************************************/
 
