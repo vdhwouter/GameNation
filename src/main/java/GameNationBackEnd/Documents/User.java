@@ -5,11 +5,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import GameNationBackEnd.Validation.UserValidator;
-
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.util.*;
 
 
 @Document

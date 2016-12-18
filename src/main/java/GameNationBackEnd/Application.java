@@ -3,15 +3,10 @@ package GameNationBackEnd;
 import GameNationBackEnd.Documents.User;
 import GameNationBackEnd.Filters.RoutingFilter;
 import GameNationBackEnd.Repositories.UserRepository;
-import GameNationBackEnd.Validation.UserValidator;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.validation.Validator;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Arrays;
 
@@ -41,7 +36,4 @@ public class Application {
     RoutingFilter routingFilter() {
         return new RoutingFilter();
     }
-
-    @Bean
-    GameNationBackEnd.Validation.UserValidator UserValidator(){return new GameNationBackEnd.Validation.UserValidator();}
 }
