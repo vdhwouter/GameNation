@@ -36,7 +36,7 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
     UserDetailsService userDetailsService() {
         // todo: now everyone is just user. We want users AND admins. here is the place to assign correct role.
         return (username) -> {
-            GameNationBackEnd.Documents.User user = userRepository.findByUsername(username);
+            GameNationBackEnd.Documents.User user = userRepository.findByUsernameIgnoreCase(username);
 
             if (user == null) {
                 throw new UsernameNotFoundException(username);

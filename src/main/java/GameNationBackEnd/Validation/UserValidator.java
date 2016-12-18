@@ -24,7 +24,7 @@ public class UserValidator implements org.springframework.validation.Validator {
     @Override
     public void validate(Object obj, Errors e) {
         User u = (User) obj;
-        if (userDB.findByUsername(u.getUsername()) != null) {
+        if (userDB.findByUsernameIgnoreCase(u.getUsername()) != null) {
             e.rejectValue("username", "username "+ u.getUsername() +" already exists");
         }
     }

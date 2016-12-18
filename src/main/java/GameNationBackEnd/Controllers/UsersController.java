@@ -47,14 +47,21 @@ public class UsersController {
         return userDB.findAll();
     }
 
+
+    @RequestMapping(value = "/testcase", method = RequestMethod.GET, params = {"username"})
+    public User TestCase(@RequestParam String username) {
+        return userDB.findByUsernameIgnoreCase(username);
+    }
+
+
     // get user by username
     @RequestMapping(method = RequestMethod.GET, params = {"username"})
     public List<User> GetUserByUsername(@RequestParam String username, Principal principal) {
-        User user = userDB.findByUsername(username);
+        User user = userDB.findByUsernameIgnoreCase(username);
         if (user != null) {
             // if authenticated, add relation between users.
             if (principal != null) {
-                User principalUser = userDB.findByUsername(principal.getName());
+                User principalUser = userDB.findByUsernameIgnoreCase(principal.getName());
                 user.setRelation(getRelation(user, principalUser));
             }
 
@@ -69,7 +76,7 @@ public class UsersController {
     public User GetUser(@PathVariable User user, Principal principal) {
         // if authenticated, add relation between users.
         if (principal != null) {
-            User principalUser = userDB.findByUsername(principal.getName());
+            User principalUser = userDB.findByUsernameIgnoreCase(principal.getName());
             user.setRelation(getRelation(user, principalUser));
         }
         return user;
@@ -86,7 +93,7 @@ public class UsersController {
             throw new UserEmailAlreadyExistsException(updatedUser.getEmail());
         }
 
-        if(userDB.findByUsername(updatedUser.getUsername()) == null || (userDB.findByUsername(updatedUser.getUsername()).getId().equals(userDB.findByUsername(user.getUsername()).getId()))){
+        if(userDB.findByUsernameIgnoreCase(updatedUser.getUsername()) == null || (userDB.findByUsernameIgnoreCase(updatedUser.getUsername()).getId().equals(userDB.findByUsernameIgnoreCase(user.getUsername()).getId()))){
             if (updatedUser.getUsername() != null) user.setUsername(updatedUser.getUsername());
             if (updatedUser.getEmail() != null) user.setEmail(updatedUser.getEmail());
             if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
@@ -111,7 +118,7 @@ public class UsersController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public User InsertUser(@Valid @RequestBody User user) throws UserAlreadyExistsException, UserEmailAlreadyExistsException{
-        if (userDB.findByUsername(user.getUsername()) != null) {
+        if (userDB.findByUsernameIgnoreCase(user.getUsername()) != null) {
             throw new UserAlreadyExistsException(user.getUsername());
         } else if(userDB.findByEmail(user.getEmail()) != null){
             throw new UserEmailAlreadyExistsException(user.getEmail());
@@ -208,7 +215,7 @@ public class UsersController {
             throw new NotAuthorizedException();
         }
         // principal contains authenticated user name
-        User user = userDB.findByUsername(principal.getName());
+        User user = userDB.findByUsernameIgnoreCase(principal.getName());
         return user;
     }
 

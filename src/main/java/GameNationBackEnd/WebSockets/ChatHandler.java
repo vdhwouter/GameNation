@@ -28,7 +28,7 @@ public class ChatHandler extends TextWebSocketHandler{
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        User user = userDB.findByUsername(session.getPrincipal().getName());
+        User user = userDB.findByUsernameIgnoreCase(session.getPrincipal().getName());
         sessions.put(user.getId(), session);
     }
 

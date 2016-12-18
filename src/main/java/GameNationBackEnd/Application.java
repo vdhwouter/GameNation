@@ -31,7 +31,7 @@ public class Application {
                 "test".split(","))
                 .forEach(
                         name -> {
-                            if (userRepository.findByUsername(name) == null) {
+                            if (userRepository.findByUsernameIgnoreCase(name) == null) {
                                 userRepository.save(new User(name, name + "@test.com", "test"));
                             }
                         });
