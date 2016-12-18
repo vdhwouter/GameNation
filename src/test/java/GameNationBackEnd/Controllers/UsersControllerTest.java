@@ -169,7 +169,6 @@ public class UsersControllerTest extends BaseControllerTest {
 
 
 
-    // Fix is in progress (Matthias)
     @Test
     public void updateUserOtherValues() throws Exception {
 
@@ -224,7 +223,6 @@ public class UsersControllerTest extends BaseControllerTest {
         List<UserGame> userGames = userGameRepository.findByUser(user);
         assertEquals(2, userGames.size());
     }
-
 
     @Test
     public void getGamesForUser() throws Exception {
@@ -362,6 +360,7 @@ public class UsersControllerTest extends BaseControllerTest {
     @Test
     public void deleteGameFromUser() throws Exception {
         User user = userRepository.findByUsername("wouter");
+
 
         Game game1 = this.gameList.get(2);
         Game game2 = this.gameList.get(4);
