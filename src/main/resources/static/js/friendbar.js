@@ -88,9 +88,20 @@ $(document).ready(function() {
       
     })
   }
-  
+
+
+    var test = false
   function updateRequests() {
     updateSentrequests()
+
+
+    if (!test){
+        alert('Update send');
+        test = false;
+    }
+
+
+
 
     var ul = $('.friendbar').children('#requests').children('ul')
     if (!session.authenticated || !session.id) {
