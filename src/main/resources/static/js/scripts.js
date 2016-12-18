@@ -62,7 +62,10 @@ $(document).ready(function () {
                 session.login(username, password)
                     .then(function (user) {
                         console.info('successfully authenticated, redirecting to profile...')
-                        navigateTo(username, username)
+                        axios.get('/users?username=' + username).then(function (data) {
+                                    navigateTo(username, data.data[0].username)
+                                })
+
                     })
                     .catch(function (error) {
                         console.warn('bad credentials!')
