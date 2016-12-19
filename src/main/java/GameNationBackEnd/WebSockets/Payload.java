@@ -1,19 +1,19 @@
 package GameNationBackEnd.WebSockets;
 
 public class Payload {
-    private String type;
-    private String data;
+    private String op;
+    private String d;
 
-    public Payload(String type, String data) {
-        this.type = type;
-        this.data = data;
+    public Payload(String op, String d) {
+        this.op = op;
+        this.d = d;
     }
 
-    public String getType() {
-        return type;
+    public String getOp() {
+        return op;
     }
 
-    public String getData() {
-        return data;
+    public String getD() {
+        return d;
     }
 }

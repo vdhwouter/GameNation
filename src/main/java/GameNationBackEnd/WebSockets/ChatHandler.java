@@ -34,17 +34,27 @@ public class ChatHandler extends TextWebSocketHandler{
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        ChatPayload chatPayload = gson.fromJson(message.getPayload(), ChatPayload.class);
+        Payload payload = gson.fromJson(message.getPayload(), Payload.class);
 
-        Message msg = new Message(userDB.findOne(chatPayload.getSender()),
-                                  userDB.findOne(chatPayload.getReceiver()),
-                                  chatPayload.getMessage());
+        switch (payload.getOp()) {
+            case "chat": {
+                ChatPayload chatPayload = gson.fromJson(payload.getD(), ChatPayload.class);
 
-        msgDB.save(msg);
+                Message msg = new Message(userDB.findOne(chatPayload.getSender()),
+                        userDB.findOne(chatPayload.getReceiver()),
+                        chatPayload.getMessage());
 
-        WebSocketSession s = sessions.get(chatPayload.getReceiver());
-        if (s != null)
-            s.sendMessage(new TextMessage(message.getPayload()));
+                msgDB.save(msg);
+
+                WebSocketSession s = sessions.get(chatPayload.getReceiver());
+                if (s != null)
+                    s.sendMessage(new TextMessage(payload.getD()));
+            } break;
+
+            case "read": {
+
+            } break;
+        }
     }
 
     @Override

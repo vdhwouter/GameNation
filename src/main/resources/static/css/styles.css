@@ -197,6 +197,61 @@ body {
     -o-transform: skewY(-20deg);
     transform: skewY(-20deg);
 }
+
+/****************************************************************************
+ *                                   Chat                                   *
+ ****************************************************************************/
+
+.chat {
+    position: absolute;
+    bottom: 0;
+    right: 12rem;
+}
+
+.chat-list__item {
+    background: #36393e;
+    margin-right: 1rem;
+    float: right;
+}
+
+.chat-list__item__header {
+    background: #f36523;
+    color: white;
+    padding: 0.2rem 0.4rem;
+}
+
+.chat-list__item__header__link {
+    text-decoration: none;
+    color: white;
+}
+
+.message-list {
+    padding: 0.2rem 0.4rem;
+    height: 16rem;
+    width: 13rem;
+}
+
+.message-list__item {
+    background: #4a4c51;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 0.1rem 0.4rem;
+    margin: 0.2rem 0;
+    max-width: 75%;
+}
+
+.message-list__item--me {
+    background: #f36523;
+    float: right;
+}
+
+.message-list__item:after {
+    display: table;
+    content: "";
+    clear: both;
+}
+
 /****************************************************************************
  *                                  Content                                 *
  ****************************************************************************/

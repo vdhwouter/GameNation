@@ -94,10 +94,6 @@ $(document).ready(function() {
   function updateRequests() {
     updateSentrequests()
 
-
-
-
-
     var ul = $('.friendbar').children('#requests').children('ul')
     if (!session.authenticated || !session.id) {
       return ul.empty()
@@ -114,8 +110,6 @@ $(document).ready(function() {
         var newUl = $('<ul></ul>')
         requests.forEach(request => {
           parseFriendrequest(request).appendTo(newUl)
-
-
         })
 
         //compare old list vs new list, only render if they differ
@@ -164,23 +158,23 @@ $(document).ready(function() {
 
   function parseFriend(friend) {
     return $(
-      '<li class="person">' +
-						'<a href="/' + friend.username + '">' +
+      '<li class="person" data-user-id="' + friend.id + '">' +
+						// '<a href="/' + friend.username + '">' +
 							'<div class="image">' +
 								'<img src="' + friend.avatar +'" alt="">' +
 							'</div>' +
 							'<div class="name">' +
 								'<span>' + friend.username + '</span>' +
 							'</div>' +
-						'</a>' +
+						// '</a>' +
 					'</li>'
     )
   }
 
   function parseFriendrequest(friend) {
     return $(
-      '<li class="person">' +
-            '<a href="/' + friend.username + '">' +
+      '<li class="person" data-user-id="' + friend.id + '">' +
+            // '<a href="/' + friend.username + '">' +
               '<div class="actions">' +
                 '<i class="fa fa-times decline" aria-hidden="true" data-user-id="' + friend.id + '" id="decline"></i>' +
                 '<i class="fa fa-check accept" aria-hidden="true" data-user-id="' + friend.id + '" id="accept"></i>' +
@@ -191,15 +185,15 @@ $(document).ready(function() {
               '<div class="name">' +
                 '<span>' + friend.username + '</span>' +
               '</div>' +
-            '</a>' +
+            // '</a>' +
           '</li>'
     )
   }
 
     function parseOutgoingRequest(friend) {
     return $(
-      '<li class="person">' +
-            '<a href="/' + friend.username + '">' +
+      '<li class="person" data-user-id="' + friend.id +  '">' +
+            // '<a href="/' + friend.username + '">' +
               '<div class="actions">' +
                 '<i class="fa fa-times decline" aria-hidden="true" data-user-id="' + friend.id + '" id="cancel"></i>' +
               '</div>' +
@@ -209,7 +203,7 @@ $(document).ready(function() {
               '<div class="name">' +
                 '<span>' + friend.username + '</span>' +
               '</div>' +
-            '</a>' +
+            // '</a>' +
           '</li>'
     )
   }
@@ -254,6 +248,13 @@ $(document).ready(function() {
           updateRequests();
       })
   })
+
+  $('.friendbar').on('click', '.person', function (e) {
+    var id = $(this).attr('data-user-id');
+    axios.get('/users/' + id).then(function (response) {
+        addChat(response.data);
+    });
+  });
 
   // if initial event was missed:
   session.authenticated ? show() : hide();
