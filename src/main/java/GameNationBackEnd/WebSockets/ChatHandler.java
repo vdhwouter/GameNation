@@ -12,8 +12,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatHandler extends TextWebSocketHandler{
@@ -30,6 +30,22 @@ public class ChatHandler extends TextWebSocketHandler{
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         User user = userDB.findByUsernameIgnoreCase(session.getPrincipal().getName());
         sessions.put(user.getId(), session);
+
+//        List<ChatPayload> message_list = new ArrayList<>();
+//        msgDB.findByReceiver(user).stream().filter(m -> m.isRead()).forEach(m -> {
+//             message_list.add(new ChatPayload(m.getSender().getId(),
+//                m.getReceiver().getId(),
+//                m.getMessage()));
+//
+//             m.read();
+//        });
+//        String messages = gson.toJson(message_list, ChatPayload.class);
+//
+//        Thread.sleep(1000);
+//
+//        WebSocketSession s = sessions.get(user.getId());
+//        if (s != null)
+//            s.sendMessage(new TextMessage(messages));
     }
 
     @Override
@@ -46,9 +62,13 @@ public class ChatHandler extends TextWebSocketHandler{
 
                 msgDB.save(msg);
 
+                List<ChatPayload> message_list = new ArrayList<>();
+                message_list.add(chatPayload);
+                String messages = gson.toJson(message_list);
+
                 WebSocketSession s = sessions.get(chatPayload.getReceiver());
                 if (s != null)
-                    s.sendMessage(new TextMessage(payload.getD()));
+                    s.sendMessage(new TextMessage(messages));
             } break;
 
             case "read": {

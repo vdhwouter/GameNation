@@ -17,23 +17,27 @@ $(document).ready(function() {
             window.ws = new WebSocket('ws://' + document.location.host + '/chat?access_token=' + localStorage.getItem('__token'));
 
         window.ws.onmessage = function (e) {
-            var msg = JSON.parse(e.data);
-            var found = false;
+            var messages = JSON.parse(e.data);
 
-            chat.children('.chat-list__item').each(function () {
-                if ($(this).data('user-id') == msg.sender) {
-                    found = true;
-                    $(this).children('.message-list').append($(
-                        '<li class="message-list__item">' + msg.message + '</li>'
-                    ));
+            $.each(messages, function(i, msg) {
+                var found = false;
+
+                chat.children('.chat-list__item').each(function () {
+                    if ($(this).data('user-id') == msg.sender) {
+                        found = true;
+                        $(this).children('.message-list').append($(
+                            '<li class="message-list__item"><div class="message">' + msg.message + '</div></li>'
+                        ));
+                    }
+                });
+
+                if (!found) {
+                    axios.get('/users/' + msg.sender).then(function(response) {
+                        addChatAndMessage(response.data, msg.message);
+                    });
                 }
             });
 
-            if (!found) {
-                axios.get('/users/' + msg.sender).then(function(response) {
-                    addChatAndMessage(response.data, msg.message);
-                });
-            }
         }
     }
 
@@ -56,7 +60,7 @@ function addChat(user) {
     ).on('click', '#close-chat', function () {
         $(this).parentsUntil('.chat-list').empty();
     }).on('keyup', '#message-input', function (e) {
-        if (e.key == "Enter") {
+        if (e.key == "Enter" && $(this).val() != '') {
             window.ws.send(JSON.stringify({
                 op: "chat",
                 d: JSON.stringify({
@@ -67,7 +71,7 @@ function addChat(user) {
             }));
 
             $(this).parentsUntil('.chat-list').children('.message-list').append($(
-                '<li class="message-list__item message-list__item--me">' + $(this).val() + '</li>'
+                '<li class="message-list__item message-list__item--me"><div class="message message--me">' + $(this).val() + '</div></li>'
             ));
 
             $(this).val('');
@@ -83,14 +87,14 @@ function addChatAndMessage(user, message) {
                 '<i class="fa fa-close fa-pull-right" id="close-chat"></i>' +
             '</div>' +
             '<ul class="message-list">' +
-                '<li class="message-list__item">' + message + '</li>' +
+                '<li class="message-list__item"><div class="message">' + message + '</div></li>' +
             '</ul>' +
             '<input class="chat-list__item__input" type="text" id="message-input">' +
         '</li>'
     ).on('click', '#close-chat', function () {
         $(this).parentsUntil('.chat-list').empty();
     }).on('keyup', '#message-input', function (e) {
-        if (e.key == "Enter") {
+        if (e.key == "Enter" && $(this).val() != '') {
             window.ws.send(JSON.stringify({
                 op: "chat",
                 d: JSON.stringify({
@@ -101,7 +105,7 @@ function addChatAndMessage(user, message) {
             }));
 
             $(this).parentsUntil('.chat-list').children('.message-list').append($(
-                '<li class="message-list__item message-list__item--me">' + $(this).val() + '</li>'
+                '<li class="message-list__item"><div class="message message--me">' + $(this).val() + '</div></li>'
             ));
 
             $(this).val('');

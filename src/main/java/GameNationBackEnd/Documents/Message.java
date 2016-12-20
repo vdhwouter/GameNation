@@ -52,4 +52,8 @@ public class Message {
     public Date getTimestamp() {
         return timestamp;
     }
+
+    public void read() {
+        read = true;
+    }
 }
