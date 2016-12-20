@@ -305,7 +305,7 @@ body {
     padding: 0.1rem 0;
 }
 
-.friendbar .person a {
+.friendbar .person .entry {
     padding: 0.1rem 0.25rem;
     height: 2rem;
     line-height: 2rem;
@@ -314,7 +314,8 @@ body {
     text-decoration: none;
 }
 
-.friendbar .person a:hover {
+.friendbar .person .entry:hover {
+    cursor: pointer;
     background: rgba(0,0,0,0.6);
 }
 

@@ -159,6 +159,7 @@ $(document).ready(function() {
   function parseFriend(friend) {
     return $(
       '<li class="person" data-user-id="' + friend.id + '">' +
+                        '<div class="entry">' +
 						// '<a href="/' + friend.username + '">' +
 							'<div class="image">' +
 								'<img src="' + friend.avatar +'" alt="">' +
@@ -167,6 +168,7 @@ $(document).ready(function() {
 								'<span>' + friend.username + '</span>' +
 							'</div>' +
 						// '</a>' +
+                        '</div>' +
 					'</li>'
     )
   }
@@ -175,6 +177,7 @@ $(document).ready(function() {
     return $(
       '<li class="person" data-user-id="' + friend.id + '">' +
             // '<a href="/' + friend.username + '">' +
+            '<div class="entry">' +
               '<div class="actions">' +
                 '<i class="fa fa-times decline" aria-hidden="true" data-user-id="' + friend.id + '" id="decline"></i>' +
                 '<i class="fa fa-check accept" aria-hidden="true" data-user-id="' + friend.id + '" id="accept"></i>' +
@@ -186,6 +189,7 @@ $(document).ready(function() {
                 '<span>' + friend.username + '</span>' +
               '</div>' +
             // '</a>' +
+            '</div>' +
           '</li>'
     )
   }
@@ -194,6 +198,7 @@ $(document).ready(function() {
     return $(
       '<li class="person" data-user-id="' + friend.id +  '">' +
             // '<a href="/' + friend.username + '">' +
+            '<div class="entry">' +
               '<div class="actions">' +
                 '<i class="fa fa-times decline" aria-hidden="true" data-user-id="' + friend.id + '" id="cancel"></i>' +
               '</div>' +
@@ -204,6 +209,7 @@ $(document).ready(function() {
                 '<span>' + friend.username + '</span>' +
               '</div>' +
             // '</a>' +
+            '</div>' +
           '</li>'
     )
   }
