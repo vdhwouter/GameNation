@@ -80,11 +80,11 @@ var infoUser = function(e) {
         userProperties[i] = $(this)[0].innerHTML;
     });
 
-    //if users are friends don't show button
+    //if users are friends don't show button only if authenticated
     axios.get('/users/' + userProperties[11] ).then(function(response){
         var modalUser = response.data;
-        console.log(modalUser.relation);
-        if(modalUser.relation == null){
+
+        if(modalUser.relation == null && session.authenticated){
             $("#addFriend").css("display", "unset");
         }else{
             $("#addFriend").css("display","none");
@@ -165,12 +165,12 @@ $('#viewProfileBtn').click(function () {
 });
 
 /***********************************only show button in modal if authenticated **********************************/
-if (session.authenticated) {
+/*if (session.authenticated) {
     $("#addFriend").css('display',null);
 }
 else {
     $("#addFriend").css('display',"none");
-}
+}*/
 
 /******************************************** add friend ********************************************************/
 $('#addFriend').click(function () {
