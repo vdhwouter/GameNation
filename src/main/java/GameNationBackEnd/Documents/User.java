@@ -59,7 +59,6 @@ public class User{
 	public String getEmail() {
 		return email;
 	}
-	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

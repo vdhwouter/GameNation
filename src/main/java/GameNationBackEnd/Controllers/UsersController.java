@@ -47,13 +47,18 @@ public class UsersController {
     // get all users
     @RequestMapping(method = RequestMethod.GET)
     public List<User> GetUsers() {
-        return userDB.findAll();
+        return userDB.findAll().stream().map(user -> {
+            user.setPassword(null);
+            return user;
+        }).collect(Collectors.toList());
     }
 
 
     @RequestMapping(value = "/testcase", method = RequestMethod.GET, params = {"username"})
     public User TestCase(@RequestParam String username) {
-        return userDB.findByUsernameIgnoreCase(username);
+        User user = userDB.findByUsernameIgnoreCase(username);
+        user.setPassword(null);
+        return user;
     }
 
 
@@ -66,6 +71,7 @@ public class UsersController {
             if (principal != null) {
                 User principalUser = userDB.findByUsernameIgnoreCase(principal.getName());
                 user.setRelation(getRelation(user, principalUser));
+                user.setPassword(null);
             }
 
             return Arrays.asList(user);
@@ -81,6 +87,7 @@ public class UsersController {
         if (principal != null) {
             User principalUser = userDB.findByUsernameIgnoreCase(principal.getName());
             user.setRelation(getRelation(user, principalUser));
+            user.setPassword(null);
         }
         return user;
     }
@@ -113,7 +120,8 @@ public class UsersController {
         } else {
             throw new UserAlreadyExistsException(updatedUser.getUsername());
         }
-        
+
+        user.setPassword(null);
         return user;
     }
 
@@ -128,7 +136,9 @@ public class UsersController {
         }else {
             user.setAvatar("img/avatar-member.jpg");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            return userDB.save(user);
+            User newUser = userDB.save(user);
+            newUser.setPassword(null);
+            return newUser;
         }
     }
 
@@ -216,6 +226,7 @@ public class UsersController {
         }
         // principal contains authenticated user name
         User user = userDB.findByUsernameIgnoreCase(principal.getName());
+        user.setPassword(null);
         return user;
     }
 
